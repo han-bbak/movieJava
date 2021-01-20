@@ -26,6 +26,14 @@
             position: absolute;
             margin: auto;
         }
+        
+        #logo {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+        }
 
         #board_top_title {
             float: left;
@@ -98,8 +106,8 @@
                      <i id="menu-icon" class="material-icons">menu</i>
                     </section>
                 </div>
-                <div class="header" id="logo">
-                    <p>로고</p>
+                <div class="header">
+                    <img id="logo" src="../../images/logo_167.png">
                 </div> 
             </div>
             <div class="header" id="header2">

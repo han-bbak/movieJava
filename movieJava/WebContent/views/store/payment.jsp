@@ -30,6 +30,14 @@
 	margin: auto;
 }
 
+#logo {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+        }
+
 #board_top_title {
 	float: left;
 	width: 50%;
@@ -112,9 +120,9 @@ select {
 						<i id="menu-icon" class="material-icons">menu</i>
 					</section>
 				</div>
-				<div class="header" id="logo">
-					<p>로고</p>
-				</div>
+				<div class="header">
+                    <img id="logo" src="../../images/logo_167.png">
+                </div> 
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -211,7 +219,7 @@ select {
 				</table>
 				<div class="btnArea">
 					<button type="button" class="btn">결제</button>
-					<button type="button" calss="btn" onclick="history.back();">취소</button>
+					<button type="button" class="btn" onclick="history.back();">취소</button>
 				</div>
 			</div>
 

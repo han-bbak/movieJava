@@ -23,6 +23,14 @@
             height: 100%;
             position: relative;
         }
+        
+        #logo {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+        }
 
         #content a {
             text-decoration: none;
@@ -143,9 +151,9 @@
                      <i id="menu-icon" class="material-icons">menu</i>
                     </section>
                 </div>
-                <div class="header" id="logo">
-                    <p>로고</p>
-                </div> 
+                <div class="header">
+                    <img id="logo" src="../../images/logo_167.png">
+                </div>  
             </div>
             <div class="header" id="header2">
                 <form id="search-form">
@@ -196,7 +204,9 @@
                         <br>
                     </h1>
                 </div>
-                <div id="board_top_btn"><button type="submit" class="btn" id="updateBtn">글쓰기</button></div>
+                <div id="board_top_btn">
+                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/QA_update.jsp'">글쓰기</button>
+                </div>
             </div>
             <div class="board_table">
                 <table class="list_table">

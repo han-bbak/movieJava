@@ -27,6 +27,14 @@
             position: absolute;
             margin: auto;
         }
+        
+        #logo {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+        }
 
         #board_top_title {
             float: left;
@@ -148,9 +156,9 @@
                         <i id="menu-icon" class="material-icons">menu</i>
                     </section>
                 </div>
-                <div class="header" id="logo">
-                    <p>로고</p>
-                </div>
+                <div class="header">
+                    <img id="logo" src="../../images/logo_167.png">
+                </div> 
             </div>
             <div class="header" id="header2">
                 <form id="search-form">
@@ -278,7 +286,7 @@
                                 <td colspan="3" align="right">
                                     총 상품 금액
                                     <span id="total">120,000원</span>
-                                    <button type="button" id="btn">결제하기</button>
+                                    <button type="button" id="btn" onclick="location.href='<%= request.getContextPath() %>/views/store/payment.jsp'">결제하기</button>
                                 </td>
                             </tr>
                         </tfoot>
