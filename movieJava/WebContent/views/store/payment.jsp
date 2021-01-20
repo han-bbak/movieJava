@@ -136,13 +136,13 @@ select {
 			<div class="header" id="header3">
 
 				<form id="logform">
-					<section id="loginform">
-						<a href="#">로그인</a>
-					</section>
-					<section id="joinform">
-						<a href="#">회원가입</a>
-					</section>
-				</form>
+                    <section id="loginform">
+                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
+                    </section>
+                    <section id="joinform">
+                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
+                    </section>
+                </form>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
@@ -154,12 +154,13 @@ select {
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
                   </svg>
 			</div>
-			<br>
-			<br>
-			<br>
-			<br> <a href="메인페이지.html">Home</a> <a href="마이페이지.html">마이페이지</a><br>
-			<a href="관심영화.html">관심 영화</a><br> <a href="Watch.html">공유 계정
-				게시판</a> <a href="Q&A.html">Q&A</a><br> <a href="goods.html">STORE</a><br>
+			<br><br><br><br>
+			<a href="메인페이지.html">Home</a>
+            <a href="마이페이지.html">마이페이지</a><br>
+            <a href="관심영화.html">관심 영화</a><br>
+            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
 
 		<div id="content">
@@ -210,7 +211,7 @@ select {
 				</table>
 				<div class="btnArea">
 					<button type="button" class="btn">결제</button>
-					<button type="button" class="btn">취소</button>
+					<button type="button" calss="btn" onclick="history.back();">취소</button>
 				</div>
 			</div>
 

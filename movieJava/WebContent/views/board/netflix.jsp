@@ -172,10 +172,10 @@
             <div class="header" id="header3">
                 <form id="logform">
                     <section id="loginform">
-                        <a href="#">로그인</a>
+                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
                     </section>
                     <section id="joinform">
-                        <a href="#">회원가입</a>
+                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
                     </section>
                 </form>
             </div>
@@ -192,18 +192,18 @@
             <a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
-            <a href="Watch.html">공유 계정</a><br>
-            <a href="Q&A.html">Q&A</a><br>
-            <a href="goods.html">STORE</a><br>
+            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
         <div id="content">
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a href="#"><span id="watcha">Watcha</span></a>
+                        <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a>
                         /
-                        <a href="#"><span id="netflix">Netflix</span></a>
+                        <a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a>
                         <br>
                     </h1>
                 </div>

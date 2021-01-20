@@ -119,10 +119,10 @@
 
                 <form id="logform">
                     <section id="loginform">
-                        <a href="#">로그인</a>
+                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
                     </section>
                     <section id="joinform">
-                        <a href="#">회원가입</a>
+                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
                     </section>
                 </form>
             </div>
@@ -139,11 +139,9 @@
             <a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
-            <a href="Watch.html">Watcha Party</a><br>
-            <a href="Netflix.html">Netflix Party</a><br>
-            <a href="Q&A.html">Q&A</a><br>
-            <a href="goods.html">STORE - Goods</a><br>
-            <a href="ticket.html">STORE - Ticket</a><br>
+            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
         <div id="content">
@@ -171,7 +169,7 @@
                     
                     <div class="btnArea">
                         <button type="button" id="btn">등록</button>
-                        <button type="button" id="btn">취소</button>
+                        <button type="button" id="btn" onclick="history.back();">취소</button>
                     </div>
             </div>
         </div>
