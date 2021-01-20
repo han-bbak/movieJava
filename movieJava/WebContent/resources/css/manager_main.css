@@ -1,0 +1,89 @@
+* {
+    font-family: 'Nanum Gothic Coding', monospace;
+}
+body {
+    background-color: rgb(64,64,64);
+    padding: 0;
+    margin : auto;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+header, nav, section {
+    box-sizing: border-box;
+    display : block;
+}
+header {
+    height : 50px;
+}
+#head-title {
+    text-align: center;
+}
+#head-title > a {
+    text-decoration: none;
+    color : white;
+}
+#menuWrap {
+    background-color: rgb(255,192,0);
+    width: 100%;
+}
+.menuSection {
+    width: 1200px;
+    height: 40px;
+    margin: 0 auto;
+    text-align: center;
+
+    transition: all 0.5s;
+}
+.menuOver {
+    height : 160px;
+    transition: all 0.5s;
+}
+ul {
+    list-style-type: none;
+    padding : 0;
+    margin: 0;
+    text-align: center;
+}
+.mainMenu {
+    display: flex;
+    justify-content: center;
+    /* flex-direction: row; */
+}
+li a {
+    text-decoration: none;
+    display: inline-block;
+    color : rgb(64,64,64);
+    padding : 10px;
+}
+.mainMenu > li > a {
+    font-weight: bolder;
+    font-size : 20px;
+    padding : 10px 50px;
+}
+.subMenu li {
+    opacity: 0;
+    height: 0px;
+    visibility: hidden;
+
+    transition : all 0s;
+    transition: height 0.5s;
+}
+.mainMenu:hover .subMenu li {
+    opacity: 1;
+    height: 40px;
+    visibility: visible;
+
+    transition : all 0s;
+    transition: height 0.5s;
+}
+
+.mainMenu a:hover {
+    transform : translate(-5px, -5px);
+    /* background-color : rgb(64,64,64); */
+    color: white;
+
+    text-shadow: 3px 3px 5px rgb(64,64,64);
+    transition: all 0.5s;
+    /* transition: background-color, color 1s; */
+}

@@ -1,0 +1,45 @@
+.contentSection {
+    width: 1200px;
+    height: 1000px;
+
+    position: absolute;
+    top: 110px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: -1;
+}
+
+.contentMenuWrap {
+    width: 15%;
+    height: 100%;
+    float:left;
+    position: relative;
+
+    background-color: rgb(224,224,224);
+    
+}
+.subTitle {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.subTitle > p {
+    font-size: 20px;
+    margin: 0;
+    padding: 30px 20px;
+}
+
+.subTitle .subText {
+    font-weight: bolder;
+}
+
+#p-sub2, #p-sub3, #p-sub4, #p-sub5, #p-sub6, #p-sub7 {
+    font-weight: 400;
+    font-size: 15px;
+    padding: 10px;
+}
+
+#p-sub3 span, #p-sub5 span, #p-sub7 span {
+    font-weight: bold;
+}
