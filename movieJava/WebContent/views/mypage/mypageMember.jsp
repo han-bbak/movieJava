@@ -15,8 +15,7 @@
 	padding: 150px;
 	text-align: center;
 }
-#id{
-color : white;}
+
 h3 {
 	margin: 19px 0 8px;
 	font-size: 14px;
