@@ -278,14 +278,14 @@
             <div class="login_area">
                 <div class="login_header">
                     <div class="login_logo">
-                        <img src="../../images/logo-eng.png">
+                        <img src="../../images/logo.png">
                     </div>
                     <span>
                         <b>무비자바</b> 로그인
                     </span>
 
                 </div>
-                <form method="POST" id="login_form" action="">
+                <form method="POST" id="login_form" action="<%= request.getContextPath() %>/member/login">
 
                     <input type="text" id="userId" name="userId" placeholder="아이디" onkeydown="onKeyDown();">
                     <input type="password" id="userPwd" name="userPwd" placeholder="비밀번호" onkeydown="onKeyDown();">
@@ -313,11 +313,10 @@
     </div>
     <div class="footer">
         <p>
-            © 2020 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) | 왓챠플레이<br>
-            Data & Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
-            <br><br>
-            Copyright© 2020, Moviejava , All Rights Reserved.
-        </p>
+			© 2021 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) | 왓챠플레이<br> Data
+			&amp; Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
+			<br> <br> Copyright© 2021, MOVIEJAVA , All Rights Reserved.
+		</p>
     </div>
     <script>
         var slides = document.getElementsByClassName("bg");
