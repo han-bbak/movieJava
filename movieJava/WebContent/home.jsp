@@ -132,41 +132,46 @@ p {
 	width: 25%;
 	height: 100%;
 	position: relative;
+	padding : 10px;
+	text-align: center;
 }
 
-#header3 a {
-	text-decoration: none;
-	font-size: 18px;
-	color: #949494;
-	font-weight: bold;
-	float: left;
-}
-
-#logform {
-	width: 60%;
-	height: 20%;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+#loginArea {
+	width : 100%;
+	padding : 20px;
 	margin: auto;
-	position: absolute;
+	text-align : center;
 }
 
-#loginform {
-	height: 100%;
-	width: 50%;
+#loginform, #joinform {
+	margin: 10px 5px 10px;
+	width: 40%;
 	float: left;
 }
 
-#joinform {
-	height: 100%;
-	width: 50%;
-	float: left;
+#searchDiv {
+	width : 100%;
 }
 
-#header3 a:hover {
-	color: #f1f1f1;
+#searchDiv span {
+	color : #fff;
+	font-size : 12px;
+}
+
+.loginJoin {
+	width: 100%;
+	height: 40px;
+	background: #1c81ff;
+	border: 1px solid #1b7df8;
+	font-size: 14px;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s, border-color 0.3s;
+}
+
+.loginJoin:hover {
+	background-color: #0065e3;
+	border-color: #0061db;
 }
 
 #content1 {
@@ -267,88 +272,82 @@ html.open {
 	display: none;
 }
 
-    .right-align {
-      text-align: right;
-    }
-    
-    
-    @media only screen and (min-width: 0) {
-      html {
-        font-size: 14px;
-      }
-    }
-    
-    @media only screen and (min-width: 992px) {
-      html {
-        font-size: 14.5px;
-      }
-    }
-    
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 400;
-      line-height: 1.3;
-    }
-    
-    h3 {
-      font-size: 2.92rem;
-    }
-    
-    
-    .mslider {
-      position: relative;
-      height: 400px;
-      width: 100%;
-    }
-    
-    .mslider.fullscreen {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    
+.right-align {
+	text-align: right;
+}
 
-    
-    .mslider .slidess {
-      background-color: #9e9e9e;
-      margin: 0;
-      height: 400px;
-    }
-    
-    .mslider .slidess li {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      width: 100%;
-      height: inherit;
-      overflow: hidden;
-    }
-    
-    .mslider .slidess li img {
-      height: 100%;
-      width: 100%;
-      background-size: cover;
-      background-position: relative;
-    }
-    
-    .mslider .slidess li .caption {
-      color: #fff;
-      position: absolute;
-      top: 15%;
-      left: 15%;
-      width: 70%;
-      opacity: 0;
-    }
+@media only screen and (min-width: 0) {
+	html {
+		font-size: 14px;
+	}
+}
 
+@media only screen and (min-width: 992px) {
+	html {
+		font-size: 14.5px;
+	}
+}
 
-     /* 바로가기 버튼 */
-     .linkbtn{
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	line-height: 1.3;
+}
+
+h3 {
+	font-size: 2.92rem;
+}
+
+.mslider {
+	position: relative;
+	height: 400px;
+	width: 100%;
+}
+
+.mslider.fullscreen {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.mslider .slidess {
+	background-color: #9e9e9e;
+	margin: 0;
+	height: 400px;
+}
+
+.mslider .slidess li {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: inherit;
+	overflow: hidden;
+}
+
+.mslider .slidess li img {
+	height: 100%;
+	width: 100%;
+	background-size: cover;
+	background-position: relative;
+}
+
+.mslider .slidess li .caption {
+	color: #fff;
+	position: absolute;
+	top: 15%;
+	left: 15%;
+	width: 70%;
+	opacity: 0;
+}
+
+/* 바로가기 버튼 */
+.linkbtn {
 	width: 157px;
 	height: 44px;
 	border-radius: 5px;
@@ -359,19 +358,19 @@ html.open {
 	color: #FFFFFF;
 	outline: none;
 	margin: 10px;
-  transition: all .2s ease-in-out;
-  cursor: pointer;
+	transition: all .2s ease-in-out;
+	cursor: pointer;
 }
-	/* Outline Button */
-	.btn-outline{
-		border: 2px solid #FFFFFF;
-		background: transparent;
-	}
-  .btn-outline:hover,
-	.btn-outline-hover{
-		background-color: #FFFFFF;
-		color: #181C25;
-	}
+/* Outline Button */
+.btn-outline {
+	border: 2px solid #FFFFFF;
+	background: transparent;
+}
+
+.btn-outline:hover, .btn-outline-hover {
+	background-color: #FFFFFF;
+	color: #181C25;
+}
 </style>
 </head>
 
@@ -408,16 +407,19 @@ html.open {
 				</form>
 			</div>
 			<div class="header" id="header3">
-
-				<form id="logform">
-					<section id="loginform">
-						<a href="<%=request.getContextPath()%>/views/member/loginView.jsp">로그인</a>
-					</section>
-					<section id="joinform">
-						<a
-							href="<%=request.getContextPath()%>/views/member/joinMember.jsp">회원가입</a>
-					</section>
-				</form>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
