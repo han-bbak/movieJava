@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="loginMember">
+		SELECT
+			   MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_ID = ?
+		   AND MEM_PWD = ?
+		   AND MEM_STATUS = 'Y'
+	</entry>
+	
+</properties>

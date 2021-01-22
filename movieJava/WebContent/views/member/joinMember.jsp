@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>무비자바 - 회원가입</title>
-    <link href="../../resources/css/reset.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/reset.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <style>
@@ -177,7 +177,7 @@
 <body>
     <div class="contentWrapper">
         <div class="logoDiv">
-            <a href="#"><img src="../../images/logo-eng.png"></a>   <!-- 메인 화면으로 이동 연결 -->
+            <a href="<%= request.getContextPath() %>"><img src="<%= request.getContextPath() %>/images/logo-eng.png"></a>   <!-- 메인 화면으로 이동 연결 -->
         </div>
         <div class="titleDiv">
             <h1>무비자바 회원가입</h1>
@@ -239,11 +239,10 @@
     </div>
     <div class="footer">
         <p>
-            © 2020 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) |  왓챠플레이<br>
-            Data & Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
-            <br><br>
-            Copyright© 2020, Moviejava , All Rights Reserved.
-        </p>
+			© 2021 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) | 왓챠플레이<br> Data
+			&amp; Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
+			<br> <br> Copyright© 2021, MOVIEJAVA , All Rights Reserved.
+		</p>
     </div>
     <!-- jQuery와 Postcodify를 로딩한다 -->
     <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>

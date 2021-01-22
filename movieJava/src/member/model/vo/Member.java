@@ -18,6 +18,12 @@ public class Member {
 	private String memStatus;
 	
 	public Member() {}
+	
+	public Member(String memId, String memPwd) {
+		super();
+		this.memId = memId;
+		this.memPwd = memPwd;
+	}
 
 	public Member(int memNo, String memId, String memPwd, String memName, String memBirth, String email, String phone,
 			String address, int point, String grade, Date entDate, Date modifyDate, String memStatus) {

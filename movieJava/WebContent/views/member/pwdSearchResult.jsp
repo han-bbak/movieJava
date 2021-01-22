@@ -32,7 +32,7 @@
         }
 
         #bg1 {
-            background : url("../../images/bg1-1.jpg");
+            background : url("<%= request.getContextPath() %>/images/bg1-1.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -40,7 +40,7 @@
         }
 
         #bg2 {
-            background : url("../../images/bg1-2.jpg");
+            background : url("<%= request.getContextPath() %>/images/bg1-2.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -48,21 +48,21 @@
         }
 
         #bg3 {
-            background : url("../../images/bg1-3.jpg");
+            background : url("<%= request.getContextPath() %>/images/bg1-3.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             z-index: -2;
         }
         #bg4 {
-            background : url("../../images/bg1-4.jpg");
+            background : url("<%= request.getContextPath() %>/images/bg1-4.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             z-index: -2;
         }
         #bg5 {
-            background : url("../../images/bg1-5.jpg");
+            background : url("<%= request.getContextPath() %>/images/bg1-5.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -279,7 +279,7 @@
             <div class="login_area">
                 <div class="login_header">
                     <div class="login_logo">
-                        <img src="../../images/logo-eng.png">
+                        <img src="<%= request.getContextPath() %>/images/logo.png">
                     </div>
                     <span>
                         <b id="userIdTab">OOO님</b>의 비밀번호 <!-- 아이디로 보여주기 -->
@@ -305,18 +305,17 @@
                 </ul>
                 <span></span>
                 <div class="returnMain">
-                    <button type="button" id="goMain" onclick="history.back();">메인으로</button>
+                    <button type="button" id="goMain" onclick="location.href='<%= request.getContextPath() %>'">메인으로</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="footer">
         <p>
-            © 2020 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) |  왓챠플레이<br>
-            Data & Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
-            <br><br>
-            Copyright© 2020, Moviejava , All Rights Reserved.
-        </p>
+			© 2021 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) | 왓챠플레이<br> Data
+			&amp; Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
+			<br> <br> Copyright© 2021, MOVIEJAVA , All Rights Reserved.
+		</p>
     </div>
     <script>
         var slides = document.getElementsByClassName("bg");

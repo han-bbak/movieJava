@@ -32,7 +32,7 @@
         }
 
         #bg1 {
-            background: url("../../images/bg1-1.jpg");
+            background: url("<%= request.getContextPath() %>/images/bg1-1.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -40,7 +40,7 @@
         }
 
         #bg2 {
-            background: url("../../images/bg1-2.jpg");
+            background: url("<%= request.getContextPath() %>/images/bg1-2.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -48,7 +48,7 @@
         }
 
         #bg3 {
-            background: url("../../images/bg1-3.jpg");
+            background: url("<%= request.getContextPath() %>/images/bg1-3.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -56,7 +56,7 @@
         }
 
         #bg4 {
-            background: url("../../images/bg1-4.jpg");
+            background: url("<%= request.getContextPath() %>/images/bg1-4.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -64,7 +64,7 @@
         }
 
         #bg5 {
-            background: url("../../images/bg1-5.jpg");
+            background: url("<%= request.getContextPath() %>/images/bg1-5.jpg");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -263,6 +263,12 @@
             animation: main_shake 0.5s;
         }
     </style>
+    <% if(request.getAttribute("msg") != null) { %>
+    	<script>
+    		alert("<%= request.getAttribute("msg") %>");
+    	</script>
+    <% request.removeAttribute("msg"); %>
+    <% } %>
 </head>
 
 <body>
@@ -278,7 +284,7 @@
             <div class="login_area">
                 <div class="login_header">
                     <div class="login_logo">
-                        <img src="../../images/logo.png">
+                        <img src="<%= request.getContextPath() %>/images/logo.png">
                     </div>
                     <span>
                         <b>무비자바</b> 로그인
@@ -306,7 +312,7 @@
                 </ul>
                 <span></span>
                 <div class="returnMain">
-                    <button type="button" id="goMain" onclick="history.back();">메인으로</button>
+                    <button type="button" id="goMain" onclick="location.href='<%= request.getContextPath() %>'">메인으로</button>
                 </div>
             </div>
         </div>
@@ -358,14 +364,6 @@
             if (userPwd.value == "") {
                 alert('비밀번호를 입력해주세요');
                 userPwd.focus();
-                return;
-            }
-
-            if(!chk(/^[a-z][a-z\d]{5,11}$/, userId, "아이디를 다시 입력해주세요.")) { // 영소문자 시작, 6~12자리
-                return;
-            }
-
-            if(!chk(/(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$/, userPwd, "비밀번호를 다시 입력해주세요.")) { // 특수문자,숫자,영대소문자 포함 8자 이상
                 return;
             }
 
