@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
+	
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -171,9 +173,34 @@ p {
 	transition: background-color 0.3s, border-color 0.3s;
 }
 
-.loginJoin:hover {
+.loginJoin:hover, #userInfoBtn button:hover {
 	background-color: #0065e3;
 	border-color: #0061db;
+}
+
+#userInfo {
+	color : white;
+	padding-top : 35px;
+	padding-bottom : 5px;
+}
+
+#userInfo span {
+	font-weight : lighter;
+}
+
+#userInfo b {
+	font-weight : bold;
+}
+
+#userInfoBtn button {
+	margin: 5px;
+	background: #1c81ff;
+	color: #fff;
+	border: 1px solid #1b7df8;
+	cursor: pointer;
+	outline : none;
+	
+	transition: background-color 0.3s, border-color 0.3s;
 }
 
 #content1 {
@@ -409,6 +436,7 @@ h3 {
 				</form>
 			</div>
 			<div class="header" id="header3">
+			<% if(loginUser == null) { %>
 				<div id="loginArea">
 					<div id="loginform">
 						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
@@ -422,6 +450,31 @@ h3 {
 						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
 					</div>
 				</div>
+			<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+			<% } %>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
