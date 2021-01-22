@@ -34,7 +34,7 @@ body {
 	background: #363636;
 }
 
-/*
+/* // div선
  		div {
 			border: 1px solid white;
 			box-sizing: border-box;
