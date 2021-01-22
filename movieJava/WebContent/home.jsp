@@ -433,8 +433,10 @@ html.open {
 
 			</div>
 			<br> <br> <br> <br> <a href="#">HOME</a><br>
-			<a href="#">마이페이지</a><br> <a href="#">관심 영화</a><br> <a
-				href="#">Watcha Party</a><br> <a href="#">Netflix Party</a><br>
+			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br>
+			 <a href="#">관심 영화</a><br> <a
+				href="#">Watcha Party</a><br>
+				 <a href="#">Netflix Party</a><br>
 			<a href="#">Q&amp;A</a><br> <a href="#">STORE - Goods</a><br>
 			<a href="#">STORE - Ticket</a><br>
 		</div>
