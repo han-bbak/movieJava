@@ -151,11 +151,13 @@ p {
 
 #searchDiv {
 	width : 100%;
+	text-align: left;
 }
 
 #searchDiv span {
 	color : #fff;
 	font-size : 12px;
+	margin : 0px 16px;
 }
 
 .loginJoin {
