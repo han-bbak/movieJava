@@ -84,7 +84,7 @@
             </div>
             <br><br><br><br>
             <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
+            <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
             <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
