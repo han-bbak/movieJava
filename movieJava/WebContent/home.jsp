@@ -386,7 +386,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<img class="logo" src="images/logo.png">
+				<a href="home.jsp"><img class="logo" src="images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -434,13 +434,12 @@ h3 {
                   </svg>
 
 			</div>
-			<br> <br> <br> <br> <a href="#">HOME</a><br>
-			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br>
-			 <a href="#">관심 영화</a><br> <a
-				href="#">Watcha Party</a><br>
-				 <a href="#">Netflix Party</a><br>
-			<a href="#">Q&amp;A</a><br> <a href="#">STORE - Goods</a><br>
-			<a href="#">STORE - Ticket</a><br>
+			<br> <br> <br> <br> <a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
+			<a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
 
 		<div id="content">
