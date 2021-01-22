@@ -20,7 +20,6 @@
             color: whitesmoke;
             font-size: xx-large;
             font-weight: 500;
-
             top: 0;
             bottom: 0;
             left: 0;
@@ -29,20 +28,17 @@
         }
         
         #logo {
-            top: 0;
-            bottom: 0;
-            right: 0;
-            position: absolute;
-            margin: auto;
+            position: relative;
+			margin: 20px 50px;
+			max-width: 130%;
         }
-
+        
         #board_top_title {
             float: left;
             width: 50%;
             height: 100%;
             position: relative;
         }
-
         .tableArea {
             padding: 20px;
             width: 850px;
@@ -58,11 +54,9 @@
             text-align: center;
             margin:auto; 
         }
-
         #contentTop {
             height: 50px;
         }
-
         #contentTable #content {
             text-align:left;
             color: black;
@@ -70,7 +64,6 @@
             margin: auto;
             padding-top: 10px;
         }
-
         #contentTable td {
             padding: 0;
         }
@@ -101,12 +94,10 @@
         #contentTable td:nth-child(6) {
           width : 10px;
         }
-
         #contentTable td:nth-child(7) {
           width : 70px;
           color: white;
         }
-
         #contentTable td:nth-child(8) {
           width : 110px;
         }
@@ -116,16 +107,13 @@
             padding-top: 10px;
             padding-right: 15px;
         }
-
         #title {
             margin-top: 0;
         }
-
         #btn {
             cursor: pointer;
             width: 80px;
             height: 30px;
-
             background: rgb(62, 103, 184);
             border: rgb(62, 103, 184);
             border-top-right-radius: 5px;
@@ -135,7 +123,6 @@
             color: white;
             margin-left: 5px;
         }
-
         .input_area {
             /* border: solid 1px red; */
             padding: 10px 10px 10px 10px;
@@ -146,7 +133,6 @@
             width: 70%;
             border: 0;
         }
-
         .replyArea {
             margin: auto;
             height: 40%;
@@ -165,8 +151,8 @@
                      <i id="menu-icon" class="material-icons">menu</i>
                     </section>
                 </div>
-                <div class="header">
-                    <img id="logo" src="../../images/logo_167.png">
+                <div class="header" id="logo">
+                    <a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
                 </div> 
             </div>
             <div class="header" id="header2">
@@ -203,9 +189,9 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
+            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
@@ -260,7 +246,6 @@
            $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 
         }); 
-
         window.onhashchange = function () { 
             if(location.hash != "#open") {
                 $("#menu,.page_cover,html").removeClass("open");  

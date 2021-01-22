@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Board {
 	private int brd_no;				// 글 번호
-	private String brd_category;	// 카테고리 (왓챠, 넷플릭스, Q&A)
+	private int brd_category;		// 카테고리 (왓챠, 넷플릭스, Q&A)
 	private String brd_title;		// 제목
 	private String brd_content;		// 내용
 	private int mem_no;				// 작성자 회원 번호 (member - mem_no 참조)
@@ -16,7 +16,7 @@ public class Board {
 	
 	public Board() {}
 
-	public Board(int brd_no, String brd_category, String brd_title, String brd_content, int mem_no, String brd_writer,
+	public Board(int brd_no, int brd_category, String brd_title, String brd_content, int mem_no, String brd_writer,
 			int brd_cnt, Date brd_date, Date brd_modify, String brd_status) {
 		super();
 		this.brd_no = brd_no;
@@ -39,11 +39,11 @@ public class Board {
 		this.brd_no = brd_no;
 	}
 
-	public String getBrd_category() {
+	public int getBrd_category() {
 		return brd_category;
 	}
 
-	public void setBrd_category(String brd_category) {
+	public void setBrd_category(int brd_category) {
 		this.brd_category = brd_category;
 	}
 

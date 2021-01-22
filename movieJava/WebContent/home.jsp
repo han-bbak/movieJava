@@ -408,9 +408,7 @@ h3 {
 		<div id="header">
 			<div class="header" id="header-menu">
 				<div class="btn">
-					<link
-						href="https://fonts.googleapis.com/icon?family=Material+Icons"
-						rel="stylesheet">
+					<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 					<i id="menu-icon" class="material-icons">menu</i>
 				</div>
 			</div>
@@ -489,7 +487,8 @@ h3 {
                   </svg>
 
 			</div>
-			<br> <br> <br> <br> <a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
+			<br> <br> <br> <br> 
+			<a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>

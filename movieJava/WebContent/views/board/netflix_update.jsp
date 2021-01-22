@@ -19,7 +19,6 @@
             color: whitesmoke;
             font-size: xx-large;
             font-weight: 500;
-
             top: 0;
             bottom: 0;
             left: 0;
@@ -34,14 +33,12 @@
             position: absolute;
             margin: auto;
         }
-
         #board_top_title {
             float: left;
             width: 50%;
             height: 100%;
             position: relative;
         }
-
         .tableArea {
             padding: 20px;
             width: 700px;
@@ -74,16 +71,13 @@
             text-align: center;
             padding-top: 10px;
         }
-
         #title {
             margin-top: 0;
         }
-
         #btn {
             cursor: pointer;
             width: 80px;
             height: 30px;
-
             background: rgb(62, 103, 184);
             border: rgb(62, 103, 184);
             border-top-right-radius: 5px;
@@ -188,7 +182,6 @@
            $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 
         }); 
-
         window.onhashchange = function () { 
             if(location.hash != "#open") {
                 $("#menu,.page_cover,html").removeClass("open");  

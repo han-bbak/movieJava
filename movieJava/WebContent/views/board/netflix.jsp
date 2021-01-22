@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
+<%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,9 +67,9 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
+            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
@@ -101,80 +104,26 @@
                             <th>제목</th>
                             <th>작성자</th>
                             <th>조회수</th>
-                            <th>작성일자</th>
+                            <th>작성일</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
+                    <% if(list.isEmpty()) { %>
+                    	<tr>
+                    		<td colspan="5">조회된 게시글이 없습니다</td>
+                    	</tr>
+                    <% } else { %>
+                    	<% for(Board b : list) { %>
+                    	<tr>
+							<td><%= b.getbrd_no() %></td>
+							<td><%= b.getbrd_category() %></td>
+							<td><%= b.getbrd_title() %></td>
+							<td><%= b.getbrd_writer() %></td>
+							<td><%= b.getbrd_cnt() %></td>
+							<td><%= b.getbrd_date() %></td>
+						</tr>
+                    	<% } %>
+                    <% } %>
                     </tbody>
                 </table>
             </div>
