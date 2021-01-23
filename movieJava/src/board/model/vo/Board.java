@@ -31,6 +31,22 @@ public class Board {
 		this.brd_status = brd_status;
 	}
 
+	public Board(int brd_no, int brd_category, String brd_title, String brd_content, String brd_writer, int brd_cnt,
+			Date brd_date, Date brd_modify, String brd_status) {
+		super();
+		this.brd_no = brd_no;
+		this.brd_category = brd_category;
+		this.brd_title = brd_title;
+		this.brd_content = brd_content;
+		this.brd_writer = brd_writer;
+		this.brd_cnt = brd_cnt;
+		this.brd_date = brd_date;
+		this.brd_modify = brd_modify;
+		this.brd_status = brd_status;
+	}
+
+	
+
 	public int getBrd_no() {
 		return brd_no;
 	}
@@ -120,4 +136,5 @@ public class Board {
 	}
 	
 	
+
 }

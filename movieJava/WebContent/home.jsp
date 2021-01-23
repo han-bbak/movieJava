@@ -491,7 +491,8 @@ h3 {
 			<a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
-			<a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+			<a id="netflix">공유 계정</a><br>
+			<!--  <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>-->
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
@@ -536,6 +537,15 @@ h3 {
 	                  });
             
               </script>
+              
+              <script>
+              // 넷플릭스 버튼
+              const netflix = document.getElementById('netflix');
+              netflix.addEventListener('click', function(){
+      			location.href='<%= request.getContextPath() %>/netflix/list';
+      		});
+              </script>
+              
 			</div>
 			<class class="released" id="content2">
 			<p>#신작</p>

@@ -10,21 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.dao.BoardDao;
 import board.model.service.BoardService;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Search;
+
 /**
- * Servlet implementation class netflixListServlet
+ * Servlet implementation class netflixSearchServlet
  */
-@WebServlet("/netflix/list")
-public class netflixListServlet extends HttpServlet {
+@WebServlet("/netflix/search")
+public class netflixSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public netflixListServlet() {
+    public netflixSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,6 +34,8 @@ public class netflixListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Search s = new Search(request.getParameter("searchCondition"),  request.getParameter("search"));
+		
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
@@ -40,39 +43,25 @@ public class netflixListServlet extends HttpServlet {
 		}
 		
 		BoardService bs = new BoardService();
+		int listCount = bs.getSearchListCount(s);
 		
-		int listCount = bs.getListCount();
-//		System.out.println("listCount: " + listCount);
+//		System.out.println("검색 기준: " + s);
+//		System.out.println("검색 기준 listCount: " + listCount);
 		
 		int pageLimit = 10;
 		int boardLimit = 10;
-		int maxPage;
-		int startPage;
-		int endPage;
 		
-		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
-		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+		ArrayList<Board> list = bs.selectSearchList(pi, s);
 		
-		endPage = startPage + pageLimit - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		// 페이징 처리와 관련된 변수를 클래스 형식으로 만들어 담기
-		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
-		ArrayList<Board> list = bs.selectList(pi);
-		
-//		System.out.println("pi: " + pi);
-//		System.out.println("list: " + list );
-		
-		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
+		request.setAttribute("search", s);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/board/netflix.jsp");
 		view.forward(request, response);
+		
 		
 	}
 

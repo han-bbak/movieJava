@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList"%>
+<%
+	Board b = (Board)request.getAttribute("board");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -204,17 +207,17 @@
                 <table id="contentTable">
                     <tr id="contentTop">
                         <td>제목</td>
-                        <td>이것은 게시글의 제목입니다</td>
+                        <td><%= b.getBrd_title() %></td>
                         <td>작성자</td>
-                        <td>작성자이름</td>
+                        <td><%= b.getBrd_writer() %></td>
                         <td>조회수</td>
-                        <td>0</td>
+                        <td><%= b.getBrd_cnt() %></td>
                         <td>작성일</td>
-                        <td>2021-01-07</td>
+                        <td><%= b.getBrd_date() %></td>
                     </tr>
                     <tr>
                         <td colspan ="8">
-                            <p id="content">게시글 내용 1!!!@!!!!!</p>
+                            <p id="content"><%= (b.getBrd_content()).replace("\n", "<br>") %></p>
                         </td>
                     </tr>
                 </table>
