@@ -45,7 +45,6 @@ public class Board {
 		this.brd_status = brd_status;
 	}
 
-	
 
 	public int getBrd_no() {
 		return brd_no;

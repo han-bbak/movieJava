@@ -205,9 +205,9 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                         <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a>
+                    	<a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a>
                         /
-                        <a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a>
+                        <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a>
                         <br>
                     </h1>
                 </div>

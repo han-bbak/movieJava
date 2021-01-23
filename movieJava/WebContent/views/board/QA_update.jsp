@@ -43,7 +43,7 @@
         .tableArea {
             padding: 20px;
             width: 700px;
-            height: 740px;
+            height: 650px;
             margin: auto;
             background: gray;
         }
@@ -161,11 +161,6 @@
                     <h4 class="board_title">작성자</h4>
                     <span class="input_area">
                         <input type="text" name="writer">
-                    </span>
-                    
-                    <h4 class="board_title">작성일</h4>
-                    <span class="input_area">
-                        <input type="date" name="date">
                     </span>
                     
                     <h4 class="board_title">내용</h4>

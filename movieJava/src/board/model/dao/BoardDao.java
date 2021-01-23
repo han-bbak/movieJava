@@ -214,15 +214,16 @@ public class BoardDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				b = new Board(rset.getInt(1),
-								rset.getInt(2),
-								rset.getString(3),
-								rset.getString(4),
-								rset.getString(5),
-								rset.getInt(6),
-								rset.getDate(7),
-								rset.getDate(8),
-								rset.getString(9));
+				b = new Board(rset.getInt("brd_no"),
+								rset.getInt("brd_category"),
+								rset.getString("brd_title"),
+								rset.getString("brd_content"),
+								rset.getInt("brd_writer"),
+								rset.getString("mem_name"),
+								rset.getInt("brd_cnt"),
+								rset.getDate("brd_date"),
+								rset.getDate("brd_modify"),
+								rset.getString("brd_status"));
 			}
 			
 		} catch (SQLException e) {
