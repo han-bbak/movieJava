@@ -13,6 +13,136 @@
     <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style> 
+      #board_top {
+            width: 100%;
+            height: 4%;
+            /* border: 1px solid red; */
+        }
+
+        #board_top_title {
+            float: left;
+            width: 50%;
+            height: 100%;
+            position: relative;
+        }
+        
+        #logo {
+            position: relative;
+			margin: 20px 50px;
+			max-width: 130%;
+        }
+
+        #content a {
+            text-decoration: none;
+            color: #a49e9e;
+        }
+
+        #content a:hover {
+            text-decoration: none;
+            color: #cecece;
+        }
+
+        #netflix {
+            color: white;
+        }
+
+        #board_top_btn {
+            float: left;
+            width: 50%;
+            height: 100%;
+
+            position: relative;
+        }
+        
+        #board_name {
+            color: whitesmoke;
+            font-size: xx-large;
+            font-weight: 500;
+
+            top: 0;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+            margin: auto;
+        }
+
+        .btn {
+            cursor: pointer;
+
+            padding: 0;
+
+            background: rgb(62, 103, 184);
+            border: rgb(62, 103, 184);
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            color: white;
+        }
+
+        #updateBtn {
+            float: left;
+
+            width: 85px;
+            height: 45px;
+
+            padding: 0;
+            font-size: 18px;
+
+            top: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+        }
+        
+        .pagingArea {
+            /* border: 1px solid yellow; */
+            text-align: center;
+
+        }
+
+        #pagingBtn {
+            width: 30px;
+            height: 30px;
+        }
+
+        .board_table {
+            width: 100%;
+            position: relative;
+            height: 30%;
+            /* border: 1px solid magenta; */
+        }
+
+        .list_table {
+            width: 850px;
+
+            left: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+
+            /* border: 1px solid red; */
+        }
+
+        .list_table tbody td {
+            padding: 5px 0;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid gray;
+            font-size: 18px;
+        }
+
+        .list_table thead th {
+            border: 1px solid black;
+            border-bottom: 1px solid gray;
+            padding: 5px 0;
+            text-align: center;
+            background: gray;
+            font-size: 20px;
+            font-weight: lighter;
+            border: gray;
+        }
 
         
 
@@ -23,17 +153,15 @@
 <body>
     <div id="wrapper">
         <div id="header">
-            <div class="header" id="header1">
-                <div class="header" id="header-menu">
-                    <section class="menuBtn">
+            <div class="header" id="header-menu">
+        		<div class="menuBtn">
                      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                      <i id="menu-icon" class="material-icons">menu</i>
-                    </section>
                 </div>
-                <div class="header">
-                    <img id="logo" src="../../images/logo_167.png">
-                </div> 
             </div>
+            <div class="header" id="header1">
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            </div> 
             <div class="header" id="header2">
                 <form id="search-form">
                     <section id="search-btn-area">
@@ -108,22 +236,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <% if(list.isEmpty()) { %>
+                    <!-- <% if(list.isEmpty()) { %>
                     	<tr>
                     		<td colspan="5">조회된 게시글이 없습니다</td>
                     	</tr>
                     <% } else { %>
                     	<% for(Board b : list) { %>
                     	<tr>
-							<td><%= b.getbrd_no() %></td>
-							<td><%= b.getbrd_category() %></td>
-							<td><%= b.getbrd_title() %></td>
-							<td><%= b.getbrd_writer() %></td>
-							<td><%= b.getbrd_cnt() %></td>
-							<td><%= b.getbrd_date() %></td>
+                    	
 						</tr>
                     	<% } %>
                     <% } %>
+                    -->
                     </tbody>
                 </table>
             </div>

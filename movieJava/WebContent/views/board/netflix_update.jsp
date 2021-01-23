@@ -27,12 +27,11 @@
         }
         
         #logo {
-            top: 0;
-            bottom: 0;
-            right: 0;
-            position: absolute;
-            margin: auto;
+            position: relative;
+			margin: 20px 50px;
+			max-width: 130%;
         }
+        
         #board_top_title {
             float: left;
             width: 50%;
@@ -93,17 +92,15 @@
 <body>
     <div id="wrapper">
         <div id="header">
-            <div class="header" id="header1">
-                <div class="header" id="header-menu">
-                    <section class="menuBtn">
+            <div class="header" id="header-menu">
+        		<div class="menuBtn">
                      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                      <i id="menu-icon" class="material-icons">menu</i>
-                    </section>
                 </div>
-                <div class="header">
-                    <img id="logo" src="../../images/logo_167.png">
-                </div> 
             </div>
+            <div class="header" id="header1">
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            </div> 
             <div class="header" id="header2">
                 <form id="search-form">
                     <section id="search-btn-area">
