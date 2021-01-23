@@ -42,12 +42,8 @@
             position: relative;
         } 
 
+
         #header1 {
-            width: 20%;
-            height: 100%;
-        }
-        
-        #logo {
         	width: 15%;
         	height: 100%;
         }
@@ -58,7 +54,7 @@
             position: relative;
         }
 
-        #search-form {
+        #header2 > #search-form {
             width: 70%;
             height: 40%;
             /* border: 1px solid red; */
