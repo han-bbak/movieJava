@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
+    
+<%
+	// session 객체에 담긴 loginUser 정보를 변수에 담아두기
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,9 +99,9 @@
         <p id="text1">포인트<p>
         <div id="content">
             <img class="masthead-avatar mb-5" src="avataaars.svg" alt="" width="300px" height="300px">
-            <h1>님의 포인트</h1>
+            <h1><%= loginUser.getMemId() %>님의 포인트</h1>
             
-            <p>point</p>
+            <p>point<%= loginUser.getPoint() %></p>
             <br><br><br><br><br><br>
             <div id="area1">포인트 적립/사용 내역</div>
             
