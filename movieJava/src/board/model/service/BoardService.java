@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import board.model.dao.BoardDao;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Reply;
 import board.model.vo.Search;
 
 public class BoardService {
@@ -129,6 +130,15 @@ public class BoardService {
 		close(conn);
 				
 		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(int brd_no) {
+		Connection conn = getConnection();
+		ArrayList<Reply> rList = new BoardDao().selectReplyList(conn, brd_no);
+		
+		close(conn);
+		
+		return rList;
 	}
 
 

@@ -3,6 +3,7 @@ package board.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
+import board.model.vo.Reply;
 
 /**
  * Servlet implementation class netflixDetailServlet
@@ -69,12 +71,15 @@ public class netflixDetailServlet extends HttpServlet {
 			b = bs.selectBoard(brd_no);
 		} else if(!flagbrd_no) {
 			b = bs.selectBoard(brd_no);
-		} else {	// 조회수 증가 없이 게시글 조회
+		} else {
 			b = bs.selectBoardNocnt(brd_no);
 		}
 		
+		ArrayList<Reply> rList = bs.selectReplyList(brd_no);
+		
 		if(b != null) {
 			request.setAttribute("board", b);
+			request.setAttribute("rList", rList);
 			request.getRequestDispatcher("/views/board/netflix_detail.jsp").forward(request, response);
 		}
 		

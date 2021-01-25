@@ -3,6 +3,7 @@
 <%
 	Board b = (Board)request.getAttribute("board");
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	ArrayList<Reply> rList = (ArrayList<Reply>)request.getAttribute("rList");
 %>
 <!DOCTYPE html>
 <html>
@@ -139,9 +140,44 @@
         }
         .replyArea {
             margin: auto;
-            height: 40%;
+            height: 70px;
             text-align: center;
         }
+        
+        .replyListArea{
+        	position: relative;
+        }
+        
+        .replyTable {
+        	left: 0;
+            right: 0;
+            position: absolute;
+            margin: auto;
+            
+            width: 100%;
+            text-align: center;
+            font-size: 15px;
+            font-weight: lighter;
+            
+        
+        }
+        
+        .replyTable td {
+          border-bottom: 1px solid black;
+          padding: 8px 8px 8px 8px;
+        }
+        
+        
+        .replyTable td:nth-child(1) {
+         background: #dadada;
+         opacity: 80%;
+        }
+        
+        .replyTable td:nth-child(2) {
+         text-align: left;
+        }
+        
+        
     </style>
 </head>
 
@@ -266,13 +302,30 @@
                     <span class="input_area">
                         <input type="text" name="input" placeholder="댓글을 작성해 보세요">
                     </span>
-                    <button type="button" id="btn">등록하기</button>
-                    <table id="replyTable">
+                    <button class="button" type="button" id="btn">등록하기</button>
+                 </div>
+                 <div class="replyListArea">
+                 	<table class="replyTable">
+                  	  <colgroup>
+                    	    <col width="10%" />
+                    	    <col width="75%" />
+                      	  	<col width="15%" />
+                   	 </colgroup>
+                   	 <% if(rList != null && !rList.isEmpty()) { %>
+                    	<% for(Reply r : rList) { %>
+                    		<tr>
+                    			<td><%= r.getMem_name() %></td>
+                    			<td><%= r.getRp_content() %></td>
+                    			<td><%= r.getRp_date() %></td>
+                    		</tr>
+                    	<% } %>
+                    <% } else { %>
                         <tr>
-                            <td>댓글 table</td>
+                            <td colspan="3">작성된 댓글이 없습니다.</td>
                         </tr>
+                    <% } %>
                     </table>
-                </div>
+                 </div>
             </div>
         </div>
     </div>

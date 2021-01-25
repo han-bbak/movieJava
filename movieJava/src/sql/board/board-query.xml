@@ -250,4 +250,24 @@
 			DEFAULT
 		)
 	</entry>
+	<entry key="selectReplyList">
+	SELECT 
+		RP_NO, 
+		RP_CONTENT, 
+		MEM_NAME, 
+		RP_WRITER, 
+		RP_DATE, 
+		RP_MODIFY, 
+		RP_STATUS, 
+		RP_PRIVACY, 
+		BRD_NO
+	FROM 
+		REPLY
+		JOIN MEMBER ON (MEM_NO = RP_WRITER)
+	WHERE 
+		RP_STATUS = 'Y'
+        AND BRD_NO = ?
+	ORDER BY
+		RP_NO DESC
+	</entry>
 </properties>

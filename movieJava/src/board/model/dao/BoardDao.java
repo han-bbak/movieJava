@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Reply;
 import board.model.vo.Search;
 
 public class BoardDao {
@@ -299,6 +300,41 @@ public class BoardDao {
 		}
 		
 		return result;
+	}
+
+	public ArrayList<Reply> selectReplyList(Connection conn, int brd_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Reply> rList = new ArrayList<Reply>();
+		String sql = prop.getProperty("selectReplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brd_no);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				rList.add(new Reply(rset.getInt("rp_no"),
+									rset.getString("rp_content"),
+									rset.getString("mem_name"),
+									rset.getString("rp_writer"),
+									rset.getDate("rp_date"),
+									rset.getDate("rp_modify"),
+									rset.getString("rp_status"),
+									rset.getString("rp_privacy"),
+									rset.getInt("brd_no")));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return rList;
 	}
 
 	
