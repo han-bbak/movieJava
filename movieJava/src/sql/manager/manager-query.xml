@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="countMember">
+		SELECT
+			   COUNT(*)
+		  FROM
+		       MEMBER
+	</entry>
+	<entry key="selectList">
+		SELECT
+			   RNUM
+			 , MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MLIST
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+</properties>

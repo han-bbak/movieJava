@@ -14,15 +14,21 @@ header, nav, section {
     display : block;
 }
 header {
+	text-align : center;
+	vertical-align: middle;
     height : 50px;
 }
+
 #head-title {
     text-align: center;
+    font-weight : bold;
+    font-size : 30px;
 }
 #head-title > a {
     text-decoration: none;
     color : white;
 }
+
 #menuWrap {
     background-color: rgb(255,192,0);
     width: 100%;
@@ -58,8 +64,12 @@ li a {
 }
 .mainMenu > li > a {
     font-weight: bolder;
-    font-size : 20px;
-    padding : 10px 50px;
+    font-size : 15px;
+    padding : 12px 50px;
+}
+
+.subMenu > li > a {
+	font-size : 13px;
 }
 .subMenu li {
     opacity: 0;

@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <!-- sideMenu CSS -->
-    <link href="../../../resources/css/content1_movie.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/content1_movie.css" rel="stylesheet" type="text/css">
     <title>컨텐츠 관리 - 회원 관리</title>
     <style>
         .contentWrap {

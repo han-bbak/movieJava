@@ -12,11 +12,16 @@
 </head>
 <body>
     <header>
-        <h1 id="head-title"><a href="<%= request.getContextPath() %>/views/common/manager_main.jsp">관리자 메뉴</a></h1>
+    	<div class="titleDiv">
+		    <h1 id="head-title"><a href="<%= request.getContextPath() %>/views/common/manager_main.jsp">관리자 메뉴</a></h1>
+    	</div>
     </header>
     <nav id="menuWrap">
         <section id="menuBar" class="menuSection">
             <ul class="mainMenu">
+            	<li>
+                    <a href="<%= request.getContextPath() %>">무비자바 메인</a>
+                </li>
                 <li>
                     <a href="<%= request.getContextPath() %>/views/manager/content1_movie.jsp">컨텐츠 관리</a>
                     <ul class="subMenu sub1">
@@ -25,7 +30,7 @@
                         <li><a href="<%= request.getContextPath() %>/views/manager/content1_review.jsp">리뷰 관리</a></li>
                     </ul>
                 </li>
-                <li><a href="<%= request.getContextPath() %>/views/manager/content2_member.jsp">회원 관리</a></li>
+                <li><a href="<%= request.getContextPath() %>/manager/memberList">회원 관리</a></li>
                 <li>
                     <a href="<%= request.getContextPath() %>/views/manager/content3_payment.jsp">결제 관리</a>
                     <ul class="subMenu sub2">
