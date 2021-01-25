@@ -14,7 +14,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class netflixInsertServlet
  */
-@WebServlet("/netflixI/insert")
+@WebServlet("/netflix/insert")
 public class netflixInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -30,6 +30,8 @@ public class netflixInsertServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		int mem_no = ((Member)request.getSession().getAttribute("loginUser")).getMemNo();

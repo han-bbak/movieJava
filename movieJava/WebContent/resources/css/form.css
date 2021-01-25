@@ -97,54 +97,80 @@
         }
 
         #header3 {
-            width: 25%;
-            height: 100%;
-            /* padding: 6px 8px 6px 16px; */
-            padding: 0;
-            position: relative;
-        }
+			width: 25%;
+			height: 100%;
+			position: relative;
+			padding : 10px;
+			text-align: center;
+		}
+		
+		 #loginArea {
+			width : 100%;
+			padding : 20px;
+			margin: auto;
+			text-align : center;
+		}
 
-        #header3 a {
-            text-decoration: none;
-            font-size: 18px;
-            color: #a49e9e;
-            display: block;
-            font-weight: bold;
-            float: left;
-            margin: 0;
-            top: 0;
-            bottom: 0;
-            position: absolute; 
-            width: 100%;
-        }
+		#loginform, #joinform {
+			margin: 10px 5px 10px;
+			width: 40%;
+			float: left;
+		}
+		
+		#searchDiv {
+			width : 100%;
+			text-align: left;
+		}
 
-        #logform {
-            width: 60%;
-            height: 20%;
+		#searchDiv span {
+			color : #fff;
+			font-size : 12px;
+			margin : 0px 16px;
+		}
+		
+		
+		.loginJoin {
+			width: 100%;
+			height: 40px;
+			background: #1c81ff;
+			border: 1px solid #1b7df8;
+			font-size: 14px;
+			color: #fff;
+			cursor: pointer;
+			transition: background-color 0.3s, border-color 0.3s;
+		}
 
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            position: absolute; 
-        }
+		.loginJoin:hover, #userInfoBtn button:hover {
+			background-color: #0065e3;
+			border-color: #0061db;
+		}
 
-        #loginform {
-            height: 100%;
-            width: 50%;
-            float: left;
-        }
+		#userInfo {
+			color : white;
+			padding-top : 35px;
+			padding-bottom : 5px;
+		}
 
-        #joinform {
-            height: 100%;
-            width: 50%;
-            float: left;
-        }
+		#userInfo span {
+			font-weight : lighter;
+		}
 
-        #header3 a:hover {
-            color: #f1f1f1;
-        }
+		#userInfo b {
+			font-weight : bold;
+		}
+
+		#userInfoBtn button {
+			margin: 5px;
+			background: #1c81ff;
+			color: #fff;
+			border: 1px solid #1b7df8;
+			cursor: pointer;
+			outline : none;
+	
+			transition: background-color 0.3s, border-color 0.3s;
+		}
+
+		
 
         #content {
             width: 100%;

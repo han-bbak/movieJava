@@ -1,250 +1,33 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
-<!DOCTYPE html>
-<html>
-<head>
-<script src="http://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
-<title>개봉예정 영화</title>
-<meta charset="UTF-8">
 
-<style type="text/css">
-.slick-slider {
-	position: relative;
-	display: block;
-	box-sizing: border-box;
-}
-
-.slick-list {
-	position: relative;
-	display: block;
-	overflow: hidden;
-}
-
-.slick-track:before, .slick-track:after {
-	display: table;
-	content: '';
-}
-
-.slick-slide {
-	display: none;
-	float: left;
-	height: 100%;
-	min-height: 1px;
-}
-
-.slick-initialized .slick-slide {
-	display: block;
-}
-
-/* Arrows */
-.slick-prev, .slick-next {
-	font-size: 0;
-	line-height: 0;
-	position: absolute;
-	top: 50%;
-	display: block;
-	width: 20px;
-	height: 20px;
-	padding: 0;
-	-webkit-transform: translate(0, -50%);
-	-ms-transform: translate(0, -50%);
-	transform: translate(0, -50%);
-	cursor: pointer;
-	color: transparent;
-	border: none;
-	background: transparent;
-}
-
-.slick-prev:before, .slick-next:before {
-	font-family: 'slick';
-	font-size: 20px;
-	line-height: 1;
-	opacity: .75;
-	color: white;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.slick-prev {
-	left: -35px;
-}
-
-.slick-prev:before {
-	content: '◀';
-}
-
-.slick-next {
-	right: -35px;
-}
-
-.slick-next:before {
-	content: '▶';
-}
-
-/* Dots */
-.slick-dots {
-	position: absolute;
-	bottom: -20px;
-	display: block;
-	width: 100%;
-	padding: 0;
-	margin: 10;
-	list-style: none;
-	text-align: center;
-}
-
-.slick-dots li {
-	position: relative;
-	display: inline-block;
-	width: 20px;
-	height: 20px;
-	margin: 0 5px;
-	padding: 0;
-	cursor: pointer;
-}
-
-.slick-dots li button {
-	display: block;
-	width: 20px;
-	height: 20px;
-	padding: 5px;
-	cursor: pointer;
-	color: transparent;
-	border: 0;
-	background: transparent;
-}
-
-.slick-dots li button:hover:before, .slick-dots li button:focus:before {
-	opacity: 1;
-}
-
-/* 도트 */
-.slick-dots li button:before {
-	font-family: 'slick';
-	font-size: 10px;
-	line-height: 40px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 20px;
-	height: 20px;
-	content: '●';
-	text-align: center;
-	opacity: .25;
-	color: black;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.slick-dots li.slick-active button:before {
-	opacity: .75;
-	color: black;
-}
-
-html, body {
-	margin: 0;
-	padding: 0;
-}
-
-* {
-	box-sizing: border-box;
-}
-
-.slider {
-	width: 70%;
-	margin: 100px auto;
-}
-
-.slick-slide {
-	margin: 0px 20px;
-}
-
-.slick-slide img {
-	width: 100%;
-}
-
-.slick-prev:before, .slick-next:before {
-	color: black;
-}
-
-.center {
-	display: flex;
-	justify-content: center;
-}
-
-.card {
-	max-width: 460px;
-	margin: 50px auto;
-}
-
-.caption {
-	font-weight: bold;
-	font-size: 15px;
-}
-</style>
-</head>
-<body>
-
-	<section class="center2 slider">
-		<div>
-			<img src="views/movie/image/scheduled/scheduled1.jpg"> <span class=center><p
-					class=caption></p></span>
-		</div>
-		<div>
-			<img src="views/movie/image/scheduled/scheduled2.jpg"> <span class=center><p
-					class=caption></p></span>
-		</div>
-		<div>
-			<img src="views/movie/image/scheduled/scheduled3.jpg"> <span class=center><p
-					class=caption></p></span>
-		</div>
-		<div>
-			<img src="views/movie/image/scheduled/scheduled4.jpg"> <span class=center><p
-					class=caption></p></span>
-		</div>
-		<div>
-			<img src="views/movie/image/scheduled/scheduled5.jpg"> <span class=center><p
-					class=caption></p></span>
-		</div>
-
-	</section>
-
-	<script src="https://code.jquery.com/jquery-2.2.0.min.js"
-		type="text/javascript"></script>
-	<script src="./slick/slick.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
    $(document).on('ready', function() {
 
-  $(".center").slick({
-    dots: true,
-    infinite: true,
-    centerMode: true,
-    slidesToShow: 4,
-    slidesToScroll: 4
-  });
+		  $("#slider-div1").slick({
+		    dots: true,
+		    infinite: true,
+		    centerMode: true,
+		    slidesToShow: 4,
+		    slidesToScroll: 4
+		  });
+		
+		});
 
-});
-
-(function(factory) {
-    'use strict';
-    if (typeof define === 'function' && define.amd) {
-        define(['jquery'], factory);
-    } else if (typeof exports !== 'undefined') {
-        module.exports = factory(require('jquery'));
-    } else {
-        factory(jQuery);
-    }
-
-}(function($) {
-    'use strict';
-    var Slick = window.Slick || {};
-
-    Slick = (function() {
-
-        var instanceUid = 0;
+	(function(factory) {
+	    'use strict';
+	    if (typeof define === 'function' && define.amd) {
+	        define(['jquery'], factory);
+	    } else if (typeof exports !== 'undefined') {
+	        module.exports = factory(require('jquery'));
+	    } else {
+	        factory(jQuery);
+	    }
+		
+		}(function($) {
+		    'use strict';
+		    var Slick = window.Slick || {};
+		
+		    Slick = (function() {
+		
+		        var instanceUid = 0;
 
         function Slick(element, settings) {
 
@@ -510,58 +293,6 @@ html, body {
 
     };
 
-    Slick.prototype.autoPlay = function() {
-
-        var _ = this;
-
-        _.autoPlayClear();
-
-        if ( _.slideCount > _.options.slidesToShow ) {
-            _.autoPlayTimer = setInterval( _.autoPlayIterator, _.options.autoplaySpeed );
-        }
-
-    };
-
-    Slick.prototype.autoPlayClear = function() {
-
-        var _ = this;
-
-        if (_.autoPlayTimer) {
-            clearInterval(_.autoPlayTimer);
-        }
-
-    };
-
-    Slick.prototype.autoPlayIterator = function() {
-
-        var _ = this,
-            slideTo = _.currentSlide + _.options.slidesToScroll;
-
-        if ( !_.paused && !_.interrupted && !_.focussed ) {
-
-            if ( _.options.infinite === false ) {
-
-                if ( _.direction === 1 && ( _.currentSlide + 1 ) === ( _.slideCount - 1 )) {
-                    _.direction = 0;
-                }
-
-                else if ( _.direction === 0 ) {
-
-                    slideTo = _.currentSlide - _.options.slidesToScroll;
-
-                    if ( _.currentSlide - 1 === 0 ) {
-                        _.direction = 1;
-                    }
-
-                }
-
-            }
-
-            _.slideHandler( slideTo );
-
-        }
-
-    };
 
     Slick.prototype.buildArrows = function() {
 
@@ -880,7 +611,7 @@ html, body {
 
         _.autoPlayClear();
 
-        _.touchObject = {};
+       /* _.touchObject = {};*/
 
         _.cleanUpEvents();
 
@@ -1295,7 +1026,7 @@ html, body {
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
-            _.checkResponsive(true);
+//            _.checkResponsive(true);
             _.focusHandler();
 
         }
@@ -1358,7 +1089,7 @@ html, body {
             })
                 .first().attr('aria-selected', 'true');
         }
-        _.activateADA();
+//        _.activateADA();
 
     };
 
@@ -2387,249 +2118,8 @@ html, body {
 
     };
 
-    Slick.prototype.swipeDirection = function() {
+    
 
-        var xDist, yDist, r, swipeAngle, _ = this;
-
-        xDist = _.touchObject.startX - _.touchObject.curX;
-        yDist = _.touchObject.startY - _.touchObject.curY;
-        r = Math.atan2(yDist, xDist);
-
-        swipeAngle = Math.round(r * 180 / Math.PI);
-        if (swipeAngle < 0) {
-            swipeAngle = 360 - Math.abs(swipeAngle);
-        }
-
-        if ((swipeAngle <= 45) && (swipeAngle >= 0)) {
-            return (_.options.rtl === false ? 'left' : 'right');
-        }
-        if ((swipeAngle <= 360) && (swipeAngle >= 315)) {
-            return (_.options.rtl === false ? 'left' : 'right');
-        }
-        if ((swipeAngle >= 135) && (swipeAngle <= 225)) {
-            return (_.options.rtl === false ? 'right' : 'left');
-        }
-        if (_.options.verticalSwiping === true) {
-            if ((swipeAngle >= 35) && (swipeAngle <= 135)) {
-                return 'down';
-            } else {
-                return 'up';
-            }
-        }
-
-        return 'vertical';
-
-    };
-
-    Slick.prototype.swipeEnd = function(event) {
-
-        var _ = this,
-            slideCount,
-            direction;
-
-        _.dragging = false;
-        _.interrupted = false;
-        _.shouldClick = ( _.touchObject.swipeLength > 10 ) ? false : true;
-
-        if ( _.touchObject.curX === undefined ) {
-            return false;
-        }
-
-        if ( _.touchObject.edgeHit === true ) {
-            _.$slider.trigger('edge', [_, _.swipeDirection() ]);
-        }
-
-        if ( _.touchObject.swipeLength >= _.touchObject.minSwipe ) {
-
-            direction = _.swipeDirection();
-
-            switch ( direction ) {
-
-                case 'left':
-                case 'down':
-
-                    slideCount =
-                        _.options.swipeToSlide ?
-                            _.checkNavigable( _.currentSlide + _.getSlideCount() ) :
-                            _.currentSlide + _.getSlideCount();
-
-                    _.currentDirection = 0;
-
-                    break;
-
-                case 'right':
-                case 'up':
-
-                    slideCount =
-                        _.options.swipeToSlide ?
-                            _.checkNavigable( _.currentSlide - _.getSlideCount() ) :
-                            _.currentSlide - _.getSlideCount();
-
-                    _.currentDirection = 1;
-
-                    break;
-
-                default:
-
-
-            }
-
-            if( direction != 'vertical' ) {
-
-                _.slideHandler( slideCount );
-                _.touchObject = {};
-                _.$slider.trigger('swipe', [_, direction ]);
-
-            }
-
-        } else {
-
-            if ( _.touchObject.startX !== _.touchObject.curX ) {
-
-                _.slideHandler( _.currentSlide );
-                _.touchObject = {};
-
-            }
-
-        }
-
-    };
-
-    Slick.prototype.swipeHandler = function(event) {
-
-        var _ = this;
-
-        if ((_.options.swipe === false) || ('ontouchend' in document && _.options.swipe === false)) {
-            return;
-        } else if (_.options.draggable === false && event.type.indexOf('mouse') !== -1) {
-            return;
-        }
-
-        _.touchObject.fingerCount = event.originalEvent && event.originalEvent.touches !== undefined ?
-            event.originalEvent.touches.length : 1;
-
-        _.touchObject.minSwipe = _.listWidth / _.options
-            .touchThreshold;
-
-        if (_.options.verticalSwiping === true) {
-            _.touchObject.minSwipe = _.listHeight / _.options
-                .touchThreshold;
-        }
-
-        switch (event.data.action) {
-
-            case 'start':
-                _.swipeStart(event);
-                break;
-
-            case 'move':
-                _.swipeMove(event);
-                break;
-
-            case 'end':
-                _.swipeEnd(event);
-                break;
-
-        }
-
-    };
-
-    Slick.prototype.swipeMove = function(event) {
-
-        var _ = this,
-            edgeWasHit = false,
-            curLeft, swipeDirection, swipeLength, positionOffset, touches;
-
-        touches = event.originalEvent !== undefined ? event.originalEvent.touches : null;
-
-        if (!_.dragging || touches && touches.length !== 1) {
-            return false;
-        }
-
-        curLeft = _.getLeft(_.currentSlide);
-
-        _.touchObject.curX = touches !== undefined ? touches[0].pageX : event.clientX;
-        _.touchObject.curY = touches !== undefined ? touches[0].pageY : event.clientY;
-
-        _.touchObject.swipeLength = Math.round(Math.sqrt(
-            Math.pow(_.touchObject.curX - _.touchObject.startX, 2)));
-
-        if (_.options.verticalSwiping === true) {
-            _.touchObject.swipeLength = Math.round(Math.sqrt(
-                Math.pow(_.touchObject.curY - _.touchObject.startY, 2)));
-        }
-
-        swipeDirection = _.swipeDirection();
-
-        if (swipeDirection === 'vertical') {
-            return;
-        }
-
-        if (event.originalEvent !== undefined && _.touchObject.swipeLength > 4) {
-            event.preventDefault();
-        }
-
-        positionOffset = (_.options.rtl === false ? 1 : -1) * (_.touchObject.curX > _.touchObject.startX ? 1 : -1);
-        if (_.options.verticalSwiping === true) {
-            positionOffset = _.touchObject.curY > _.touchObject.startY ? 1 : -1;
-        }
-
-
-        swipeLength = _.touchObject.swipeLength;
-
-        _.touchObject.edgeHit = false;
-
-        if (_.options.infinite === false) {
-            if ((_.currentSlide === 0 && swipeDirection === 'right') || (_.currentSlide >= _.getDotCount() && swipeDirection === 'left')) {
-                swipeLength = _.touchObject.swipeLength * _.options.edgeFriction;
-                _.touchObject.edgeHit = true;
-            }
-        }
-
-        if (_.options.vertical === false) {
-            _.swipeLeft = curLeft + swipeLength * positionOffset;
-        } else {
-            _.swipeLeft = curLeft + (swipeLength * (_.$list.height() / _.listWidth)) * positionOffset;
-        }
-        if (_.options.verticalSwiping === true) {
-            _.swipeLeft = curLeft + swipeLength * positionOffset;
-        }
-
-        if (_.options.fade === true || _.options.touchMove === false) {
-            return false;
-        }
-
-        if (_.animating === true) {
-            _.swipeLeft = null;
-            return false;
-        }
-
-        _.setCSS(_.swipeLeft);
-
-    };
-
-    Slick.prototype.swipeStart = function(event) {
-
-        var _ = this,
-            touches;
-
-        _.interrupted = true;
-
-        if (_.touchObject.fingerCount !== 1 || _.slideCount <= _.options.slidesToShow) {
-            _.touchObject = {};
-            return false;
-        }
-
-        if (event.originalEvent !== undefined && event.originalEvent.touches !== undefined) {
-            touches = event.originalEvent.touches[0];
-        }
-
-        _.touchObject.startX = _.touchObject.curX = touches !== undefined ? touches.pageX : event.clientX;
-        _.touchObject.startY = _.touchObject.curY = touches !== undefined ? touches.pageY : event.clientY;
-
-        _.dragging = true;
-
-    };
 
     Slick.prototype.unfilterSlides = Slick.prototype.slickUnfilter = function() {
 
@@ -2774,9 +2264,3 @@ html, body {
     };
 
 }));
-
-</script>
-
-</body>
-<!--/* 영화 슬라이드 끝*/-->
-</html>
