@@ -205,4 +205,49 @@
           	BRD_STATUS = 'Y'
          	AND BRD_NO = ?
 	</entry>
+	<entry key="updateBoard">
+		UPDATE
+			BOARD
+		SET
+			BRD_TITLE = ?,
+			BRD_CONTENT = ?,
+			BRD_MODIFY = SYSDATE
+		WHERE
+			BRD_NO = ?
+	</entry>
+	<entry key="deleteBoard">
+		UPDATE
+			BOARD
+		SET
+			BRD_STATUS = 'N'
+		WHERE
+			BRD_NO = ?
+	</entry>
+	<entry key="insertBoard">
+		INSERT
+		INTO BOARD
+		(
+			BRD_NO,
+			BRD_CATEGORY,
+			BRD_TITLE,
+			BRD_CONTENT,
+       		BRD_WRITER,
+			BRD_CNT,
+			BRD_DATE,
+			BRD_MODIFY,
+			BRD_STATUS
+		)
+		VALUES
+		(
+			SEQ_BRD_NO.NEXTVAL,
+			1,
+			?,
+			?,
+			?,
+			DEFAULT,
+			SYSDATE,
+			SYSDATE,
+			DEFAULT
+		)
+	</entry>
 </properties>

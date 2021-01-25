@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList"%>
-<%
-	Board b = (Board)request.getAttribute("board");
-%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
+	<link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -44,76 +40,39 @@
         }
         .tableArea {
             padding: 20px;
-            width: 850px;
-            height: 900px;
+            width: 700px;
+            height: 650px;
             margin: auto;
             background: gray;
         }
-   
-        #contentTable {
+    
+        .input_area {
+            border: solid 1px #dadada;
+            padding: 10px 10px 14px 10px;
+            background: white;
             width: 95%;
-            height: 50%;
-            border:5px solid white;
-            text-align: center;
-            margin:auto; 
         }
-        #contentTop {
-            height: 50px;
+    
+        .input_area input {
+            width: 95%;
+            height: 30px;
+            border: 0;
         }
-        #contentTable #content {
-            text-align:left;
-            color: black;
-            border-top: 1px solid;
-            margin: auto;
-            padding-top: 10px;
-        }
-        #contentTable td {
-            padding: 0;
-        }
-   
-        #contentTable td:nth-child(1) {
-          width : 50px;
-          color: white;
-        }
-   
-        #contentTable td:nth-child(2) {
-          width : 500px;
-        }
-   
-        #contentTable td:nth-child(3) {
-            width: 80px;
-            color: white;
-        }
-   
-        #contentTable td:nth-child(4) {
-          width : 110px;
-        }
-   
-        #contentTable td:nth-child(5) {
-          width : 70px;
-          color: white;
-        }
-   
-        #contentTable td:nth-child(6) {
-          width : 10px;
-        }
-        #contentTable td:nth-child(7) {
-          width : 70px;
-          color: white;
-        }
-        #contentTable td:nth-child(8) {
-          width : 110px;
+        
+        textarea {
+        	width: 95%;
+            height: 400px;
+            border: 0;
         }
     
         .btnArea {
-            text-align: right;
+            text-align: center;
             padding-top: 10px;
-            padding-right: 15px;
         }
         #title {
             margin-top: 0;
         }
-        .button {
+        #btn {
             cursor: pointer;
             width: 80px;
             height: 30px;
@@ -124,22 +83,7 @@
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             color: white;
-            margin-left: 5px;
-        }
-        .input_area {
-            /* border: solid 1px red; */
-            padding: 10px 10px 10px 10px;
-            background: white;
-        }
-    
-        .input_area input {
-            width: 70%;
-            border: 0;
-        }
-        .replyArea {
-            margin: auto;
-            height: 40%;
-            text-align: center;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -147,16 +91,15 @@
 <body>
     <div id="wrapper">
         <div id="header">
-        	<div class="header" id="header-menu">
+            <div class="header" id="header-menu">
         		<div class="menuBtn">
                      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
                      <i id="menu-icon" class="material-icons">menu</i>
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
             </div> 
-            
             <div class="header" id="header2">
                 <form id="search-form">
                     <section id="search-btn-area">
@@ -191,9 +134,9 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
-			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
-			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
+            <a href="메인페이지.html">Home</a>
+            <a href="마이페이지.html">마이페이지</a><br>
+            <a href="관심영화.html">관심 영화</a><br>
             <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
@@ -204,72 +147,26 @@
                 <div id="board_top_title"><h1 id="board_name">Netflix</h1></div>
             </div>
             <div class="tableArea"> 
-                <table id="contentTable">
-                    <tr id="contentTop">
-                        <td>제목</td>
-                        <td><%= b.getBrd_title() %></td>
-                        <td>작성자</td>
-                        <td><%= b.getBrd_writer() %></td>
-                        <td>조회수</td>
-                        <td><%= b.getBrd_cnt() %></td>
-                        <td>작성일</td>
-                        <td><%= b.getBrd_date() %></td>
-                    </tr>
-                    <tr>
-                        <td colspan ="8">
-                            <p id="content"><%= (b.getBrd_content()).replace("\n", "<br>") %></p>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnArea">
-                    <button type="button" class="button" id="backBtn">목록</button>
-                    <button type="button" class="button" id="updateBtn">수정</button>
-                    <button type="button" class="button" id="deleteBtn">삭제</button>
-                </div>
-                <hr>
-                <div class="replyArea">
-                    <br>
+            <form action="<%= request.getContextPath() %>/netflix/insert" method="post">
+                    <h4 class="board_title" id="title">제목</h4>
                     <span class="input_area">
-                        <input type="text" name="input" placeholder="댓글을 작성해 보세요">
+                        <input type="text" name="title" required>
                     </span>
-                    <button type="button" id="btn">등록하기</button>
-                    <table id="replyTable">
-                        <tr>
-                            <td>댓글 table</td>
-                        </tr>
-                    </table>
-                </div>
+                    
+                    <h4 class="board_title">내용</h4>
+                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required></textarea>
+                    
+                    <div class="btnArea">
+                        <button type="submit" id="btn">등록</button>
+                        <button type="button" id="btn" onclick="history.back();">취소</button>
+                    </div>
+             </form>
             </div>
         </div>
     </div>
 </body>
-				<form action="" id="brd_noForm" method="post">
-					<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
-				</form>
 <script>
-
-	// 목록
-	const listBtn = document.getElementById('backBtn');
-	backBtn.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/netflix/list';
-	});
-	
-	// 수정
-	const updateBtn = document.getElementById('updateBtn');
-	updateBtn.addEventListener('click', function(){
-		$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/updateForm");
-		$("#brd_noForm").submit();
-	});
-	
-	// 삭제
-	const deleteBtn = document.getElementById('deleteBtn');
-	deleteBtn.addEventListener('click', function(){
-		$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/delete");
-		$("#brd_noForm").submit();
-	});
-</script>
-<script>
-       $(".menuBtn").click(function () { 
+       $(".btn").click(function () { 
            $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 
         }); 

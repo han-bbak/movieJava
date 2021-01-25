@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board"%>
+<%
+	Board b = (Board)request.getAttribute("board");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -50,7 +53,7 @@
             border: solid 1px #dadada;
             padding: 10px 10px 14px 10px;
             background: white;
-            width: 550px;
+            width: 95%;
         }
     
         .input_area input {
@@ -58,12 +61,11 @@
             height: 30px;
             border: 0;
         }
-    
-        #detail_content {
-            width: 95%; 
-            height: 300px;
-            padding: 10px 10px 14px 10px;
-            border: solid 1px #dadada;
+        
+        textarea {
+        	width: 95%;
+            height: 400px;
+            border: 0;
         }
     
         .btnArea {
@@ -86,6 +88,7 @@
             color: white;
             margin-left: 10px;
         }
+
     </style>
 </head>
 
@@ -99,7 +102,7 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -148,23 +151,21 @@
                 <div id="board_top_title"><h1 id="board_name">Netflix</h1></div>
             </div>
             <div class="tableArea"> 
+            <form action="<%= request.getContextPath() %>/netflix/update" method="post">
+			<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
                     <h4 class="board_title" id="title">제목</h4>
                     <span class="input_area">
-                        <input type="text" name="title">
-                    </span>
-                    
-                    <h4 class="board_title">작성자</h4>
-                    <span class="input_area">
-                        <input type="text" name="writer">
+                        <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
                     
                     <h4 class="board_title">내용</h4>
-                    <textarea id="detail_content" style="resize:none;"></textarea>
+                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     
                     <div class="btnArea">
-                        <button type="button" id="btn">등록</button>
+                        <button type="submit" id="btn">등록</button>
                         <button type="button" id="btn" onclick="history.back();">취소</button>
                     </div>
+            </form>
             </div>
         </div>
     </div>
