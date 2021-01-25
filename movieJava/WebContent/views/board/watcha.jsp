@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
+<%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	Search s = (Search)request.getAttribute("search");
+	String search = "";
+	String searchCondition = "";
+	String[] selected = new String[3];
+	if(s != null) {
+		search = s.getSearch();
+		searchCondition = s.getSearchCondition();
+		if(searchCondition.equals("writer")) {
+			selected[0] ="selected";
+		} else if(searchCondition.equals("title")) {
+			selected[1] ="selected";
+		} else {
+			selected[2] ="selected";
+		}
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,11 +27,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+	<link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style> 
-
-        #board_top {
+   
+      #board_top {
             width: 100%;
             height: 4%;
             /* border: 1px solid red; */
@@ -33,15 +53,12 @@
         #content a {
             text-decoration: none;
             color: #a49e9e;
+            cursor: pointer;
         }
 
         #content a:hover {
             text-decoration: none;
             color: #cecece;
-        }
-
-        #watcha {
-            color: white;
         }
 
         #board_top_btn {
@@ -104,6 +121,15 @@
             width: 30px;
             height: 30px;
         }
+        
+        .searchArea {
+        	text-align: center;
+        }
+        
+        #searchBtn {
+        	width: 60px;
+        	height: 25px;
+        }
 
         .board_table {
             width: 100%;
@@ -158,7 +184,8 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -196,7 +223,7 @@
             <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a id="netflix">공유 계정</a><br>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
@@ -205,16 +232,19 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                    	<a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a>
+                        <!-- <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a> -->
+                        <a id="netflix">Netflix</a>
+                        
                         /
-                        <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a>
+                        <!-- <a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a> -->
+                        <a id="watcha" style="color:white;">Watcha</a>
                         <br>
                     </h1>
                 </div>
                 <div id="board_top_btn">
-                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/watcha_update.jsp'">글쓰기</button>
+                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/watcha_insert.jsp'">글쓰기</button>
+
                 </div>
-                
             </div>
             <div class="board_table">
                 <table class="list_table">
@@ -231,88 +261,79 @@
                             <th>제목</th>
                             <th>작성자</th>
                             <th>조회수</th>
-                            <th>작성일자</th>
+                            <th>작성일</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>게시글 1</td>
-                            <td>ㄱ</td>
-                            <td>10</td>
-                            <td>2021-01-07</td>
-                        </tr>
-                    </tbody>
+                     <% if(list.isEmpty()) { %>
+                    	<tr>
+                    		<td colspan="5">조회된 게시글이 없습니다</td>
+                    	</tr>
+                    <% } else { %>
+                    	<% for(Board b : list) { %>
+                    	<tr>
+                    		<td><%= b.getBrd_no() %></td>
+                    		<td><%= b.getBrd_title() %></td>
+                    		<td><%= b.getBrd_writer() %></td>
+                    		<td><%= b.getBrd_cnt() %></td>
+                    		<td><%= b.getBrd_date() %></td>
+						</tr>
+                    	<% } %>
+                    <% } %>
+                   </tbody>
                 </table>
             </div>
             <div class="pagingArea">
-                <button class="btn" id="pagingBtn"> &lt;&lt; </button>
-                <button class="btn" id="pagingBtn"> &lt; </button>
-                <button class="btn" id="pagingBtn"> &gt; </button>
-                <button class="btn" id="pagingBtn"> &gt;&gt; </button>
+                <% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=1'"> &lt;&lt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
+				<% } %>
+                
+                
+                <% if(pi.getCurrentPage() == 1) { %>
+                	<button class="btn" id="pagingBtn" disabled> &lt; </button>
+                <% } else { %>
+                	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+                <% } %>
+                
+                
+                <% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+                	<% if(p == pi.getCurrentPage()) { %>
+                		<button class="btn" id="pagingBtn" style="background:lightgray;" disabled><%= p %></button>
+                	<% } else if(s == null) { %>
+             			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= p %>'"> <%= p %> </button>
+           			<% } else { %>
+               			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/search?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> <%= p %> </button>
+                	<% } %>
+                <% } %>
+                
+                
+                <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+                	<button class="btn" id="pagingBtn" disabled> &gt; </button>
+                <% } else { %>
+                 	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+         		<% } %>
+         		
+         		
+         		<% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
+				<% } %>
+            </div>
+            <br>
+            <div class="searchArea">
+            	<form action="<%= request.getContextPath() %>/watcha/search" method="get">
+					<select id="searchCondition" name="searchCondition">
+						<option>----</option>
+						<option value="writer" <%= selected[0] %>>작성자</option>
+						<option value="title" <%= selected[1] %>>제목</option>
+						<option value="content" <%= selected[2] %>>내용</option> 
+					</select>
+					<input type="search" name="search"<%= search %> >
+					<button class="btn" id="searchBtn" type="submit">검색하기</button>
+				</form>
             </div>
         </div>
     </div>
@@ -329,4 +350,35 @@
             } 
         };
     </script>
+    <script>
+    	// 넷플릭스 버튼
+    	const netflix = document.getElementById('netflix');
+    	netflix.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/netflix/list';
+    	});
+    	
+    	// 왓챠 버튼
+    	const Watcha = document.getElementById('Watcha');
+    	Watcha.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/Watcha/list';
+    	});
+
+    </script>
+    <script>
+		// 게시판 상세 보기  기능
+		$(function() {
+			$(".list_table td").mouseenter(function(){
+				$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
+			}).mouseout(function(){
+				$(this).parent().css("background", "#363636");
+			}).click(function(){
+				var brd_no = $(this).parent().children().eq(0).text();
+				console.log(brd_no);
+				location.href='<%= request.getContextPath() %>/watcha/detail?brd_no=' + brd_no;
+			});
+		});
+		
+		
+		
+	</script>
 </html>

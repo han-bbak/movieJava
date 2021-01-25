@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList"%>
+    pageEncoding="UTF-8" import="board.model.vo.*, java.util.ArrayList, member.model.vo.Member"%>
 <%
 	Board b = (Board)request.getAttribute("board");
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -171,15 +172,29 @@
                 </form>
             </div>
             <div class="header" id="header3">
-
-                <form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -194,7 +209,7 @@
             <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
+            <a id="netflix">공유 계정</a><br>
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
@@ -223,8 +238,27 @@
                 </table>
                 <div class="btnArea">
                     <button type="button" class="button" id="backBtn">목록</button>
-                    <button type="button" class="button" id="updateBtn">수정</button>
-                    <button type="button" class="button" id="deleteBtn">삭제</button>
+                    
+                    <% if(loginUser.getMemNo() == b.getMem_no()) { %>
+                    	<button type="button" class="button" id="updateBtn">수정</button>
+                    	<button type="button" class="button" id="deleteBtn">삭제</button>
+                    	
+                    	<script>
+							// 수정
+							const updateBtn = document.getElementById('updateBtn');
+							updateBtn.addEventListener('click', function(){
+							$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/updateForm");
+								$("#brd_noForm").submit();
+							});
+	
+							// 삭제
+							const deleteBtn = document.getElementById('deleteBtn');
+							deleteBtn.addEventListener('click', function(){
+							$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/delete");
+								$("#brd_noForm").submit();
+							});
+						</script>
+					<% } %>
                 </div>
                 <hr>
                 <div class="replyArea">
@@ -246,26 +280,21 @@
 				<form action="" id="brd_noForm" method="post">
 					<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
 				</form>
+
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
+</script>
+
 <script>
 
 	// 목록
 	const listBtn = document.getElementById('backBtn');
 	backBtn.addEventListener('click', function(){
 		location.href='<%= request.getContextPath() %>/netflix/list';
-	});
-	
-	// 수정
-	const updateBtn = document.getElementById('updateBtn');
-	updateBtn.addEventListener('click', function(){
-		$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/updateForm");
-		$("#brd_noForm").submit();
-	});
-	
-	// 삭제
-	const deleteBtn = document.getElementById('deleteBtn');
-	deleteBtn.addEventListener('click', function(){
-		$("#brd_noForm").attr("action", "<%= request.getContextPath() %>/netflix/delete");
-		$("#brd_noForm").submit();
 	});
 </script>
 <script>

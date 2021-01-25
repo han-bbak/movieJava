@@ -57,7 +57,7 @@ public class BoardService {
 	}
 
 	public Board selectBoard(int brd_no) {
-Connection conn = getConnection();
+		Connection conn = getConnection();
 		
 		BoardDao bd = new BoardDao();
 		
