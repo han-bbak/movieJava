@@ -46,6 +46,14 @@ public class Board {
 	}
 
 
+
+	public Board(String brd_title, String brd_content, int mem_no) {
+		super();
+		this.brd_title = brd_title;
+		this.brd_content = brd_content;
+		this.mem_no = mem_no;
+	}
+
 	public int getBrd_no() {
 		return brd_no;
 	}

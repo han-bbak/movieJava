@@ -242,7 +242,8 @@
                     </h1>
                 </div>
                 <div id="board_top_btn">
-                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/netflix_update.jsp'">글쓰기</button>
+                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/netflix_insert.jsp'">글쓰기</button>
+
                 </div>
             </div>
             <div class="board_table">
@@ -370,6 +371,8 @@
 				location.href='<%= request.getContextPath() %>/netflix/detail?brd_no=' + brd_no;
 			});
 		});
+		
+		
 		
 	</script>
 </html>

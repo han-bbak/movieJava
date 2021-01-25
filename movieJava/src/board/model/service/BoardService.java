@@ -87,5 +87,50 @@ Connection conn = getConnection();
 		return b;
 	}
 
+	public int updateBoard(Board b) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().updateBoard(conn, b);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
+	public int deleteBoard(int brd_no) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().deleteBoard(conn, brd_no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
+	public int insertBoard(Board b) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().insertBoard(conn, b);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+				
+		return result;
+	}
+
+
 
 }
