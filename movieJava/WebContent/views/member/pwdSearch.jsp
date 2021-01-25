@@ -268,6 +268,14 @@
             animation: main_shake 0.5s;
         }
     </style>
+    <% if(request.getAttribute("msg") != null) { %>
+    	<script>
+    		alert('<%= request.getAttribute("msg") %>');
+    	</script>
+    <% 
+		request.removeAttribute("msg");
+    }
+    %>
 </head>
 
 <body>
@@ -290,7 +298,7 @@
                     </span>
 
                 </div>
-                <form method="POST" id="pwdSearch_form" action="">
+                <form method="POST" id="pwdSearch_form" action="<%= request.getContextPath() %>/member/pwdSearch">
 
                     <input type="text" id="userName" name="userName" placeholder="이름" onkeydown="onKeyDown();">
                     <input type="text" id="userId" name="userId" placeholder="아이디" onkeydown="onKeyDown();">

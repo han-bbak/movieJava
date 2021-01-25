@@ -121,4 +121,151 @@ public class MemberDao {
 		return result;
 	}
 
+	// 아이디 검색
+	public Member idSearch(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member mem = null;
+		String sql = prop.getProperty("idSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getMemName());
+			pstmt.setString(2, m.getMemBirth());
+			pstmt.setString(3, m.getEmail());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEM_NO"),
+						         rset.getString("MEM_ID"),
+						         rset.getString("MEM_PWD"),
+						         rset.getString("MEM_NAME"),
+						         rset.getString("MEM_BIRTH"),
+						         rset.getString("EMAIL"),
+						         rset.getString("PHONE"),
+						         rset.getString("ADDRESS"),
+						         rset.getInt("POINT"),
+						         rset.getString("GRADE"),
+						         rset.getDate("ENT_DATE"),
+						         rset.getDate("MODIFY_DATE"),
+						         rset.getString("MEM_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return mem;
+	}
+
+	// 비밀번호 찾기
+	public Member pwdSearch(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member mem = null;
+		String sql = prop.getProperty("pwdSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getMemName());
+			pstmt.setString(2, m.getMemId());
+			pstmt.setString(3, m.getEmail());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEM_NO"),
+						         rset.getString("MEM_ID"),
+						         rset.getString("MEM_PWD"),
+						         rset.getString("MEM_NAME"),
+						         rset.getString("MEM_BIRTH"),
+						         rset.getString("EMAIL"),
+						         rset.getString("PHONE"),
+						         rset.getString("ADDRESS"),
+						         rset.getInt("POINT"),
+						         rset.getString("GRADE"),
+						         rset.getDate("ENT_DATE"),
+						         rset.getDate("MODIFY_DATE"),
+						         rset.getString("MEM_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return mem;
+	}
+
+	// 회원번호로 회원 조회
+	public Member searchMember(Connection conn, int memNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member mem = null;
+		String sql = prop.getProperty("searchMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, memNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				mem = new Member(rset.getInt("MEM_NO"),
+						         rset.getString("MEM_ID"),
+						         rset.getString("MEM_PWD"),
+						         rset.getString("MEM_NAME"),
+						         rset.getString("MEM_BIRTH"),
+						         rset.getString("EMAIL"),
+						         rset.getString("PHONE"),
+						         rset.getString("ADDRESS"),
+						         rset.getInt("POINT"),
+						         rset.getString("GRADE"),
+						         rset.getDate("ENT_DATE"),
+						         rset.getDate("MODIFY_DATE"),
+						         rset.getString("MEM_STATUS"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return mem;
+	}
+
+	// 임시 비밀번호 업데이트
+	public int updateTempPwd(Connection conn, int memNo, String tempPwd) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateTempPwd");
+		
+		try {
+			pstmt= conn.prepareStatement(sql);
+			
+			pstmt.setString(1, tempPwd);
+			pstmt.setInt(2, memNo);
+			
+			result = pstmt.executeUpdate();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

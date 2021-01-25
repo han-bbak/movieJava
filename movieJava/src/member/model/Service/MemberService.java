@@ -25,6 +25,12 @@ public class MemberService {
 		
 		int result = new MemberDao().joinMember(conn, m);
 		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
 		close(conn);
 		
 		return result;
@@ -35,6 +41,51 @@ public class MemberService {
 		Connection conn = getConnection();
 		
 		int result = new MemberDao().idCheck(conn, userId);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 아이디 검색용
+	public Member idSearch(Member m) {
+		Connection conn = getConnection();
+		Member mem = new MemberDao().idSearch(conn, m);
+		
+		close(conn);
+		
+		return mem;
+	}
+
+	// 비밀번호 찾기
+	public Member pwdSearch(Member m) {
+		Connection conn = getConnection();
+		Member mem = new MemberDao().pwdSearch(conn, m);
+		
+		close(conn);
+		return mem;
+	}
+
+	// 회원 번호로 회원 조회
+	public Member searchMember(int memNo) {
+		Connection conn = getConnection();
+		Member mem = new MemberDao().searchMember(conn, memNo);
+		
+		close(conn);
+		return mem;
+	}
+	
+	// 임시비밀번호 업데이트
+	public int updateTempPwd(int memNo, String tempPwd) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().updateTempPwd(conn, memNo, tempPwd);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
 		
 		close(conn);
 		

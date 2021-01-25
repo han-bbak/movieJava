@@ -230,9 +230,9 @@
                         <option value="12">12월</option>
                     </select>
                     <input type="text" class="birth" id="birthday" name="birthday" maxlength="2" placeholder="일">
-                    <h3 class="subTitle2">이메일</h3>
+                    <h3 class="subTitle">* 이메일</h3>
                     <input type="email" id="email" name="email" placeholder="이메일을 입력하세요">
-                    <h3 class="subTitle2">핸드폰</h3>
+                    <h3 class="subTitle">* 핸드폰</h3>
                     <input type="tel" id="phone" name="phone" maxlength="11" placeholder="핸드폰 번호(-제외)를 입력하세요">
 
                     <h3 class="subTitle2">우편번호</h3>
@@ -289,10 +289,10 @@
                 				userId.focus();
                 			} else {
                 				if(confirm("사용 가능한 아이디 입니다. 사용 하시겠습니까?")) {
-                					userId.prop('readonly', true);
+                					userId.setAttribute('readonly', true);
                 					isUsable = true;
                 				} else {
-                					userId.prop('readonly', false);
+                					userId.removeAttribute('readonly');
                 					isUsable = false;
                 					userId.focus();
                 				}

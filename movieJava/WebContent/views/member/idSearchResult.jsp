@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member mem = (Member)request.getAttribute("mem");
+	String userId = mem.getMemId();
+	String viewId = userId.substring(0, userId.length()-3) + "***";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -279,15 +284,15 @@
             <div class="login_area">
                 <div class="login_header">
                     <div class="login_logo">
-                        <img src="<%= request.getContextPath() %>/images/logo-eng.png">
+                        <img src="<%= request.getContextPath() %>/images/logo.png">
                     </div>
                     <span>
-                        <b id="userNameTab">OOO님</b>의 아이디
+                        <b id="userNameTab"><%= mem.getMemName() %>님</b>의 아이디
                     </span>
 
                 </div>
                 <div class="confirmIdDiv">
-                    <p>abcdefg</p>
+                    <p><%= viewId %></p>
 
                 </div>
                 <button type="button" class="login_ok" onclick="location.href='loginView.html'">확인</button> <!-- 로그인 화면으로 -->

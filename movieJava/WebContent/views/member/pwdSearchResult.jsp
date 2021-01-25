@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member mem = (Member)request.getAttribute("mem");
+	String userPwd = mem.getMemPwd();
+	String viewPwd = userPwd.substring(0, userPwd.length()-5) + "*****";
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -276,22 +281,23 @@
     <div id="cover"></div>
     <div class="wrapper">
         <div class="login_wrapper">
+        <form method="post" action="<%= request.getContextPath() %>/member/tempPwd">
             <div class="login_area">
                 <div class="login_header">
                     <div class="login_logo">
                         <img src="<%= request.getContextPath() %>/images/logo.png">
                     </div>
                     <span>
-                        <b id="userIdTab">OOO님</b>의 비밀번호 <!-- 아이디로 보여주기 -->
+                        <b id="userIdTab"><%= mem.getMemId() %>님</b>의 비밀번호 <!-- 아이디로 보여주기 -->
                     </span>
 
                 </div>
                 <div class="confirmIdDiv">
-                    <p>abcdefg</p>
+                    <p><%= viewPwd %></p>
 
                 </div>
                 <button type="button" class="okBtn" onclick="location.href='<%= request.getContextPath() %>/views/member/loginView.jsp'">확인</button> <!-- 로그인 화면으로 -->
-                <button type="button" class="okBtn" onclick="location.href='<%= request.getContextPath() %>/views/member/temporaryPwd.jsp'">임시비밀번호 발급</button>
+                <button type="submit" class="okBtn" onclick="location.href='<%= request.getContextPath() %>/views/member/temporaryPwd.jsp'">임시비밀번호 발급</button>
                 <ul class="list">
                     <li>
                         <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
@@ -308,6 +314,8 @@
                     <button type="button" id="goMain" onclick="location.href='<%= request.getContextPath() %>'">메인으로</button>
                 </div>
             </div>
+            <input type="hidden" id="userNo" name="userNo" value="<%= mem.getMemNo() %>">
+        </form>
         </div>
     </div>
     <div class="footer">

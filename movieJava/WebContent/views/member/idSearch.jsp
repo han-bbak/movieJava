@@ -254,6 +254,14 @@
             animation:main_shake 0.5s;
         }
     </style>
+    <% if(request.getAttribute("msg") != null) { %>
+    	<script>
+    		alert('<%= request.getAttribute("msg") %>');
+    	</script>
+    <% 
+		request.removeAttribute("msg");
+    }
+    %>
 </head>
 <body>
     <div id="cover_1"></div>
@@ -275,7 +283,7 @@
                     </span>
 
                 </div>
-                <form method="POST" id="idSearch_form" action="">
+                <form method="POST" id="idSearch_form" action="<%= request.getContextPath() %>/member/idSearch">
 
                     <input type="text" id="userName" name="userName" placeholder="이름" onkeydown="onKeyDown();">
                     <input type="text" id="userPNo" name="userPNo" placeholder="생년월일[000000(6자리) 입력]" onkeydown="onKeyDown();">

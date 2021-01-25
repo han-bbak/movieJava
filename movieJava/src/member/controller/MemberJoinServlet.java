@@ -66,7 +66,7 @@ public class MemberJoinServlet extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/views/member/joinMember.jsp");
 		} else {
 			request.setAttribute("msg", "회원 가입에 실패하였습니다.");
-			request.getRequestDispatcher(request.getContextPath() + "/views/member/joinMember.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/member/joinMember.jsp").forward(request, response);
 		}
 		
 	}

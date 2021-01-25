@@ -66,4 +66,76 @@
 		 WHERE
 		       MEM_ID = ?
 	</entry>
+	<entry key="idSearch">
+		SELECT
+			   MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NAME = ?
+		   AND MEM_BIRTH = ?
+		   AND EMAIL = ?
+	</entry>
+	<entry key="pwdSearch">
+		SELECT
+			   MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NAME = ?
+		   AND MEM_ID = ?
+		   AND EMAIL = ?
+	</entry>
+	<entry key="searchMember">
+		SELECT
+			   MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NO = ?
+	</entry>
+	<entry key="updateTempPwd">
+		UPDATE
+		       MEMBER
+		   SET
+		       MEM_PWD = ?
+		 WHERE
+		       MEM_NO = ?
+	</entry>
 </properties>

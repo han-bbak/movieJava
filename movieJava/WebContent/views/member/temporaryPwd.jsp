@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member mem = (Member)request.getAttribute("mem");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -276,15 +279,16 @@
                         <img src="<%= request.getContextPath() %>/images/logo.png">
                     </div>
                     <span>
-                        <b id="userNameTab">OOO님</b>의 임시비밀번호
+                        <b id="userNameTab"><%= mem.getMemId() %>님</b>의 임시비밀번호
                     </span>
 
                 </div>
-                <form id="tempPwd_Form" method="POST">
+                <form id="tempPwd_Form" method="POST" action="<%= request.getContextPath() %>/member/updateTempPwd">
                     <div class="confirmIdDiv">
                     <!-- 제출하고 action 연결 : 임시비밀번호로 정보 수정 -->
                         <input type="text" id="tempPwdText" name="tempPwd" readonly>
                     </div>
+                    <input type="hidden" id="userNo" name="userNo" value="<%= mem.getMemNo() %>">
                     <button type="button" class="login_ok" onclick="onSubmit();"><sup>* </sup>임시비밀번호로 변경</button>
                 </form>
                 <ul class="list">
@@ -344,9 +348,9 @@
         });
 
         function onSubmit() {
-            $("#tempPwd_Form").submit();
             alert("로그인 후 마이페이지에서 비밀번호를 변경해주세요.")
-            location.href = "<%= request.getContextPath() %>/views/member/loginView.jsp";
+            $("#tempPwd_Form").submit();
+            // location.href = "<%= request.getContextPath() %>/views/member/loginView.jsp";
         }
     </script>
 </body>
