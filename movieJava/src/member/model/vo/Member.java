@@ -24,6 +24,18 @@ public class Member {
 		this.memId = memId;
 		this.memPwd = memPwd;
 	}
+	
+	public Member(String memId, String memPwd, String memName, String memBirth, String email, String phone,
+			String address) {
+		super();
+		this.memId = memId;
+		this.memPwd = memPwd;
+		this.memName = memName;
+		this.memBirth = memBirth;
+		this.email = email;
+		this.phone = phone;
+		this.address = address;
+	}
 
 	public Member(int memNo, String memId, String memPwd, String memName, String memBirth, String email, String phone,
 			String address, int point, String grade, Date entDate, Date modifyDate, String memStatus) {

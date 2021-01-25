@@ -173,16 +173,27 @@
         }
 
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+    <script>
+    	alert('<%= session.getAttribute("msg") %>');
+ 		location.href='<%= request.getContextPath() %>';
+    </script>
+    <%  session.removeAttribute("msg"); %>
+    <% } else if(request.getAttribute("msg") != null) {%>
+    <script>
+    	alert('<%= request.getAttribute("msg") %>');
+    </script>
+    <% } %>
 </head>
 <body>
     <div class="contentWrapper">
         <div class="logoDiv">
-            <a href="<%= request.getContextPath() %>"><img src="<%= request.getContextPath() %>/images/logo-eng.png"></a>   <!-- 메인 화면으로 이동 연결 -->
+            <a href="<%= request.getContextPath() %>"><img src="<%= request.getContextPath() %>/images/logo.png"></a>   <!-- 메인 화면으로 이동 연결 -->
         </div>
         <div class="titleDiv">
             <h1>무비자바 회원가입</h1>
         </div>
-        <form id="joinForm" method="POST" action="">
+        <form id="joinForm" method="POST" action="<%= request.getContextPath() %>/member/join">
             <div class="joinDiv">
                 <div class="idDiv">
                     <h3 class="subTitle">* 아이디</h3>
@@ -250,6 +261,52 @@
     <!-- "검색" 단추를 누르면 팝업 레이어가 열리도록 설정한다 -->
     <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
     <script>
+   		var isUsable = false;
+    	$(function() {
+    		var chkId = document.getElementById("chkId");
+    		
+    		$("#chkDuplicate").click(function(){
+    			var userId = document.getElementById("userId");
+    			if (userId.value == "") {
+                    alert('아이디를 입력해주세요.');
+                    userId.focus();
+                    return;
+                }
+    			
+    			if(!chk(/^[a-z][a-z\d]{5,11}$/, userId, "아이디를 다시 입력해주세요.")) { // 영소문자 시작, 6~12자리
+    				chkId.innerHTML = "아이디 입력이 잘못 되었습니다.(영소문자/숫자 6~12자리, 특수문자 사용 불가)";
+                    chkId.style.color = "red";
+                    userId.focus();
+                } else {
+                	$.ajax({
+                		url : "<%= request.getContextPath() %>/member/idCheck",
+                		type : "post",
+                		data : {userId : userId.value},
+                		success : function(data) {
+                			if(data == "fail") {
+                				alert('사용할 수 없는 아이디 입니다.');
+                				chkId.innerHTML = "사용할 수 없는 아이디 입니다.";
+                				userId.focus();
+                			} else {
+                				if(confirm("사용 가능한 아이디 입니다. 사용 하시겠습니까?")) {
+                					userId.prop('readonly', true);
+                					isUsable = true;
+                				} else {
+                					userId.prop('readonly', false);
+                					isUsable = false;
+                					userId.focus();
+                				}
+                			}
+                			
+                		},
+                		error : function(e) {
+                			console.log(e);
+                		}
+                	});
+                }
+    		});
+    	});
+    
         function onKeyDown() {
             if (event.keyCode == 13) {
                 event.preventDefault();
@@ -297,11 +354,17 @@
                 birthday.focus();
                 return;
             }
-
+            
             if(!chk(/^[a-z][a-z\d]{5,11}$/, userId, "아이디를 다시 입력해주세요.")) { // 영소문자 시작, 6~12자리
                 chkId.innerHTML = "아이디 입력이 잘못 되었습니다.(영소문자/숫자 6~12자리, 특수문자 사용 불가)";
                 chkId.style.color = "red";
                 return;
+            }
+            
+            if(!isUsable) {
+            	alert('아이디 중복 체크를 해주세요!');
+            	userId.focus();
+            	return;
             }
 
             if(!chk(/(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$/, userPwd, "비밀번호를 다시 입력해주세요.")) { // 특수문자,숫자,영대소문자 포함 8자 이상

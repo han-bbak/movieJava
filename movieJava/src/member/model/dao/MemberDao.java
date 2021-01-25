@@ -1,5 +1,7 @@
 package member.model.dao;
 
+import static common.JDBCTemplate.close;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -7,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import static common.JDBCTemplate.*;
+
 import member.model.vo.Member;
 
 public class MemberDao {
@@ -62,6 +64,61 @@ public class MemberDao {
 		}
 		
 		return loginUser;
+	}
+
+	// 회원가입용
+	public int joinMember(Connection conn, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("joinMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getMemId());
+			pstmt.setString(2, m.getMemPwd());
+			pstmt.setString(3, m.getMemName());
+			pstmt.setString(4, m.getMemBirth());
+			pstmt.setString(5, m.getEmail());
+			pstmt.setString(6, m.getPhone());
+			pstmt.setString(7, m.getAddress());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 아이디 중복 체크
+	public int idCheck(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("idCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

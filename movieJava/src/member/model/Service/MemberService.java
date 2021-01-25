@@ -19,4 +19,26 @@ public class MemberService {
 		return loginUser;
 	}
 
+	// 회원가입용
+	public int joinMember(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().joinMember(conn, m);
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 중복 아이디 체크
+	public int idCheck(String userId) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().idCheck(conn, userId);
+		
+		close(conn);
+		
+		return result;
+	}
+	
 }

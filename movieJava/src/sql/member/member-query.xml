@@ -23,5 +23,47 @@
 		   AND MEM_PWD = ?
 		   AND MEM_STATUS = 'Y'
 	</entry>
-	
+	<entry key="joinMember">
+		INSERT
+		  INTO MEMBER
+		  (
+		  	   MEM_NO
+		  	 , MEM_ID
+		  	 , MEM_PWD
+		  	 , MEM_NAME
+		  	 , MEM_BIRTH
+		  	 , EMAIL
+		  	 , PHONE
+		  	 , ADDRESS
+		  	 , POINT
+		  	 , GRADE
+		  	 , ENT_DATE
+		  	 , MODIFY_DATE
+		  	 , MEM_STATUS
+		  )
+		VALUES
+		(
+			   SEQ_MEM_NO.NEXTVAL
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , DEFAULT
+			 , DEFAULT
+			 , SYSDATE
+			 , SYSDATE
+			 , DEFAULT
+		)
+	</entry>
+	<entry key="idCheck">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       MEMBER
+		 WHERE
+		       MEM_ID = ?
+	</entry>
 </properties>
