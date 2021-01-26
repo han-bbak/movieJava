@@ -214,7 +214,7 @@
             	<% if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=1'"> &lt;&lt; </button>
             	<% } else { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberSearch?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
             	<% } %>
             	<!-- 이전으로 -->
             	<% if(pi.getCurrentPage() == 1) { %>
@@ -222,7 +222,7 @@
             	<% } else if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
             	<% } else {%>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() - 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberSearch?currentPage=<%= pi.getCurrentPage() - 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt; </button>
             	<% } %>
             	
             	<!-- 10개 페이지 목록 -->
@@ -232,7 +232,7 @@
             		<% } else if(s == null) { %>
             			<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= p %>'"><%= p %></button>
             		<% } else { %>
-            			<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"><%= p %></button>
+            			<button onclick="location.href='<%= request.getContextPath() %>/manager/memberSearch?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"><%= p %></button>
             		<% } %>
             	<% } %>
             	
@@ -242,14 +242,14 @@
             	<% } else if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
             	<% } else {%>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() + 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberSearch?currentPage=<%= pi.getCurrentPage() + 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt; </button>
             	<% } %>
             	
             	<!-- 맨 끝으로 -->
             	<% if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
             	<% } else { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberSearch?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
             	<% } %>
             </div>
         </div>

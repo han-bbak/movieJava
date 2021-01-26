@@ -9,6 +9,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
+import store.model.vo.Store;
 
 public class ManagerService {
 
@@ -101,6 +102,52 @@ public class ManagerService {
 			rollback(conn);
 		}
 		return m;
+	}
+
+// -----------------------------------  Store  --------------------------------------------------	
+	
+	// 상품 리스트 갯수
+	public int countStore() {
+		Connection conn = getConnection();
+		
+		int countStore = new ManagerDao().countStore(conn);
+		
+		close(conn);
+		
+		return countStore;
+	}
+
+	// 상품 리스트 조회(페이징)
+	public ArrayList<Store> selectStore(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Store> list = new ManagerDao().selectStore(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 상품 검색 갯수 조회
+	public int countSearchStore(Search s) {
+		Connection conn = getConnection();
+		
+		int storeCount = new ManagerDao().countSearchStore(conn, s);
+		
+		close(conn);
+		
+		return storeCount;
+	}
+
+	// 검색 상품 리스트
+	public ArrayList<Store> selectSearchStore(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Store> storeList = new ManagerDao().selectSearchStore(conn, pi, s);
+		
+		close(conn);
+		
+		return storeList;
 	}
 
 }

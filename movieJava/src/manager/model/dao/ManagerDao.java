@@ -16,6 +16,7 @@ import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import store.model.vo.Store;
 
 public class ManagerDao {
 	private Properties prop = new Properties();
@@ -272,6 +273,137 @@ public class ManagerDao {
 		}
 		
 		return result;
+	}
+	
+// -----------------------------------  Store  --------------------------------------------------	
+
+	// 상품 갯수 조회
+	public int countStore(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("countStore");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return result;
+	}
+
+	// 페이징 상품 목록
+	public ArrayList<Store> selectStore(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Store> list = new ArrayList<>();
+		String sql = prop.getProperty("selectStore");
+		
+		int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Store(rset.getInt(2),
+						           rset.getString(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getInt(6),
+						           rset.getString(7),
+						           rset.getString(8),
+						           rset.getString(9)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 검색 상품 갯수
+	public int countSearchStore(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int storeCount = 0;
+		String sql = prop.getProperty("countSearchStore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				storeCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return storeCount;
+	}
+
+	// 상품 검색 리스트
+	public ArrayList<Store> selectSearchStore(Connection conn, PageInfo pi, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Store> storeList = new ArrayList<>();
+		String sql = prop.getProperty("selectSearchStore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				storeList.add(new Store(rset.getInt(2),
+						           rset.getString(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getInt(6),
+						           rset.getString(7),
+						           rset.getString(8),
+						           rset.getString(9)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return storeList;
 	}
 
 }

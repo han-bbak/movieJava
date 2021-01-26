@@ -46,7 +46,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="<%= request.getContextPath() %>/views/manager/content5_product.jsp">상품 관리</a>
+                    <a href="<%= request.getContextPath() %>/manager/storeList">상품 관리</a>
                 </li>
             </ul>
         </section>

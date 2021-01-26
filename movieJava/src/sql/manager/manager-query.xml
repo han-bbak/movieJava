@@ -217,4 +217,80 @@
 		 WHERE
 		       MEM_NO = ?
 	</entry>
+	
+<!-- ============================ Store ============================ -->
+	<entry key="countStore">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       STORE
+	</entry>
+	<entry key="selectStore">
+		SELECT RNUM
+		     , ST_NO
+		     , ST_CONTENT
+		     , ST_TITLE
+		     , ST_PRICE
+		     , ST_QUAN
+		     , ST_PATH
+		     , ST_ONAME
+		     , ST_RNAME
+		  FROM
+		     (
+		        SELECT
+				       ROWNUM RNUM 
+		             , ST_NO
+				     , ST_CONTENT
+				     , ST_TITLE
+				     , ST_PRICE
+				     , ST_QUAN
+				     , ST_PATH
+				     , ST_ONAME
+				     , ST_RNAME
+				  FROM
+				       STORE
+		      ORDER BY ST_NO DESC
+		     )
+	     WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="countSearchStore">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       STORE
+		 WHERE
+		       ST_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchStore">
+		SELECT RNUM
+		     , ST_NO
+		     , ST_CONTENT
+		     , ST_TITLE
+		     , ST_PRICE
+		     , ST_QUAN
+		     , ST_PATH
+		     , ST_ONAME
+		     , ST_RNAME
+		  FROM
+		     (
+		        SELECT
+				       ROWNUM RNUM 
+		             , ST_NO
+				     , ST_CONTENT
+				     , ST_TITLE
+				     , ST_PRICE
+				     , ST_QUAN
+				     , ST_PATH
+				     , ST_ONAME
+				     , ST_RNAME
+				  FROM
+				       STORE
+				 WHERE
+				       ST_TITLE LIKE '%' || ? || '%' 
+		      ORDER BY ST_NO DESC
+		     )
+	     WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
 </properties>
