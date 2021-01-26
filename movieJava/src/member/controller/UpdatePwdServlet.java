@@ -16,8 +16,7 @@ import member.model.vo.Member;
 /**
  * Servlet implementation class UpdatePwdServlet
  */
-//@WebServlet("/member/updatePwd")
-@WebServlet(name="UpdatePwdServlet", urlPatterns="/member/updatePwd")
+@WebServlet("/member/updatePwd")
 public class UpdatePwdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -40,11 +39,11 @@ public class UpdatePwdServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");	// 현재 비밀번호
 		String newPwd = request.getParameter("newPwd");		// 변경할 비밀번호
 		
-		// System.out.println(userId + " " + userPwd + " " + newPwd);
+		System.out.println(userId + " " + userPwd + " " + newPwd);
 		
 		Member updateMember = new MemberService().updatePwd(userId, userPwd, newPwd);
 		
-		// System.out.println(updateMember);
+		 System.out.println(updateMember);
 		
 		if(updateMember != null) {
 			// 비밀번호 수정이 잘 되었음을 result-success로 표시
@@ -56,6 +55,7 @@ public class UpdatePwdServlet extends HttpServlet {
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/mypage/mypageMember.jsp");
+		
 		view.forward(request, response);
 	}
 

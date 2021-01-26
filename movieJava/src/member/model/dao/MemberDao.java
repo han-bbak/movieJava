@@ -271,7 +271,7 @@ public class MemberDao {
 	
 	
 	// 5. 비밀번호 변경용 dao
-		public int updatePwd(Connection conn, String memId, String memPwd, String newPwd) {
+		public int updatePwd(Connection conn, String MemId, String MemPwd, String newPwd) {
 			int result = 0;
 			PreparedStatement pstmt = null;
 			String sql = prop.getProperty("updatePwd");
@@ -280,8 +280,8 @@ public class MemberDao {
 				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, newPwd);
-				pstmt.setString(2, memId);
-				pstmt.setString(3, memPwd);
+				pstmt.setString(2, MemId);
+				pstmt.setString(3, MemPwd);
 				
 				result = pstmt.executeUpdate();
 			} catch (SQLException e) {
@@ -295,7 +295,7 @@ public class MemberDao {
 		
 		
 		// 4. userId로 회원 한명 조회용 dao
-		public Member selectMember(Connection conn, String memId) {
+		public Member selectMember(Connection conn, String MemId) {
 			Member mem = null;
 			
 			PreparedStatement pstmt = null;
@@ -305,7 +305,7 @@ public class MemberDao {
 			
 			try {
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, memId);
+				pstmt.setString(1, MemId);
 				
 				rset = pstmt.executeQuery();
 				

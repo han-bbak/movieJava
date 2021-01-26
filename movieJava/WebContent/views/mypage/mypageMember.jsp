@@ -774,6 +774,11 @@ h1 {
 		let newPwd = document.getElementById('newPwd');
 		let newPwd2 = document.getElementById('newPwd2');
 
+		if (userPwd.value != <%=loginUser.getMemPwd()%>) {
+			alert("현재 비밀번호가 틀립니다");
+			return false;
+		}
+		
 		if (userPwd.value == "" || newPwd.value == "" || newPwd2.value == "") {
 			alert("비밀번호를 입력해주세요.");
 			return false;
