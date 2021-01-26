@@ -167,27 +167,25 @@
           padding: 8px 8px 8px 8px;
         }
         
-        
         .replyTable td:nth-child(1) {
+         border: 0;
+        }
+        
+        
+        .replyTable td:nth-child(2) {
          background: #dadada;
          opacity: 80%;
-         width: 10%;
+         text-align: center;
          
         }
         
-        .replyTable td:nth-child(2) {
-         text-align: left;
-         <!--width: 65%;-->
-        }
-        
         .replyTable td:nth-child(3) {
-         text-align: center;
-         <!--width: 15%;-->
+         text-align: left;
         }
         
         .replyTable td:nth-child(4) {
-         text-align: left;
-         <!--width: 10%; -->
+         text-align: center;
+
         }
         
         #replyDelete {
@@ -326,27 +324,36 @@
                  <div class="replyListArea">
                  	<table class="replyTable">
                  	<colgroup>
+                        <col width="3%" />
                         <col width="10%" />
-                        <col width="75%" />
+                        <col width="72%" />
                         <col width="15%" />
                         <col width="10%" />
                     </colgroup>
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
                     			<tr>
+                    				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
                     				<% if(loginUser.getMemNo() == r.getRp_writer()) { %>
                     					<td><%= r.getRp_date() %></td>
-                    					<td><button class="button" type="button" id="replyDelete">삭제</button></td>
+                    					<td>
+                    						<button class="button" type="button" id="replyDelete">삭제</button>
+                    						<form action="" id="rp_noForm" method="post">
+                    							<input type="hidden" name="rp_no" value="<%= r.getRp_no() %>" />
+                    							<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>" />
+                    						</form>
+                    					</td>
                     				<% } else { %>
                     					<td colspan="2"><%= r.getRp_date() %></td>
                     				<% } %>
+                    				
                     			</tr>
                     		<% } %>
                     	<% } else { %>
                         <tr>
-                            <td colspan="3">작성된 댓글이 없습니다.</td>
+                            <td colspan="4" style="background: #dadada; opacity: 80%;" >작성된 댓글이 없습니다.</td>
                         </tr>
                     <% } %>
                     </table>
@@ -355,6 +362,7 @@
         </div>
     </div>
 </body>
+
 				<form action="" id="brd_noForm" method="post">
 					<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
 				</form>
@@ -372,12 +380,12 @@
 		location.href='<%= request.getContextPath() %>/netflix/list';
 	});
 	
+	// 댓글 삭제
 	const replyDelete = document.getElementById('replyDelete');
-	replyDelete.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/netflix/deleteReply';
+	$("#replyDelete").on("click", function(){
+		$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/deleteReply");
+		$("#rp_noForm").submit();
 	});
-	
-	
 	
 	
 	$(function() {
@@ -397,9 +405,9 @@
 					
 					for(var key in data){
 						var tr = $("<tr>");
-						var writerTd = $("<td>").text(data[key].mem_name);
-						var contentTd = $("<td>").text(data[key].rp_content);
-						var dateTd = $("<td>").text(data[key].rp_date);
+						var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
+						var contentTd = $("<td style='width : 75%; background: gray;'>").text(data[key].rp_content);
+						var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
 				
 						tr.append(writerTd, contentTd, dateTd);
 						

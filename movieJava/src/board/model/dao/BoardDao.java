@@ -380,6 +380,8 @@ public class BoardDao {
 			close(pstmt);
 		}
 		
+		System.out.println("dao");
+		
 		return result;
 	}
 

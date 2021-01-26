@@ -163,7 +163,6 @@ public class BoardService {
 
 	public int deleteReply(int rp_no) {
 		Connection conn = getConnection();
-		
 		int result = new BoardDao().deleteReply(conn, rp_no);
 		
 		if(result > 0) {
