@@ -92,4 +92,20 @@ public class MemberService {
 		return result;
 	}
 	
+	
+	
+	//  비밀번호 변경
+		public Member updatePwd(String memId, String memPwd, String newPwd) {
+			Connection conn = getConnection();
+			Member updateMember = null;
+			int result = new MemberDao().updatePwd(conn, memId, memPwd, newPwd);
+			
+			if(result > 0) {
+				updateMember = new MemberDao().selectMember(conn, memId);
+				commit(conn);
+			}else {
+				rollback(conn);
+			}
+			return updateMember;
+		}
 }

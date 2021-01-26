@@ -267,5 +267,70 @@ public class MemberDao {
 		
 		return result;
 	}
+	
+	
+	
+	// 5. 비밀번호 변경용 dao
+		public int updatePwd(Connection conn, String memId, String memPwd, String newPwd) {
+			int result = 0;
+			PreparedStatement pstmt = null;
+			String sql = prop.getProperty("updatePwd");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, newPwd);
+				pstmt.setString(2, memId);
+				pstmt.setString(3, memPwd);
+				
+				result = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		}
+		
+		
+		
+		// 4. userId로 회원 한명 조회용 dao
+		public Member selectMember(Connection conn, String memId) {
+			Member mem = null;
+			
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			
+			String sql = prop.getProperty("selectMember");
+			
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, memId);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					mem = new Member(rset.getInt("MEM_NO"),
+					         rset.getString("MEM_ID"),
+					         rset.getString("MEM_PWD"),
+					         rset.getString("MEM_NAME"),
+					         rset.getString("MEM_BIRTH"),
+					         rset.getString("EMAIL"),
+					         rset.getString("PHONE"),
+					         rset.getString("ADDRESS"),
+					         rset.getInt("POINT"),
+					         rset.getString("GRADE"),
+					         rset.getDate("ENT_DATE"),
+					         rset.getDate("MODIFY_DATE"),
+					         rset.getString("MEM_STATUS"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			return mem;
+		}
 
 }
