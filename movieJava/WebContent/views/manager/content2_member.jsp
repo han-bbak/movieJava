@@ -1,8 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, manager.model.vo.PageInfo" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, manager.model.vo.*" %>
 <%
 	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	Search s = (Search)request.getAttribute("search");
+	String search = "";
+	String searchCondition = "";
+	String[] checked = new String[3];
+	checked[0] = "checked";
+	if(s != null) {
+		search = s.getSearch();
+		searchCondition = s.getSearchCondition();
+		if(searchCondition.equals("name")) {
+			checked[0] = "checked";
+		} else if(searchCondition.equals("userId")) {
+			checked[1] = "checked";
+			checked[0] = "";
+		} else {
+			checked[2] = "checked";
+			checked[0] = "";
+		}
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -116,6 +136,14 @@
         	cursor : pointer;
         }
         
+        .searchImg button {
+        	margin : 0;
+        	padding : 0;
+        	border : none;
+        	background : none;
+        	color : none;
+        }
+        
     </style>
 </head>
 <body>
@@ -133,25 +161,25 @@
             </div>
         </div>
         <div class="contentWrap">
+            <form action="<%= request.getContextPath() %>/manager/memberSearch" method="get">
             <div class="radioDiv">
-                <form>
-                    <input type="radio" name="category" value="name" id="name" checked>
+                    <input type="radio" name="category" value="name" id="name" <%= checked[0] %>>
                     <label for="name" class="radioLabel">이름</label>&nbsp;&nbsp;
-                    <input type="radio" name="category" value="userId" id="userId">
+                    <input type="radio" name="category" value="userId" id="userId" <%= checked[1] %>>
                     <label for="userId" class="radioLabel">아이디</label>&nbsp;&nbsp;
-                    <input type="radio" name="category" value="userPhone" id="userPhone">
+                    <input type="radio" name="category" value="userPhone" id="userPhone" <%= checked[2] %>>
                     <label for="userPhone" class="radioLabel">핸드폰<small>(뒤 4자리)</small></label>
-                </form>
             </div>
             <hr>
             <div class="searchDiv">
-                <form>
-                    <input type="text" name="search" placeholder="검색할 키워드 입력" size="30" style="height: 30px;">
+                    <input type="text" name="search" placeholder="검색할 키워드 입력" size="30" style="height: 30px;" value="<%= search %>">
                     <div class="searchImg">
-                        <img src="<%= request.getContextPath() %>/images/search.png" style="width:33px; height:33px;">
+                    	<button type="submit">
+                        	<img src="<%= request.getContextPath() %>/images/search.png" style="width:33px; height:33px;">
+                        </button>
                     </div>
-                </form>
             </div>
+            </form>
             <div class="tableDiv">
                 <!-- 검색 결과 출력 -->
                 <table>
@@ -183,33 +211,46 @@
             </div>
             <div class="pagingBtnDiv">
             	<!-- 처음으로 -->
-            	<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=1'"> &lt;&lt; </button>
-            	
+            	<% if(s == null) { %>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=1'"> &lt;&lt; </button>
+            	<% } else { %>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
+            	<% } %>
             	<!-- 이전으로 -->
             	<% if(pi.getCurrentPage() == 1) { %>
             		<button disabled> &lt; </button>
-            	<% } else { %>
+            	<% } else if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+            	<% } else {%>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() - 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt; </button>
             	<% } %>
             	
             	<!-- 10개 페이지 목록 -->
             	<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
             		<% if(p == pi.getCurrentPage()) { %>
             			<button style="background:rgb(255,192,0); color:black;" disabled> <%= p %></button>
-            		<% } else { %>
+            		<% } else if(s == null) { %>
             			<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= p %>'"><%= p %></button>
+            		<% } else { %>
+            			<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"><%= p %></button>
             		<% } %>
             	<% } %>
             	
             	<!-- 다음으로 -->
             	<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
             		<button disabled> &gt; </button>
-            	<% } else { %>
+            	<% } else if(s == null) { %>
             		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+            	<% } else {%>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getCurrentPage() + 1 %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt; </button>
             	<% } %>
             	
             	<!-- 맨 끝으로 -->
-            	<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+            	<% if(s == null) { %>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+            	<% } else { %>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/memberList?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
+            	<% } %>
             </div>
         </div>
     </section>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member" %>
+<%
+	Member m = (Member)request.getAttribute("member");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +85,7 @@
             background: rgb(255, 192, 0);
             border-radius: 8px;
             border-color: rgb(255, 192, 0);
+            outline : none;
         }
 
         button:hover {
@@ -176,35 +180,35 @@
                 <table>
                     <tr>
                         <th>이름 : </th>
-                        <td><span>이윤재</span></td>
+                        <td><span><%= m.getMemName() %></span></td>
                     </tr>
                     <tr>
                         <th>아이디 : </th>
-                        <td><span>akp</span></td>
+                        <td><span><%= m.getMemId() %></span></td>
                     </tr>
                     <tr>
                         <th>핸드폰 : </th>
-                        <td><span>010-1234-1234</span></td>
+                        <td><span><%= m.getPhone() %></span></td>
                     </tr>
                     <tr>
                         <th>이메일 : </th>
-                        <td><span>arkphong@naver.com</span></td>
+                        <td><span><%= m.getEmail() %></span></td>
                     </tr>
                     <tr>
                         <th>주소 : </th>
-                        <td><span>경기도 경기도 경기도 경기도 경기도</span></td>
+                        <td><span><%= (m.getAddress()).replace(",", " ") %></span></td>
                     </tr>
                     <tr>
                         <th>회원상태 : </th>
-                        <td><span>활동</span></td>
+                        <td><span><%= (m.getMemStatus().equals("Y") ? "활동" : "정지") %></span></td>
                     </tr>
                     <tr>
                         <th>가입일 : </th>
-                        <td><span>2020년 12월 31일</span></td>
+                        <td><span><%= m.getEntDate() %></span></td>
                     </tr>
                     <tr>
                         <th>포인트 : </th>
-                        <td><span>1,000,000</span>포인트</td>
+                        <td><span><%= m.getPoint() %></span> 포인트</td>
                     </tr>
                 </table>
             </div>
@@ -219,32 +223,45 @@
             <br clear="both">
             <div class="div-last" id="addPointDiv">
                 <p>포인트 추가</p>
-                <form>
-                    <input type="text" name="addPoint" size="30"><br><br>
-                    <input type="submit" value="확인">
+                    <input type="text" name="addPoint" id="addPoint" size="30"><br><br>
+                    <input type="button" id="addPointBtn" value="확인">
                     <input type="button" onclick="cancelDiv(this);" value="취소">
-                </form>
             </div>
             <div class="div-last" id="removePointDiv">
                 <p>포인트 차감</p>
-                <form>
-                    <input type="text" name="removePoint" size="30"><br><br>
-                    <input type="submit" value="확인">
+                    <input type="text" name="removePoint" id="removePoint" size="30"><br><br>
+                    <input type="button" id="removePointBtn" value="확인">
                     <input type="button" onclick="cancelDiv(this);" value="취소">
-                </form>
             </div>
             <div class="div-last" id="stopMemberDiv">
                 <p>회원 정지</p>
-                <form>
-                    <input type="submit" value="활동" name="active" id="activeBtn">
-                    <input type="submit" value="정지" name="stop" id="stopBtn">
+                    <input type="button" value="활동" name="active" id="activeBtn">
+                    <input type="button" value="정지" name="stop" id="stopBtn">
                     <input type="button" onclick="cancelDiv(this);" value="취소">
-                </form>
             </div>
         </div>
     </section>
 
     <script>
+	    $(function(){
+			var countMember = $("#countMember");
+			
+			$.ajax({
+				url : "<%= request.getContextPath() %>/manager/memberCount",
+				type : "post",
+				success : function(data){
+					countMember.text(data);
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+			
+			$.ajax({
+				
+			});
+		});
+	    
         function showDiv(value) {
             var divBox = document.getElementsByClassName("div-last");
 

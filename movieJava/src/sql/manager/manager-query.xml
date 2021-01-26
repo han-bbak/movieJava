@@ -28,4 +28,177 @@
 		 WHERE
 		       RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="searchNameMember">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NAME LIKE '%' || ? || '%'
+	</entry>
+	<entry key="searchIdMember">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_ID LIKE '%' || ? || '%'
+	</entry>
+	<entry key="searchPhoneMember">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MEMBER
+		 WHERE
+		       PHONE LIKE '%' || ?
+	</entry>
+	<entry key="selectSearchNameMember">
+		SELECT
+			   RNUM
+			 , MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		     (
+		       SELECT
+		              ROWNUM RNUM
+		            , MEM_NO
+					, MEM_ID
+					, MEM_PWD
+					, MEM_NAME
+					, MEM_BIRTH
+					, EMAIL
+					, PHONE
+					, ADDRESS
+					, POINT
+					, GRADE
+					, ENT_DATE
+					, MODIFY_DATE
+					, MEM_STATUS
+			     FROM
+			          MEMBER
+			    WHERE 
+			          MEM_NAME LIKE '%' || ? || '%'
+			 ORDER BY 
+			          MEM_NO DESC 
+		     )
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchIdMember">
+		SELECT
+			   RNUM
+			 , MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		     (
+		       SELECT
+		              ROWNUM RNUM
+		            , MEM_NO
+					, MEM_ID
+					, MEM_PWD
+					, MEM_NAME
+					, MEM_BIRTH
+					, EMAIL
+					, PHONE
+					, ADDRESS
+					, POINT
+					, GRADE
+					, ENT_DATE
+					, MODIFY_DATE
+					, MEM_STATUS
+			     FROM
+			          MEMBER
+			    WHERE 
+			          MEM_ID LIKE '%' || ? || '%'
+			 ORDER BY 
+			          MEM_NO DESC 
+		     )
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchPhoneMember">
+		SELECT
+			   RNUM
+			 , MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		     (
+		       SELECT
+		              ROWNUM RNUM
+		            , MEM_NO
+					, MEM_ID
+					, MEM_PWD
+					, MEM_NAME
+					, MEM_BIRTH
+					, EMAIL
+					, PHONE
+					, ADDRESS
+					, POINT
+					, GRADE
+					, ENT_DATE
+					, MODIFY_DATE
+					, MEM_STATUS
+			     FROM
+			          MEMBER
+			    WHERE 
+			          PHONE LIKE '%' || ?
+			 ORDER BY 
+			          MEM_NO DESC 
+		     )
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMember">
+		SELECT
+			   MEM_NO
+			 , MEM_ID
+			 , MEM_PWD
+			 , MEM_NAME
+			 , MEM_BIRTH
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , POINT
+			 , GRADE
+			 , ENT_DATE
+			 , MODIFY_DATE
+			 , MEM_STATUS
+		  FROM
+		       MEMBER
+		 WHERE
+		       MEM_NO = ?
+	</entry>
 </properties>
