@@ -6,7 +6,7 @@ public class Reply {
 	private int rp_no;	// 댓글 번호
 	private String rp_content;
 	private String mem_name;
-	private String rp_writer;	// 댓글 작성자
+	private int rp_writer;	// 댓글 작성자
 	private Date rp_date;
 	private Date rp_modify;
 	private String rp_status;
@@ -15,7 +15,7 @@ public class Reply {
 	
 	public Reply() {}
 
-	public Reply(int rp_no, String rp_content, String mem_name, String rp_writer, Date rp_date, Date rp_modify,
+	public Reply(int rp_no, String rp_content, String mem_name, int rp_writer, Date rp_date, Date rp_modify,
 			String rp_status, String rp_privacy, int brd_no) {
 		super();
 		this.rp_no = rp_no;
@@ -53,11 +53,11 @@ public class Reply {
 		this.mem_name = mem_name;
 	}
 
-	public String getRp_writer() {
+	public int getRp_writer() {
 		return rp_writer;
 	}
 
-	public void setRp_writer(String rp_writer) {
+	public void setRp_writer(int rp_writer) {
 		this.rp_writer = rp_writer;
 	}
 

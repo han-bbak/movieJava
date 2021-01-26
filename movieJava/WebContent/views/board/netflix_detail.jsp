@@ -171,11 +171,30 @@
         .replyTable td:nth-child(1) {
          background: #dadada;
          opacity: 80%;
+         width: 10%;
+         
         }
         
         .replyTable td:nth-child(2) {
          text-align: left;
+         <!--width: 65%;-->
         }
+        
+        .replyTable td:nth-child(3) {
+         text-align: center;
+         <!--width: 15%;-->
+        }
+        
+        .replyTable td:nth-child(4) {
+         text-align: left;
+         <!--width: 10%; -->
+        }
+        
+        #replyDelete {
+        	width: 40px;
+        	height:30px;
+        }
+        
         
         
     </style>
@@ -300,26 +319,32 @@
                 <div class="replyArea">
                     <br>
                     <span class="input_area">
-                        <input type="text" name="input" placeholder="댓글을 작성해 보세요">
+                        <input id="replyContent" type="text" name="input" placeholder="댓글을 작성해 보세요">
                     </span>
-                    <button class="button" type="button" id="btn">등록하기</button>
+                    <button class="button" type="button" id="replyBtn">등록하기</button>
                  </div>
                  <div class="replyListArea">
                  	<table class="replyTable">
-                  	  <colgroup>
-                    	    <col width="10%" />
-                    	    <col width="75%" />
-                      	  	<col width="15%" />
-                   	 </colgroup>
+                 	<colgroup>
+                        <col width="10%" />
+                        <col width="75%" />
+                        <col width="15%" />
+                        <col width="10%" />
+                    </colgroup>
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
-                    		<tr>
-                    			<td><%= r.getMem_name() %></td>
-                    			<td><%= r.getRp_content() %></td>
-                    			<td><%= r.getRp_date() %></td>
-                    		</tr>
-                    	<% } %>
-                    <% } else { %>
+                    			<tr>
+                    				<td><%= r.getMem_name() %></td>
+                    				<td><%= r.getRp_content() %></td>
+                    				<% if(loginUser.getMemNo() == r.getRp_writer()) { %>
+                    					<td><%= r.getRp_date() %></td>
+                    					<td><button class="button" type="button" id="replyDelete">삭제</button></td>
+                    				<% } else { %>
+                    					<td colspan="2"><%= r.getRp_date() %></td>
+                    				<% } %>
+                    			</tr>
+                    		<% } %>
+                    	<% } else { %>
                         <tr>
                             <td colspan="3">작성된 댓글이 없습니다.</td>
                         </tr>
@@ -335,19 +360,60 @@
 				</form>
 
 <script>
-//넷플릭스 버튼
-const netflix = document.getElementById('netflix');
-netflix.addEventListener('click', function(){
-	location.href='<%= request.getContextPath() %>/netflix/list';
-});
-</script>
-
-<script>
+	//넷플릭스 버튼
+	const netflix = document.getElementById('netflix');
+	netflix.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/netflix/list';
+	});
 
 	// 목록
 	const listBtn = document.getElementById('backBtn');
 	backBtn.addEventListener('click', function(){
 		location.href='<%= request.getContextPath() %>/netflix/list';
+	});
+	
+	const replyDelete = document.getElementById('replyDelete');
+	replyDelete.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/netflix/deleteReply';
+	});
+	
+	
+	
+	
+	$(function() {
+		$("#replyBtn").click(function() {
+			var rp_writer = <%= loginUser.getMemNo() %>;
+			var brd_no = <%= b.getBrd_no() %>;
+			var content = $("#replyContent").val();
+			
+			$.ajax({
+				url: "<%= request.getContextPath() %>/netflix/insertReply",
+				type: "post",
+				dataTaype: "json",
+				data: {rp_writer:rp_writer, brd_no:brd_no, content:content},
+				success: function(data) {
+					replyTable = $(".replyTable");
+					replyTable.html("");
+					
+					for(var key in data){
+						var tr = $("<tr>");
+						var writerTd = $("<td>").text(data[key].mem_name);
+						var contentTd = $("<td>").text(data[key].rp_content);
+						var dateTd = $("<td>").text(data[key].rp_date);
+				
+						tr.append(writerTd, contentTd, dateTd);
+						
+						replyTable.append(tr);
+					}
+					
+					$("#replyContent").val("");
+			
+				}, 
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		});
 	});
 </script>
 <script>

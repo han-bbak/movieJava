@@ -37,24 +37,24 @@ public class netflixDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
 		
-		boolean flagbList = false;
+		boolean flagnList = false;
 		boolean flagbrd_no = false;
 		
 		Cookie[] cookies = request.getCookies();
 		
 		if(cookies != null) {
 			for(Cookie c : cookies) {
-				if(c.getName().equals("bList")) {
-					flagbList = true;
+				if(c.getName().equals("nList")) {
+					flagnList = true;
 					
-					String bList = URLDecoder.decode(c.getValue(), "UTF-8");
-					String[] list = bList.split(",");
+					String nList = URLDecoder.decode(c.getValue(), "UTF-8");
+					String[] list = nList.split(",");
 					for(String st : list) {
 						if(st.equals(String.valueOf(brd_no)))
 							flagbrd_no = true;
 					}
 					if(!flagbrd_no) {
-						c.setValue(URLEncoder.encode(bList + "," + brd_no, "UTF-8"));
+						c.setValue(URLEncoder.encode(nList + "," + brd_no, "UTF-8"));
 						response.addCookie(c);
 					}
 				}
@@ -64,8 +64,8 @@ public class netflixDetailServlet extends HttpServlet {
 		BoardService bs = new BoardService();
 		Board b = null;
 		
-		if(!flagbList) {
-			Cookie c = new Cookie("bList", String.valueOf(brd_no));
+		if(!flagnList) {
+			Cookie c = new Cookie("nList", String.valueOf(brd_no));
 			c.setMaxAge(1 * 24 * 60 * 60);
 			response.addCookie(c);
 			b = bs.selectBoard(brd_no);
