@@ -23,7 +23,7 @@
 			BRD_MODIFY,
 			BRD_STATUS
 		FROM
-			BLIST
+			NLIST
 		WHERE
 			RNUM BETWEEN ? AND ?
 	</entry>
@@ -269,5 +269,36 @@
         AND BRD_NO = ?
 	ORDER BY
 		RP_NO DESC
+	</entry>
+	<entry key="insertReply">
+		INSERT 
+		INTO REPLY 
+			(
+				RP_NO, 
+				RP_CONTENT, 
+				RP_WRITER, 
+				RP_DATE, 
+				RP_MODIFY, 
+				RP_STATUS, 
+				BRD_NO
+			) 
+		VALUES
+			(
+			SEQ_RP_NO.NEXTVAL, 
+			?,
+			?,  
+			SYSDATE, 
+			SYSDATE, 
+			DEFAULT,
+            ?
+			)
+	</entry>
+	<entry key="deleteReply">
+		UPDATE
+			REPLY
+		SET
+			RP_STATUS = 'N'
+		WHERE
+			RP_NO = ?
 	</entry>
 </properties>

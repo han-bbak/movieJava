@@ -319,7 +319,7 @@ public class BoardDao {
 				rList.add(new Reply(rset.getInt("rp_no"),
 									rset.getString("rp_content"),
 									rset.getString("mem_name"),
-									rset.getString("rp_writer"),
+									rset.getInt("rp_writer"),
 									rset.getDate("rp_date"),
 									rset.getDate("rp_modify"),
 									rset.getString("rp_status"),
@@ -335,6 +335,52 @@ public class BoardDao {
 		}
 
 		return rList;
+	}
+
+	public int insertReply(Connection conn, Reply r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getRp_content());
+			pstmt.setInt(2, r.getRp_writer());
+			pstmt.setInt(3, r.getBrd_no());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+	public int deleteReply(Connection conn, int rp_no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rp_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	

@@ -141,6 +141,39 @@ public class BoardService {
 		return rList;
 	}
 
+	public ArrayList<Reply> insertReply(Reply r) {
+		Connection conn = getConnection();
+		BoardDao bd = new BoardDao();
+		
+		int result = bd.insertReply(conn, r);
+		
+		ArrayList<Reply> rList = null;
+		
+		if(result > 0) {
+			commit(conn);
+			rList = bd.selectReplyList(conn, r.getBrd_no());
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
 
+		return rList;
+	}
 
+	public int deleteReply(int rp_no) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().deleteReply(conn, rp_no);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 }
