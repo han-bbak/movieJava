@@ -742,7 +742,7 @@ h1 {
 
 					<!-- JOIN BTN-->
 					<div class="btn_area">
-						<button type="button" id="updatePwdBtn">
+						<button id="updatePwdBtn">
 							<span>변경하기</span>
 						</button>
 					</div>
