@@ -228,4 +228,50 @@ public class ManagerDao {
 		return m;
 	}
 
+	// 회원 포인트 변경
+	public int memberChangePoint(Connection conn, int memNo, int point) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("memberChangePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, point);
+			pstmt.setInt(2, memNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 회원 상태 변경
+	public int memberStatusChange(Connection conn, int memNo, String status) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("memberStatusChange");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, status);
+			pstmt.setInt(2, memNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

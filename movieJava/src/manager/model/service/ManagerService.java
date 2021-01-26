@@ -67,4 +67,40 @@ public class ManagerService {
 		return m;
 	}
 
+	// 회원 포인트 변경
+	public int memberChangePoint(int memNo, int point) {
+		Connection conn = getConnection();
+		int changePoint = 0;
+		
+		int result = new ManagerDao().memberChangePoint(conn, memNo, point);
+		
+		if(result > 0) {
+			commit(conn);
+			Member m = new ManagerDao().selectMember(conn, memNo);
+			if(m != null) {
+				changePoint = m.getPoint();
+			}
+		} else {
+			rollback(conn);
+		}
+		
+		return changePoint;
+	}
+
+	// 회원 status 변경
+	public Member memberStatusChange(int memNo, String status) {
+		Connection conn = getConnection();
+		Member m = null;
+		
+		int result = new ManagerDao().memberStatusChange(conn, memNo, status);
+		
+		if(result > 0) {
+			commit(conn);
+			m = new ManagerDao().selectMember(conn, memNo);
+		} else {
+			rollback(conn);
+		}
+		return m;
+	}
+
 }

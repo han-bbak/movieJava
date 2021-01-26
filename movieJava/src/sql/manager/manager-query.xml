@@ -201,4 +201,20 @@
 		 WHERE
 		       MEM_NO = ?
 	</entry>
+	<entry key="memberChangePoint">
+		UPDATE
+		       MEMBER
+		   SET
+		       POINT = POINT + ?
+		 WHERE
+		       MEM_NO = ?
+	</entry>
+	<entry key="memberStatusChange">
+		UPDATE
+		       MEMBER
+		   SET 
+		       MEM_STATUS = ?
+		 WHERE
+		       MEM_NO = ?
+	</entry>
 </properties>

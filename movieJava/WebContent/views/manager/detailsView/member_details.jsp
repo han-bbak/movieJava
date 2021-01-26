@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" import="member.model.vo.Member" %>
 <%
 	Member m = (Member)request.getAttribute("member");
+
+	String birth = m.getMemBirth().substring(0, 2) + "년 " + m.getMemBirth().substring(2, 4) + "월 " + m.getMemBirth().substring(4) + "일";
 %>
 <!DOCTYPE html>
 <html>
@@ -187,6 +189,10 @@
                         <td><span><%= m.getMemId() %></span></td>
                     </tr>
                     <tr>
+                        <th>생년월일 : </th>
+                        <td><span><%= birth %></span></td>
+                    </tr>
+                    <tr>
                         <th>핸드폰 : </th>
                         <td><span><%= m.getPhone() %></span></td>
                     </tr>
@@ -200,7 +206,7 @@
                     </tr>
                     <tr>
                         <th>회원상태 : </th>
-                        <td><span><%= (m.getMemStatus().equals("Y") ? "활동" : "정지") %></span></td>
+                        <td><span id="statusSpan"><%= (m.getMemStatus().equals("Y") ? "활동" : "정지") %></span></td>
                     </tr>
                     <tr>
                         <th>가입일 : </th>
@@ -208,7 +214,7 @@
                     </tr>
                     <tr>
                         <th>포인트 : </th>
-                        <td><span><%= m.getPoint() %></span> 포인트</td>
+                        <td><span id="pointSpan"><%= m.getPoint() %></span> 포인트</td>
                     </tr>
                 </table>
             </div>
@@ -245,6 +251,7 @@
     <script>
 	    $(function(){
 			var countMember = $("#countMember");
+			var stopBtn = $("#stopBtn");
 			
 			$.ajax({
 				url : "<%= request.getContextPath() %>/manager/memberCount",
@@ -257,10 +264,81 @@
 				}
 			});
 			
-			$.ajax({
-				
-			});
 		});
+	    
+	    $("#addPointBtn").click(function(){
+	    	var addPoint = $("#addPoint");
+			
+	    	$.ajax({
+	    		url : "<%= request.getContextPath() %>/manager/memberChangePoint",
+	    		type : "post",
+	    		data : {memNo : <%= m.getMemNo() %>, addPoint : addPoint.val()},
+	    		success : function(data){
+	    			if(data != null) {
+	    				addPoint.val("");
+    					$("#pointSpan").text(data);
+    					$("#addPointDiv").css("display", "none");
+	    			}
+	    		},
+	    		error : function(e){
+	    			console.log(e);
+	    		}
+	    	});
+	    });
+	    
+	    $("#removePointBtn").click(function(){
+	    	var removePoint = $("#removePoint");
+	    	
+	    	$.ajax({
+	    		url : "<%= request.getContextPath() %>/manager/memberChangePoint",
+	    		type : "post",
+	    		data : {memNo : <%= m.getMemNo() %>, removePoint : removePoint.val()},
+	    		success : function(data){
+	    			if(data != null) {
+	    				removePoint.val("");
+    					$("#pointSpan").text(data);
+    					$("#removePointDiv").css("display", "none");
+	    			}
+	    		},
+	    		error : function(e){
+	    			console.log(e);
+	    		}
+	    	});
+	    });
+	    
+	    $("#activeBtn").click(function(){
+	    	$.ajax({
+	    		url : "<%= request.getContextPath() %>/manager/memberStatusChange",
+	    		type : "post",
+	    		data : {memNo : <%= m.getMemNo() %>, status : "Y"},
+	    		success : function(data) {
+	    			if(data != null) {
+	    				$("#statusSpan").text(data);
+	    				$("#stopMemberDiv").css("display", "none");
+	    			}
+	    		},
+	    		error : function(e){
+	    			console.log(e);
+	    		}
+	    	});
+	    });
+	    
+	    $("#stopBtn").click(function(){
+	    	$.ajax({
+	    		url : "<%= request.getContextPath() %>/manager/memberStatusChange",
+	    		type : "post",
+	    		data : {memNo : <%= m.getMemNo() %>, status : "N"},
+	    		success : function(data) {
+	    			if(data != null) {
+	    				$("#statusSpan").text(data);
+	    				$("#stopMemberDiv").css("display", "none");
+	    			}
+	    		},
+	    		error : function(e){
+	    			console.log(e);
+	    		}
+	    	});
+	    });
 	    
         function showDiv(value) {
             var divBox = document.getElementsByClassName("div-last");
