@@ -33,7 +33,12 @@ public class MemberSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String searchCondition = request.getParameter("category");
+		String searchCondition = "";
+		if(request.getParameter("category") == null) {
+			searchCondition = request.getParameter("searchCondition");
+		} else {
+			searchCondition = request.getParameter("category");
+		}
 		String search = request.getParameter("search");
 		
 		Search s = new Search(searchCondition, search);
