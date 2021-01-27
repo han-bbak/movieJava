@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*, member.model.vo.Member"%>
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
@@ -19,6 +19,8 @@
 			selected[2] ="selected";
 		}
 	}
+	
+	Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -167,9 +169,6 @@
             font-weight: lighter;
             border: gray;
         }
-
-        
-
     </style>
     
 </head>
@@ -185,7 +184,6 @@
             </div>
             <div class="header" id="header1">
             	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
-
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -201,14 +199,47 @@
                 </form>
             </div>
             <div class="header" id="header3">
-                <form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+                
+                <% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
+			<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+			<% } %>
+                
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -232,18 +263,17 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <!-- <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a> -->
                         <a id="netflix">Netflix</a>
                         
                         /
-                        <!-- <a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a> -->
                         <a id="watcha" style="color:white;">Watcha</a>
                         <br>
                     </h1>
                 </div>
                 <div id="board_top_btn">
-                	<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/watcha_insert.jsp'">글쓰기</button>
-
+                <% if(loginUser != null) { %>
+					<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/netflix_insert.jsp'">글쓰기</button>
+				<% } %>
                 </div>
             </div>
             <div class="board_table">
@@ -351,17 +381,17 @@
         };
     </script>
     <script>
-    	// 넷플릭스 버튼
-    	const netflix = document.getElementById('netflix');
-    	netflix.addEventListener('click', function(){
-    		location.href='<%= request.getContextPath() %>/netflix/list';
-    	});
-    	
-    	// 왓챠 버튼
-    	const Watcha = document.getElementById('Watcha');
-    	Watcha.addEventListener('click', function(){
-    		location.href='<%= request.getContextPath() %>/Watcha/list';
-    	});
+ 	// 넷플릭스 버튼
+	const netflix = document.getElementById('netflix');
+	netflix.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/netflix/list';
+	});
+	
+	// 왓챠 버튼
+	const watcha = document.getElementById('watcha');
+	watcha.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/watcha/list';
+	});
 
     </script>
     <script>

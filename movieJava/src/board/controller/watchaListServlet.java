@@ -41,7 +41,7 @@ public class watchaListServlet extends HttpServlet {
 		
 		BoardService bs = new BoardService();
 		
-		int listCount = bs.getListCount();
+		int listCount = bs.getListCount1();
 //		System.out.println("listCount: " + listCount);
 		
 		int pageLimit = 10;
@@ -63,7 +63,7 @@ public class watchaListServlet extends HttpServlet {
 		// 페이징 처리와 관련된 변수를 클래스 형식으로 만들어 담기
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Board> list = bs.selectList(pi);
+		ArrayList<Board> list = bs.selectList1(pi);
 		
 //		System.out.println("pi: " + pi);
 //		System.out.println("list: " + list );

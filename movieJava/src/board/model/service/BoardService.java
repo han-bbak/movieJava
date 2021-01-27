@@ -175,4 +175,24 @@ public class BoardService {
 		
 		return result;
 	}
+
+	public int getListCount1() {
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().getListCount1(conn);
+		
+		close(conn);
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectList1(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectList1(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
 }

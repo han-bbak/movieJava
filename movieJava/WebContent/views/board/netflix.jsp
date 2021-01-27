@@ -262,11 +262,9 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <!-- <a href="<%= request.getContextPath() %>/views/board/watcha.jsp"><span id="watcha">Watcha</span></a> -->
                         <a id="netflix" style="color:white;">Netflix</a>
                         
                         /
-                        <!-- <a href="<%= request.getContextPath() %>/views/board/netflix.jsp"><span id="netflix">Netflix</span></a> -->
                         <a id="watcha">Watcha</a>
                         <br>
                     </h1>
@@ -389,9 +387,9 @@
     	});
     	
     	// 왓챠 버튼
-    	const Watcha = document.getElementById('Watcha');
-    	Watcha.addEventListener('click', function(){
-    		location.href='<%= request.getContextPath() %>/Watcha/list';
+    	const watcha = document.getElementById('watcha');
+    	watcha.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/watcha/list';
     	});
 
     </script>
