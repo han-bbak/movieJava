@@ -242,5 +242,19 @@
             </div>
         </div>
     </section>
+    <script>
+	    var countProduct = $("#countProduct");
+		
+		$.ajax({
+			url : "<%= request.getContextPath() %>/manager/storeCount",
+			type : "post",
+			success : function(data){
+				countProduct.text(data);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+    </script>
 </body>
 </html>
