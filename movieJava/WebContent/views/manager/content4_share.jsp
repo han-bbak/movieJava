@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.*" %>
+<%
+	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,11 +34,68 @@
             margin-left: 50px;
         }
 
+        .tableDiv table {
+        	text-align : center;
+        }
+
         .tableDiv th {
             border-top: 2px solid white;
             border-bottom: 1px solid lightgray;
             padding: 10px;
             font-size : 15px;
+        }
+        
+        .tableDiv tr {
+        	height : 30px;
+        }
+        
+        .tableDiv tr:nth-child(odd) {
+        	background : lightgray;
+        	color : rgb(64, 64, 64);
+        }
+        
+        .tableDiv tr:first-child {
+        	background : #fff;
+        	color : black;
+        }
+        
+        .tableDiv table {
+        	border-top : 2px solid white;
+        	border-bottom : 2px solid white;
+        }
+        
+        .tableDiv th:nth-child(1) {
+        	width : 80px;
+        }
+        
+        .tableDiv th:nth-child(2) {
+        	width : 150px;
+        }
+        
+        .tableDiv th:nth-child(3) {
+        	width : 150px;
+        }
+        
+        .tableDiv th:nth-child(4) {
+        	width : 200px;
+        }
+        
+        .tableDiv th:nth-child(5) {
+        	width : 200px;
+        }
+        
+        .pagingBtnDiv {
+        	text-align : center;
+        }
+        
+        .pagingBtnDiv button {
+        	background : lightgray;
+        	border : none;
+        	width : 30px;
+        	height : 30px;
+        	border-radius : 5px;
+        	outline : none;
+        	cursor : pointer;
         }
 
 
@@ -72,7 +133,11 @@
                 <!-- 문의글 목록 출력 -->
                 <table>
                     <tr>
-                        <th>이름</th>
+                        <th>No.</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>조회수</th>
+                        <th>작성일</th>
                     </tr>
                 </table>
             </div>

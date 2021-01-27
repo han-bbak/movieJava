@@ -42,7 +42,7 @@
                     <a href="<%= request.getContextPath() %>/views/manager/content4_QandA.jsp">게시판 관리</a>
                     <ul class="subMenu sub3">
                         <li><a href="<%= request.getContextPath() %>/views/manager/content4_QandA.jsp">문의 & 답변</a></li>
-                        <li><a href="<%= request.getContextPath() %>/views/manager/content4_share.jsp">공유 계정 게시판</a></li>
+                        <li><a href="<%= request.getContextPath() %>/manager/shareNetflix">공유 계정 게시판</a></li>
                     </ul>
                 </li>
                 <li>
