@@ -150,4 +150,19 @@ public class ManagerService {
 		return storeList;
 	}
 
+	// 상품 등록
+	public int insertStore(Store st) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().insertStore(conn, st);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+
 }

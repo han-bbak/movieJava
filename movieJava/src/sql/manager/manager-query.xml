@@ -293,4 +293,29 @@
 	     WHERE
 		       RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="insertStore">
+		INSERT
+		  INTO STORE
+		  (
+		  	   ST_NO
+		  	 , ST_CONTENT
+		  	 , ST_TITLE
+		  	 , ST_PRICE
+		  	 , ST_QUAN
+		  	 , ST_PATH
+		  	 , ST_ONAME
+		  	 , ST_RNAME
+		  )
+		VALUES
+		(
+			   SEQ_ST_NO.NEXTVAL
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+			 , ?
+		)
+	</entry>
 </properties>

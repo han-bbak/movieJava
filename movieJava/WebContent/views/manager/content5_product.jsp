@@ -170,7 +170,7 @@
                 </form>
             </div>
             <div class="productInsertDiv">
-                <input type="button" value="상품 등록" onclick="window.open('detailsView/product1_insert.jsp','popup', 'width=450px, height=680px')">
+                <input type="button" value="상품 등록" onclick="window.open('<%= request.getContextPath() %>/views/manager/detailsView/product1_insert.jsp','popup', 'width=450px, height=760px')">
             </div>
             <div class="tableDiv">
                 <!-- 검색 결과 출력 -->

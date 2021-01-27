@@ -19,7 +19,7 @@
             box-sizing: border-box;
             display: inline-block;
             width: 400px;
-            height: 650px;
+            height: 730px;
             margin : 0 auto;
             border: 3px solid rgb(255,192,0);
             border-radius: 10px;
@@ -123,15 +123,24 @@
 
 
     </style>
+    <% if(request.getAttribute("msg") != null) { %>
+    	<script>
+    		alert('<%= request.getAttribute("msg") %>');
+    		window.close();
+    	</script>
+    <%
+    	request.removeAttribute("msg");
+    	}
+    %>
 </head>
-<body>
+<body onbeforeunload="refreshAndClose();">
     <section class="contentSection">
         <div class="titleDiv">
             <span id="title">상품 등록</span>
         </div>
 
         <div class="insertDiv">
-            <form id="productInsertForm" action="" method="post">
+            <form id="productInsertForm" action="<%= request.getContextPath() %>/manager/storeInsert" method="post" enctype="multipart/form-data">
                 <div class="pNameDiv pDiv">
                     <p class="insertTitle">상품명</p>
                     <input type="text" id="pName" name="pName" placeholder="상품명을 입력하세요.">
@@ -140,9 +149,14 @@
                     <p class="insertTitle">상품 설명</p>
                     <textarea rows="5" id="pContent" name="pContent" placeholder="상품 설명을 입력하세요." style="resize: none;"></textarea>
                 </div>
+                <div class="pPriceDiv pDiv">
+                    <p class="insertTitle">상품 가격</p>
+                    <input type="text" id="pPrice" name="pPrice" placeholder="상품 가격을 입력하세요.">
+                </div>
                 <div class="pQuantityDiv pDiv">
                     <p class="insertTitle">입고 수량</p>
                     <input type="number" id="pQuantity" name="pQuantity" min="1" value="1" step="1">
+                    <!-- <input type="hidden" id="pQuan" name="pQuan" value="1"> -->
                 </div>
                 <div class="pImgDiv pDiv">
                     <p class="insertTitle">상품 이미지</p>
@@ -174,6 +188,11 @@
                     reader.readAsDataURL(element.files[0]);
                 }
             }
+            
+            // $("#pQuantity").change(function(){
+            // 		$("#pQuan").val($(this).val());
+            // });
+            
         });
 
         function onSubmit() {
@@ -181,6 +200,7 @@
             var pContent = document.getElementById("pContent");
             var pImg = document.getElementById("pImg");
             var pQuantity = document.getElementById("pQuantity");
+            var pPrice = document.getElementById("pPrice");
 
             if (pName.value == "") {
                 alert('상품명을 입력해주세요.');
@@ -193,6 +213,12 @@
                 pContent.focus();
                 return;
             }
+            
+            if (pPrice.value == "") {
+                alert('상품 가격을 입력해주세요');
+                pPrice.focus();
+                return;
+            }
 
             if(!(pImg.files && pImg.files[0])) {
                 alert('상품 이미지를 등록해주세요.')
@@ -200,6 +226,11 @@
             }
 
             $("#insertBtn").submit();
+        }
+        
+        function refreshAndClose(){
+       		window.opener.location.reload();
+       		window.close();
         }
     </script>
 </body>

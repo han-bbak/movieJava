@@ -406,4 +406,32 @@ public class ManagerDao {
 		return storeList;
 	}
 
+	// 상품 등록
+	public int insertStore(Connection conn, Store st) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertStore");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, st.getStoreContent());
+			pstmt.setString(2, st.getStoreTitle());
+			pstmt.setString(3, st.getStorePrice());
+			pstmt.setInt(4, st.getStoreQuantity());
+			pstmt.setString(5, st.getStorePath());
+			pstmt.setString(6, st.getOriginName());
+			pstmt.setString(7, st.getRename());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
