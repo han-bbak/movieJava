@@ -10,13 +10,12 @@ public class Reply {
 	private Date rp_date;
 	private Date rp_modify;
 	private String rp_status;
-	private String rp_privacy;	// 비밀 댓글 여부
 	private int brd_no;	// 작성한 댓글의 글 번호
 	
 	public Reply() {}
 
 	public Reply(int rp_no, String rp_content, String mem_name, int rp_writer, Date rp_date, Date rp_modify,
-			String rp_status, String rp_privacy, int brd_no) {
+			String rp_status,int brd_no) {
 		super();
 		this.rp_no = rp_no;
 		this.rp_content = rp_content;
@@ -25,7 +24,6 @@ public class Reply {
 		this.rp_date = rp_date;
 		this.rp_modify = rp_modify;
 		this.rp_status = rp_status;
-		this.rp_privacy = rp_privacy;
 		this.brd_no = brd_no;
 	}
 
@@ -85,14 +83,6 @@ public class Reply {
 		this.rp_status = rp_status;
 	}
 
-	public String getRp_privacy() {
-		return rp_privacy;
-	}
-
-	public void setRp_privacy(String rp_privacy) {
-		this.rp_privacy = rp_privacy;
-	}
-
 	public int getBrd_no() {
 		return brd_no;
 	}
@@ -105,7 +95,7 @@ public class Reply {
 	public String toString() {
 		return "Reply [rp_no=" + rp_no + ", rp_content=" + rp_content + ", mem_name=" + mem_name + ", rp_writer="
 				+ rp_writer + ", rp_date=" + rp_date + ", rp_modify=" + rp_modify + ", rp_status=" + rp_status
-				+ ", rp_privacy=" + rp_privacy + ", brd_no=" + brd_no + "]";
+				 + ", brd_no=" + brd_no + "]";
 	}
 	
 	

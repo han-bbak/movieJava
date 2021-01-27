@@ -325,8 +325,8 @@
                  <div class="replyListArea">
                  	<table class="replyTable">
                  	<colgroup>
-                        <col width="3%" />
-                        <col width="10%" />
+                        <col width="5%" />
+                        <col width="8%" />
                         <col width="60%" />
                         <col width="13%" />
                         <col width="14%" />
@@ -396,28 +396,28 @@
 	});
 	
 	
-	// 댓글 수정
-	const replyUpdate = document.getElementById('replyUpdate');
-	$("#replyUpdate").on("click", function(){
-		var text = $(this).text();
-		var rp_content = $(this).parent().parent().children().eq(2).text();
-		var rp_no = $(this).parent().parent().children().eq(0).text();
-		console.log(rp_content);
-		console.log(rp_no);
-		$($(this).parent().parent().children().eq(2)).html("<input type='text' name='comment' style='width : 100%; padding:5px 5px 5px 5px;' value='" + rp_content + "'>");
-		$(this).parent().children().eq(0).text('완료');
-		$(this).parent().children().eq(1).text('취소');
-		
-		if(text == '완료') {
-			var rp_content = $(this).parent().parent().children().eq(2).text();
-			var rp_no = $(this).parent().parent().children().eq(0).text();
-			$('input[name=rp_content]').val(rp_content);
-			
-			$(this).parent().parent().children().eq(2).submit();
-		} else if (text == '취소'){
-			location.replace('/netflix/detail?brd_no=<%= b.getBrd_no() %>');
-		}
-	});
+	// 댓글 수정 -> 나중에..ㅠ
+//	const replyUpdate = document.getElementById('replyUpdate');
+//	$("#replyUpdate").on("click", function(){
+//		var text = $(this).text();
+//		if(text == '수정') {
+//			var rp_content = $(this).parent().parent().children().eq(2).text();
+//			var rp_no = $(this).parent().parent().children().eq(0).text();
+//			console.log(rp_content);
+//			console.log(rp_no);
+//			$($(this).parent().parent().children().eq(2)).html("<input type='text' name='comment' style='width : 100%; padding:5px 5px 5px 5px;' value='" + rp_content + "'>");
+//			$(this).parent().children().eq(0).text('완료');
+//			$(this).parent().children().eq(1).text('취소');
+//		} else if(text == '완료') {
+//			var rp_content = $(this).parent().parent().children().eq(2).text();
+//			var rp_no = $(this).parent().parent().children().eq(0).text();
+//			$('input[name=rp_content]').val(rp_content);
+//			
+//			$(this).parent().parent().children().eq(2).submit();
+//		} else if (text == '취소'){
+//			$(this).attr("action", "<%= request.getContextPath() %>/netflix/detail?brd_no='<%= b.getBrd_no() %>'");
+//		}
+//	});
 	
 	$(function() {
 		$("#replyBtn").click(function() {
@@ -437,7 +437,7 @@
 					for(var key in data){
 						var tr = $("<tr>");
 						var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
-						var contentTd = $("<td style='width : 75%; background: gray;'>").text(data[key].rp_content);
+						var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
 						var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
 				
 						tr.append(writerTd, contentTd, dateTd);
