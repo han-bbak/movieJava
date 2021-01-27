@@ -10,6 +10,7 @@ import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
 import store.model.vo.Store;
+import tag.model.vo.Tag;
 
 public class ManagerService {
 
@@ -85,6 +86,8 @@ public class ManagerService {
 			rollback(conn);
 		}
 		
+		close(conn);
+		
 		return changePoint;
 	}
 
@@ -101,6 +104,9 @@ public class ManagerService {
 		} else {
 			rollback(conn);
 		}
+		
+		close(conn);
+		
 		return m;
 	}
 
@@ -161,6 +167,66 @@ public class ManagerService {
 		} else {
 			rollback(conn);
 		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+// -----------------------------------  Tag  --------------------------------------------------
+
+	// 태그 총 갯수
+	public int tagCount() {
+		Connection conn = getConnection();
+		
+		int tagCount = new ManagerDao().tagCount(conn);
+		
+		close(conn);
+		
+		return tagCount;
+	}
+
+	// 태그 리스트
+	public ArrayList<Tag> selectTagList() {
+		Connection conn = getConnection();
+		
+		ArrayList<Tag> list = new ManagerDao().selectTagList(conn);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 태그 삭제
+	public int removeTag(String tagName) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().removeTag(conn, tagName);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 태그 추가
+	public int addTag(String tagName) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().addTag(conn, tagName);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
 		
 		return result;
 	}

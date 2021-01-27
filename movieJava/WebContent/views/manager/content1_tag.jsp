@@ -52,7 +52,7 @@
                 <hr>
                 <ul>
                     <li><a href="content1_tag.jsp">태그 미설정 영화</a></li>
-                    <li><a href="content1_4_tagManager.jsp">태그 관리</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/tagList">태그 추가/삭제</a></li>
                 </ul>
 
                 <!-- <span class="subText" id="span-sub1">등록 영화 관리</span> -->

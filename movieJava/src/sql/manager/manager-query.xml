@@ -318,4 +318,53 @@
 			 , ?
 		)
 	</entry>
+	
+<!-- ============================ Tag ============================ -->
+
+	<entry key="tagCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       TAG
+		 WHERE
+		       TAG_STATUS = 'Y'
+	</entry>
+	<entry key="selectTagList">
+		SELECT
+		       TAG_NO
+		     , TAG_NAME
+		     , REGISTER_DATE
+		     , TAG_STATUS
+		  FROM
+		       TAG
+		 WHERE
+		       TAG_STATUS = 'Y'
+	</entry>
+	<entry key="removeTag">
+		UPDATE
+		       TAG
+		   SET 
+		       TAG_STATUS = 'N'
+		 WHERE 
+		       TAG_NAME = ?
+		   AND TAG_STATUS = 'Y'
+	</entry>
+	<entry key="addTag">
+		INSERT
+		  INTO
+		       TAG
+		  (
+		       TAG_NO
+		     , TAG_NAME
+		     , REGISTER_DATE
+		     , TAG_STATUS
+		  )
+		VALUES
+		(
+		       SEQ_TAG_NO.NEXTVAL
+		     , ?
+		     , SYSDATE
+		     , DEFAULT
+		)
+	</entry>
 </properties>

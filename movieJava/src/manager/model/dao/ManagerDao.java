@@ -17,6 +17,7 @@ import manager.model.vo.Search;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
 import store.model.vo.Store;
+import tag.model.vo.Tag;
 
 public class ManagerDao {
 	private Properties prop = new Properties();
@@ -422,6 +423,109 @@ public class ManagerDao {
 			pstmt.setString(5, st.getStorePath());
 			pstmt.setString(6, st.getOriginName());
 			pstmt.setString(7, st.getRename());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+// -----------------------------------  Tag  --------------------------------------------------
+
+	// 태그 총 갯수
+	public int tagCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int tagCount = 0;
+		String sql = prop.getProperty("tagCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				tagCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return tagCount;
+	}
+
+	// 태그 리스트
+	public ArrayList<Tag> selectTagList(Connection conn) {
+		ArrayList<Tag> list = new ArrayList<>();
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTagList");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			while(rset.next()) {
+				list.add(new Tag(rset.getInt(1),
+								 rset.getString(2),
+								 rset.getDate(3),
+								 rset.getString(4)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	// 태그 삭제
+	public int removeTag(Connection conn, String tagName) {
+		String[] tagNameArr = tagName.split(",");
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("removeTag");
+		
+		try {
+			for(int i = 0; i < tagNameArr.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, tagNameArr[i]);
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 태그 추가
+	public int addTag(Connection conn, String tagName) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("addTag");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, "#" + tagName);
 			
 			result = pstmt.executeUpdate();
 			
