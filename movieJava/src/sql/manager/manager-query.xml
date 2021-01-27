@@ -367,4 +367,71 @@
 		     , DEFAULT
 		)
 	</entry>
+	<entry key="boardCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       BOARD
+	</entry>
+	<entry key="netflixCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 1
+	</entry>
+	<entry key="watchaCount">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 2
+	</entry>
+	<entry key="countSearchNetflix">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 1
+		   AND BRD_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchNetflix">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		  (
+		       SELECT
+		              ROWNUM RNUM
+		            , BRD_NO
+				    , BRD_CATEGORY
+				    , BRD_TITLE
+				    , BRD_CONTENT
+				    , MEM_NAME
+				    , BRD_CNT
+				    , BRD_DATE
+				    , BRD_MODIFY
+				    , BRD_STATUS
+				 FROM
+				      BOARD
+				      JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+			    WHERE
+			          BRD_CATEGORY = 1
+			      AND BRD_TITLE LIKE '%' || ? || '%'
+			 ORDER BY BRD_NO DESC
+		  )
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
 </properties>

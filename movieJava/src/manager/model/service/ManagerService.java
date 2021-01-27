@@ -5,6 +5,7 @@ import static common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import board.model.vo.Board;
 import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
@@ -229,6 +230,61 @@ public class ManagerService {
 		close(conn);
 		
 		return result;
+	}
+
+// -----------------------------------  Board  --------------------------------------------------	
+	
+	// 게시글 총 갯수
+	public int boardCount() {
+		Connection conn = getConnection();
+		
+		int boardCount = new ManagerDao().boardCount(conn);
+		
+		close(conn);
+		
+		return boardCount;
+	}
+
+	public int netflixCount() {
+		Connection conn = getConnection();
+		
+		int netflixCount = new ManagerDao().netflixCount(conn);
+		
+		close(conn);
+		
+		return netflixCount;
+	}
+
+	public int watchaCount() {
+		Connection conn = getConnection();
+		
+		int watchaCount = new ManagerDao().watchaCount(conn);
+		
+		close(conn);
+		
+		return watchaCount;
+	}
+
+	// 넷플릭스 게시판 검색 결과 갯수
+	public int countSearchNetflix(Search s) {
+		Connection conn = getConnection();
+		
+		int searchNetflix = new ManagerDao().countSearchNetflix(conn, s);
+		
+		close(conn);
+		
+		return searchNetflix;
+	}
+
+	// 넷플릭스 게시판 검색 결과 리스트
+	public ArrayList<Board> selectSearchNetflix(board.model.vo.PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectSearchNetflix(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
 	}
 
 }

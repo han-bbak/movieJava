@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import board.model.vo.Board;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.dao.MemberDao;
@@ -536,6 +537,153 @@ public class ManagerDao {
 		}
 		
 		return result;
+	}
+	
+// -----------------------------------  Board  --------------------------------------------------	
+
+	// 게시글 총 갯수
+	public int boardCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int boardCount = 0;
+		String sql = prop.getProperty("boardCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				boardCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return boardCount;
+	}
+
+	public int netflixCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int netflixCount = 0;
+		String sql = prop.getProperty("netflixCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				netflixCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return netflixCount;
+	}
+
+	public int watchaCount(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int watchaCount = 0;
+		String sql = prop.getProperty("watchaCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				watchaCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return watchaCount;
+	}
+
+	// 넷플릭스 게시판 검색 결과 갯수
+	public int countSearchNetflix(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("countSearchNetflix");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 넷플릭스 게시판 검색 결과 리스트
+	public ArrayList<Board> selectSearchNetflix(Connection conn, board.model.vo.PageInfo pi, Search s) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSearchNetflix");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }
