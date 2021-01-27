@@ -180,7 +180,7 @@ public class BoardDao {
 		return list;
 	}
 
-	public int increaseCount(Connection conn, int BRD_NO) {
+	public int increaseCount(Connection conn, int brd_no) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("increaseCount");
@@ -188,7 +188,7 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, BRD_NO);
+			pstmt.setInt(1, brd_no);
 			
 			result = pstmt.executeUpdate();
 			
@@ -446,6 +446,113 @@ public class BoardDao {
 		
 		return list;
 	}
+
+	public int getSearchListCount1(Connection conn, Search s) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		if(s.getSearchCondition().equals("writer")) {
+			sql = prop.getProperty("getSearchWriterListCount1");
+		} else if(s.getSearchCondition().equals("title")) {
+			sql = prop.getProperty("getSearchTitleListCount1");
+		} else {
+			sql = prop.getProperty("getSearchContentListCount1");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectSearchList1(Connection conn, PageInfo pi, Search s) {
+		ArrayList<Board> list = new ArrayList<> ();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		if(s.getSearchCondition().equals("writer")) {
+			sql = prop.getProperty("selectSearchWriterList1");
+		} else if(s.getSearchCondition().equals("title")) {
+			sql = prop.getProperty("selectSearchTitleList1");
+		} else {
+			sql = prop.getProperty("selectSearchContentList1");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+									rset.getInt(3),
+									rset.getString(4),
+									rset.getString(5),
+									rset.getString(6),
+									rset.getInt(7),
+									rset.getDate(8),
+									rset.getDate(9),
+									rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int insertBoard1(Connection conn, Board b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBoard1");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getBrd_title());
+			pstmt.setString(2, b.getBrd_content());
+			pstmt.setInt(3, b.getMem_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 
 	
 

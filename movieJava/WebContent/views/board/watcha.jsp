@@ -270,7 +270,7 @@
                 </div>
                 <div id="board_top_btn">
                 <% if(loginUser != null) { %>
-					<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/netflix_insert.jsp'">글쓰기</button>
+					<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/watcha_insert.jsp'">글쓰기</button>
 				<% } %>
                 </div>
             </div>
@@ -399,18 +399,22 @@
 
     </script>
     <script>
-		// 게시판 상세 보기  기능
-		$(function() {
-			$(".list_table td").mouseenter(function(){
-				$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
-			}).mouseout(function(){
-				$(this).parent().css("background", "#363636");
-			}).click(function(){
-				var brd_no = $(this).parent().children().eq(0).text();
-				console.log(brd_no);
+ // 게시판 상세 보기  기능
+	$(function() {
+		$(".list_table td").mouseenter(function(){
+			$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
+		}).mouseout(function(){
+			$(this).parent().css("background", "#363636");
+		}).click(function(){
+			var brd_no = $(this).parent().children().eq(0).text();
+			console.log(brd_no);
+			<% if(loginUser != null) { %>
 				location.href='<%= request.getContextPath() %>/watcha/detail?brd_no=' + brd_no;
-			});
+			<% } else { %>
+				alert('로그인 후 게시글 보기가 가능합니다.');
+			<% } %>
 		});
+	});
 		
 		
 		

@@ -326,4 +326,182 @@
 		WHERE
 			RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="getSearchWriterListCount1">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD
+			JOIN MEMBER ON(BRD_WRITER = MEM_NO)
+		WHERE
+			BRD_CATEGORY = 2
+			AND BRD_STATUS = 'Y'
+			AND MEM_NAME LIKE '%' || ? || '%'
+	</entry>
+	<entry key="getSearchTitleListCount1">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD 
+		WHERE
+			BRD_CATEGORY = 2
+			AND BRD_STATUS = 'Y'
+			AND BRD_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="getSearchContentListCount1">
+		SELECT
+			COUNT(*)
+		FROM
+			BOARD
+		WHERE
+			BRD_CATEGORY = 2
+			AND BRD_STATUS = 'Y'
+			AND BRD_CONTENT LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchWriterList1">
+		SELECT 
+			RNUM, 
+			BRD_NO,
+			BRD_CATEGORY,
+			BRD_TITLE,
+			BRD_CONTENT,
+            MEM_NAME,
+			BRD_CNT,
+			BRD_DATE,
+			BRD_MODIFY,
+			BRD_STATUS
+		FROM
+			(SELECT 
+				ROWNUM RNUM,
+				A.*
+     		FROM
+     			(SELECT 
+     				BRD_NO,
+					BRD_CATEGORY,
+					BRD_TITLE,
+					BRD_CONTENT,
+       			    MEM_NAME,
+					BRD_CNT,
+					BRD_DATE,
+					BRD_MODIFY,
+					BRD_STATUS
+         		 FROM 
+         		 	BOARD
+                    JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+         	 	WHERE 
+          			BRD_CATEGORY = 2
+         			AND BRD_STATUS = 'Y'
+          			AND MEM_NAME LIKE '%' || ? || '%'
+          		ORDER BY 
+          			BRD_NO DESC) 
+          	A)
+		WHERE 
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchTitleList1">
+		SELECT 
+			RNUM, 
+			BRD_NO,
+			BRD_CATEGORY,
+			BRD_TITLE,
+			BRD_CONTENT,
+            MEM_NAME,
+			BRD_CNT,
+			BRD_DATE,
+			BRD_MODIFY,
+			BRD_STATUS
+		FROM
+			(SELECT 
+				ROWNUM RNUM,
+				A.*
+     		FROM
+     			(SELECT 
+     				BRD_NO,
+					BRD_CATEGORY,
+					BRD_TITLE,
+					BRD_CONTENT,
+       			    MEM_NAME,
+					BRD_CNT,
+					BRD_DATE,
+					BRD_MODIFY,
+					BRD_STATUS
+         		 FROM 
+         		 	BOARD
+                    JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+         	 	WHERE 
+          			BRD_CATEGORY = 2
+         			AND BRD_STATUS = 'Y'
+          			AND BRD_TITLE LIKE '%' || ? || '%'
+          		ORDER BY 
+          			BRD_NO DESC) 
+          	A)
+		WHERE 
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSearchContentList1">
+		SELECT 
+			RNUM, 
+			BRD_NO,
+			BRD_CATEGORY,
+			BRD_TITLE,
+			BRD_CONTENT,
+            MEM_NAME,
+			BRD_CNT,
+			BRD_DATE,
+			BRD_MODIFY,
+			BRD_STATUS
+		FROM
+			(SELECT 
+				ROWNUM RNUM,
+				A.*
+     		FROM
+     			(SELECT 
+     				BRD_NO,
+					BRD_CATEGORY,
+					BRD_TITLE,
+					BRD_CONTENT,
+       			    MEM_NAME,
+					BRD_CNT,
+					BRD_DATE,
+					BRD_MODIFY,
+					BRD_STATUS
+         		 FROM 
+         		 	BOARD
+                    JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+         	 	WHERE 
+          			BRD_CATEGORY = 2
+         			AND BRD_STATUS = 'Y'
+          			AND BRD_CONTENT LIKE '%' || ? || '%'
+          		ORDER BY 
+          			BRD_NO DESC) 
+          	A)
+		WHERE 
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="insertBoard1">
+		INSERT
+		INTO BOARD
+		(
+			BRD_NO,
+			BRD_CATEGORY,
+			BRD_TITLE,
+			BRD_CONTENT,
+       		BRD_WRITER,
+			BRD_CNT,
+			BRD_DATE,
+			BRD_MODIFY,
+			BRD_STATUS
+		)
+		VALUES
+		(
+			SEQ_BRD_NO.NEXTVAL,
+			2,
+			?,
+			?,
+			?,
+			DEFAULT,
+			SYSDATE,
+			SYSDATE,
+			DEFAULT
+		)
+	</entry>
 </properties>
