@@ -169,6 +169,7 @@
         
         .replyTable td:nth-child(1) {
          border: 0;
+         font-weight: bold;
         }
         
         
@@ -188,7 +189,7 @@
 
         }
         
-        #replyDelete {
+        #replyDelete, #replyUpdate {
         	width: 40px;
         	height:30px;
         }
@@ -324,36 +325,43 @@
                  <div class="replyListArea">
                  	<table class="replyTable">
                  	<colgroup>
-                        <col width="3%" />
-                        <col width="10%" />
-                        <col width="72%" />
-                        <col width="15%" />
-                        <col width="10%" />
+                        <col width="5%" />
+                        <col width="8%" />
+                        <col width="60%" />
+                        <col width="13%" />
+                        <col width="14%" />
                     </colgroup>
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
                     			<tr>
+                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no()) { %>
                     				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
                     				<% if(loginUser.getMemNo() == r.getRp_writer()) { %>
                     					<td><%= r.getRp_date() %></td>
                     					<td>
+                    						<button class="button" type="button" id="replyUpdate">수정</button>
                     						<button class="button" type="button" id="replyDelete">삭제</button>
                     						<form action="" id="rp_noForm" method="post">
                     							<input type="hidden" name="rp_no" value="<%= r.getRp_no() %>" />
                     							<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>" />
+                    							<input type="hidden" name="rp_content" value="<%= r.getRp_content() %>" />
                     						</form>
                     					</td>
-                    				<% } else { %>
+                    				 <% } else { %>
                     					<td colspan="2"><%= r.getRp_date() %></td>
-                    				<% } %>
-                    				
+                    				 <% } %>
+                    			<% } else { %>
+                    				<tr>
+                           				<td colspan="5" style="background: #dadada; opacity: 80%;">비밀 댓글입니다.</td>
+                        			</tr>
+                    			<% } %>
                     			</tr>
                     		<% } %>
                     	<% } else { %>
                         <tr>
-                            <td colspan="4" style="background: #dadada; opacity: 80%;" >작성된 댓글이 없습니다.</td>
+                            <td colspan="5" style="background: #dadada; opacity: 80%;" >작성된 댓글이 없습니다.</td>
                         </tr>
                     <% } %>
                     </table>
@@ -388,6 +396,29 @@
 	});
 	
 	
+	// 댓글 수정 -> 나중에..ㅠ
+//	const replyUpdate = document.getElementById('replyUpdate');
+//	$("#replyUpdate").on("click", function(){
+//		var text = $(this).text();
+//		if(text == '수정') {
+//			var rp_content = $(this).parent().parent().children().eq(2).text();
+//			var rp_no = $(this).parent().parent().children().eq(0).text();
+//			console.log(rp_content);
+//			console.log(rp_no);
+//			$($(this).parent().parent().children().eq(2)).html("<input type='text' name='comment' style='width : 100%; padding:5px 5px 5px 5px;' value='" + rp_content + "'>");
+//			$(this).parent().children().eq(0).text('완료');
+//			$(this).parent().children().eq(1).text('취소');
+//		} else if(text == '완료') {
+//			var rp_content = $(this).parent().parent().children().eq(2).text();
+//			var rp_no = $(this).parent().parent().children().eq(0).text();
+//			$('input[name=rp_content]').val(rp_content);
+//			
+//			$(this).parent().parent().children().eq(2).submit();
+//		} else if (text == '취소'){
+//			$(this).attr("action", "<%= request.getContextPath() %>/netflix/detail?brd_no='<%= b.getBrd_no() %>'");
+//		}
+//	});
+	
 	$(function() {
 		$("#replyBtn").click(function() {
 			var rp_writer = <%= loginUser.getMemNo() %>;
@@ -406,7 +437,7 @@
 					for(var key in data){
 						var tr = $("<tr>");
 						var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
-						var contentTd = $("<td style='width : 75%; background: gray;'>").text(data[key].rp_content);
+						var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
 						var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
 				
 						tr.append(writerTd, contentTd, dateTd);

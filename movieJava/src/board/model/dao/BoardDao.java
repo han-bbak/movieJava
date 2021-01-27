@@ -323,7 +323,6 @@ public class BoardDao {
 									rset.getDate("rp_date"),
 									rset.getDate("rp_modify"),
 									rset.getString("rp_status"),
-									rset.getString("rp_privacy"),
 									rset.getInt("brd_no")));
 			}
 			
@@ -379,9 +378,7 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
-		
-		System.out.println("dao");
-		
+
 		return result;
 	}
 
