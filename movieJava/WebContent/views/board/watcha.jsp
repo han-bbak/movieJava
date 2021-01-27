@@ -199,7 +199,6 @@
                 </form>
             </div>
             <div class="header" id="header3">
-                
                 <% if(loginUser == null) { %>
 				<div id="loginArea">
 					<div id="loginform">
@@ -263,8 +262,7 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a id="netflix">Netflix</a>
-                        
+                        <a id="netflix1">Netflix</a>
                         /
                         <a id="watcha" style="color:white;">Watcha</a>
                         <br>
@@ -386,6 +384,12 @@
 	netflix.addEventListener('click', function(){
 		location.href='<%= request.getContextPath() %>/netflix/list';
 	});
+	
+	const netflix1 = document.getElementById('netflix1');
+	netflix1.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/netflix/list';
+	});
+	
 	
 	// 왓챠 버튼
 	const watcha = document.getElementById('watcha');

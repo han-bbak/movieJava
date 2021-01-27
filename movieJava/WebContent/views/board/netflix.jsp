@@ -262,8 +262,7 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a id="netflix" style="color:white;">Netflix</a>
-                        
+                        <a id="netflix1" style="color:white;">Netflix</a>
                         /
                         <a id="watcha">Watcha</a>
                         <br>
@@ -383,6 +382,11 @@
     	// 넷플릭스 버튼
     	const netflix = document.getElementById('netflix');
     	netflix.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/netflix/list';
+    	});
+    	
+    	const netflix1 = document.getElementById('netflix1');
+    	netflix1.addEventListener('click', function(){
     		location.href='<%= request.getContextPath() %>/netflix/list';
     	});
     	
