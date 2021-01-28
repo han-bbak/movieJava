@@ -13,18 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import board.model.service.BoardService;
 import board.model.vo.Board;
 import board.model.vo.PageInfo;
+import board.model.vo.Search;
 
 /**
- * Servlet implementation class qaListServlet
+ * Servlet implementation class qaSearchServlet
  */
-@WebServlet("/qa/list")
-public class qaListServlet extends HttpServlet {
+@WebServlet("/qa/search")
+public class qaSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public qaListServlet() {
+    public qaSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,6 +34,8 @@ public class qaListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Search s = new Search(request.getParameter("searchCondition"),  request.getParameter("search"));
+		
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
@@ -40,38 +43,21 @@ public class qaListServlet extends HttpServlet {
 		}
 		
 		BoardService bs = new BoardService();
-		
-		int listCount = bs.getListCount2();
-//		System.out.println("listCount: " + listCount);
+		int listCount = bs.getSearchListCount2(s);
 		
 		int pageLimit = 10;
 		int boardLimit = 10;
-		int maxPage;
-		int startPage;
-		int endPage;
 		
-		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
-		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+		ArrayList<Board> list = bs.selectSearchList2(pi, s);
 		
-		endPage = startPage + pageLimit - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
-		ArrayList<Board> list = bs.selectList2(pi);
-		
-//		System.out.println("pi: " + pi);
-//		System.out.println("list: " + list );
-		
-		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
+		request.setAttribute("search", s);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/views/board/qa.jsp");
 		view.forward(request, response);
-	
 	}
 
 	/**

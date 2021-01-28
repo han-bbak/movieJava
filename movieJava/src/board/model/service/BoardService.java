@@ -252,4 +252,40 @@ public class BoardService {
 		return list;
 	}
 
+	public int getSearchListCount2(Search s) {
+		Connection conn = getConnection();
+		
+		int listCount = new BoardDao().getSearchListCount2(conn, s);
+		
+		close(conn);
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectSearchList2(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectSearchList2(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	public int insertBoard2(Board b) {
+		Connection conn = getConnection();
+		
+		int result = new BoardDao().insertBoard2(conn, b);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+				
+		return result;
+	}
+
 }
