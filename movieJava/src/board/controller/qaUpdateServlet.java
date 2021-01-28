@@ -43,7 +43,7 @@ public class qaUpdateServlet extends HttpServlet {
 		int result = new BoardService().updateBoard(b);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("msg", "수정되었습니다.");
+			request.getSession().setAttribute("msg", "게시글이 수정되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/qa/detail?brd_no=" + brd_no);
 		}
 	

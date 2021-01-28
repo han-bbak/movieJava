@@ -33,8 +33,7 @@ public class netflixDeleteServlet extends HttpServlet {
 		int result = new BoardService().deleteBoard(brd_no);
 		
 		if(result > 0) {
-			HttpSession session = request.getSession();
-			session.setAttribute("msg", "게시글이 삭제되었습니다.");
+			request.getSession().setAttribute("msg", "게시글이 삭제되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/netflix/list");
 		}
 	}

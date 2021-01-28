@@ -34,7 +34,7 @@ public class qaDeleteReplyServlet extends HttpServlet {
 		int result = new BoardService().deleteReply(rp_no);
 		
 		if(result > 0) {
-			HttpSession session = request.getSession();
+			request.getSession().setAttribute("msg", "댓글이 삭제되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/qa/detail?brd_no=" + brd_no);
 		}
 	}
