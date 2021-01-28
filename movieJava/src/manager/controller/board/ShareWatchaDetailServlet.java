@@ -1,26 +1,26 @@
 package manager.controller.board;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import board.model.vo.Board;
 import manager.model.service.ManagerService;
 
 /**
- * Servlet implementation class BoardRemoveServlet
+ * Servlet implementation class ShareWatchaDetailServlet
  */
-@WebServlet("/manager/boardRemove")
-public class BoardRemoveServlet extends HttpServlet {
+@WebServlet("/manager/watchaDetail")
+public class ShareWatchaDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardRemoveServlet() {
+    public ShareWatchaDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,25 +29,16 @@ public class BoardRemoveServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int brdNo = Integer.parseInt(request.getParameter("removeBoardNo"));
-		int brdCategory = Integer.parseInt(request.getParameter("removeBoardCategory"));
+		int brdNo = Integer.parseInt(request.getParameter("brdNo"));
 		
-		int result = new ManagerService().removeBoard(brdNo);
+		Board b = new ManagerService().selectBoard(brdNo);
 		
-		if(result > 0) {
-			request.setAttribute("msg", "해당 게시글을 삭제했습니다.");
-			if(brdCategory == 1) {
-				request.getRequestDispatcher("/manager/shareNetflix").forward(request, response);
-			} else {
-				request.getRequestDispatcher("/manager/shareWatcha").forward(request, response);
-			}
+		if(b != null) {
+			request.setAttribute("board", b);
+			request.getRequestDispatcher("/views/manager/detailsView/watchaDetailView.jsp").forward(request, response);
 		} else {
-			request.setAttribute("msg", "해당 게시글 삭제에 실패했습니다.");
-			if(brdCategory == 1) {
-				request.getRequestDispatcher("/views/manager/content4_share.jsp").forward(request, response);
-			} else {
-				request.getRequestDispatcher("/views/manager/content4_2_shareWatcha.jsp").forward(request, response);
-			}
+			request.setAttribute("msg", "게시글 조회에 실패했습니다.");
+			request.getRequestDispatcher("/views/manager/content4_2_shareWatcha.jsp").forward(request, response);
 		}
 	}
 

@@ -462,7 +462,7 @@
 		 WHERE 
 		       BRD_NO = ?
 	</entry>
-	<entry key="selectBoardList">
+	<entry key="selectNetflixList">
 		SELECT
 		       RNUM
 		     , BRD_NO
@@ -476,6 +476,68 @@
 		     , BRD_STATUS
 		  FROM
 		       NLIST_M
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectWatchaList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		       WLIST_M
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="countSearchWatcha">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 2
+		   AND BRD_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchWatcha">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		  (
+		       SELECT
+		              ROWNUM RNUM
+		            , BRD_NO
+				    , BRD_CATEGORY
+				    , BRD_TITLE
+				    , BRD_CONTENT
+				    , MEM_NAME
+				    , BRD_CNT
+				    , BRD_DATE
+				    , BRD_MODIFY
+				    , BRD_STATUS
+				 FROM
+				      BOARD
+				      JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+			    WHERE
+			          BRD_CATEGORY = 2
+			      AND BRD_TITLE LIKE '%' || ? || '%'
+			 ORDER BY BRD_NO DESC
+		  )
 	     WHERE
 	           RNUM BETWEEN ? AND ?
 	</entry>

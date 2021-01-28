@@ -745,11 +745,11 @@ public class ManagerDao {
 	}
 
 	// 게시글 페이징 된 리스트
-	public ArrayList<Board> selectBoardList(Connection conn, PageInfo pi) {
+	public ArrayList<Board> selectNetflixList(Connection conn, PageInfo pi) {
 		ArrayList<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectBoardList");
+		String sql = prop.getProperty("selectNetflixList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -759,6 +759,115 @@ public class ManagerDao {
 			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 게시글 페이징 된 리스트(왓챠)
+	public ArrayList<Board> selectWatchaList(Connection conn, PageInfo pi) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectWatchaList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 검색 게시글 갯수(왓챠)
+	public int countSearchWatcha(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("countSearchWatcha");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 검색 게시글 리스트(왓챠)
+	public ArrayList<Board> selectSearchWatcha(Connection conn, PageInfo pi, Search s) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSearchWatcha");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			

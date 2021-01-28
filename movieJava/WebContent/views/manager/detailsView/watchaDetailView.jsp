@@ -29,7 +29,7 @@
             font-weight: bold;
         }
 
-        .netflixDetails {
+        .watchaDetails {
             margin: 30px;
             margin-bottom: 10px;
             width: 80%;
@@ -50,30 +50,30 @@
             float: left;
         }
 
-        .netflixDetails table {
+        .watchaDetails table {
             width: 100%;
             text-align: center;
             color: white;
             border-collapse : collapse;
         }
 
-        .netflixDetails th {
+        .watchaDetails th {
             width: 15%;
             padding: 15px 5px;
             text-align: right;
         }
 
-        .netflixDetails td {
+        .watchaDetails td {
             text-align: justify;
             padding-left: 20px;
         }
         
-        .netflixDetails thead {
+        .watchaDetails thead {
         	background : lightgray;
         	color : black;
         }
         
-        .netflixDetails tbody p {
+        .watchaDetails tbody p {
         	min-height : 500px;
         	overflow-y: scroll;
         }
@@ -124,7 +124,7 @@
                 <p>게시글 상세 정보</p>
             </div>
             <hr>
-            <div class="netflixDetails">
+            <div class="watchaDetails">
                 <table>
                 	<thead>
 	                	<tr>

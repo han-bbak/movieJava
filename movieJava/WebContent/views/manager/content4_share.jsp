@@ -161,11 +161,11 @@
                 </p>
                 <p class="subText" id="p-sub4">넷플릭스</p>
                 <p class="subText" id="p-sub5">
-                    <a href="<%= request.getContextPath() %>/manager/shareNetflix"><span id="countNetflix">1,000,000</span></a>건
+                    <a href="<%= request.getContextPath() %>/manager/shareNetflix"><span id="countNetflix">000</span></a>건
                 </p>
                 <p class="subText" id="p-sub6">왓챠</p>
                 <p class="subText" id="p-sub7">
-                    <a href="<%= request.getContextPath() %>/manager/shareWatcha"><span id="countWatcha">1,000,000</span></a>건
+                    <a href="<%= request.getContextPath() %>/manager/shareWatcha"><span id="countWatcha">000</span></a>건
                 </p>
                 <hr>
 
@@ -200,7 +200,7 @@
                     </tr>
                     <% if(list.isEmpty()) { %>
                     	<tr>
-                    		<td colspan="5">조회 된 회원이 없습니다.</td>
+                    		<td colspan="5">조회 된 게시글이 없습니다.</td>
                     	</tr>
                     <% } else {%>
                     	<% for(Board b : list) { %>

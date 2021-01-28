@@ -10,22 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.service.BoardService;
 import board.model.vo.Board;
 import manager.model.service.ManagerService;
 import manager.model.vo.PageInfo;
 
 /**
- * Servlet implementation class ShareNetflixListServlet
+ * Servlet implementation class ShareWatchaListServlet
  */
-@WebServlet("/manager/shareNetflix")
-public class ShareNetflixListServlet extends HttpServlet {
+@WebServlet("/manager/shareWatcha")
+public class ShareWatchaListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShareNetflixListServlet() {
+    public ShareWatchaListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +33,7 @@ public class ShareNetflixListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int currentPage = 1;
+int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -42,7 +41,7 @@ public class ShareNetflixListServlet extends HttpServlet {
 		
 		ManagerService ms = new ManagerService();
 		
-		int listCount = ms.netflixCount();
+		int listCount = ms.watchaCount();
 //		System.out.println("listCount: " + listCount);
 		
 		int pageLimit = 10;
@@ -64,7 +63,7 @@ public class ShareNetflixListServlet extends HttpServlet {
 		// 페이징 처리와 관련된 변수를 클래스 형식으로 만들어 담기
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Board> list = ms.selectNetflixList(pi);
+		ArrayList<Board> list = ms.selectWatchaList(pi);
 		
 //		System.out.println("pi: " + pi);
 //		System.out.println("list: " + list );
@@ -72,7 +71,7 @@ public class ShareNetflixListServlet extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
-		RequestDispatcher view = request.getRequestDispatcher("/views/manager/content4_share.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("/views/manager/content4_2_shareWatcha.jsp");
 		view.forward(request, response);
 	}
 

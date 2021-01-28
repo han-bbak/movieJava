@@ -315,11 +315,44 @@ public class ManagerService {
 		return result;
 	}
 
-	// 게시글 페이징 된 리스트
-	public ArrayList<Board> selectBoardList(PageInfo pi) {
+	// 게시글 페이징 된 리스트(넷플릭스)
+	public ArrayList<Board> selectNetflixList(PageInfo pi) {
 		Connection conn = getConnection();
 		
-		ArrayList<Board> list = new ManagerDao().selectBoardList(conn, pi);
+		ArrayList<Board> list = new ManagerDao().selectNetflixList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 게시글 페이징 된 리스트(왓챠)
+	public ArrayList<Board> selectWatchaList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectWatchaList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 검색 게시글 갯수 (왓챠)
+	public int countSearchWatcha(Search s) {
+		Connection conn = getConnection();
+		
+		int searchWatcha = new ManagerDao().countSearchWatcha(conn, s);
+		
+		close(conn);
+		
+		return searchWatcha;
+	}
+
+	// 검색 게시글 리스트(왓챠)
+	public ArrayList<Board> selectSearchWatcha(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectSearchWatcha(conn, pi, s);
 		
 		close(conn);
 		
