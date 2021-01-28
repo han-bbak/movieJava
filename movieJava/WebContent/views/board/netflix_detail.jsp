@@ -264,7 +264,7 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -395,6 +395,12 @@
 		$("#rp_noForm").submit();
 	});
 	
+	// Q&A 버튼
+	const qa = document.getElementById('qa');
+	qa.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/qa/list';
+	});
+	
 	
 	// 댓글 수정 -> 나중에..ㅠ
 //	const replyUpdate = document.getElementById('replyUpdate');
@@ -456,14 +462,14 @@
 	});
 </script>
 <script>
-       $(".menuBtn").click(function () { 
-           $("#menu,.page_cover,html").addClass("open"); 
-            window.location.hash = "#open"; 
-        }); 
-        window.onhashchange = function () { 
-            if(location.hash != "#open") {
-                $("#menu,.page_cover,html").removeClass("open");  
-            } 
-        };
+$(".menuBtn").click(function () { 
+    $("#menu,.page_cover,html").addClass("open"); 
+     window.location.hash = "#open"; 
+ }); 
+ window.onhashchange = function () { 
+     if(location.hash != "#open") {
+         $("#menu,.page_cover,html").removeClass("open");  
+     } 
+ };
     </script>
 </html>

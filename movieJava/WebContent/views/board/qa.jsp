@@ -3,6 +3,7 @@
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	Board bd = (Board)request.getAttribute("board");
 	
 	Search s = (Search)request.getAttribute("search");
 	String search = "";
@@ -169,6 +170,7 @@
             font-weight: lighter;
             border: gray;
         }
+        
     </style>
     
 </head>
@@ -238,7 +240,6 @@
 					});
 				</script>
 			<% } %>
-                
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -254,7 +255,7 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
-            <a id="qa">Q&A</a><br>
+            <a id="qa">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -262,16 +263,13 @@
             <div id="board_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a id="netflix1">Netflix</a>
-                        /
-                        <a id="watcha" style="color:white;">Watcha</a>
-                        <br>
+                        <a id="qa1" style="color:white;">Q&A</a>                      
                     </h1>
                 </div>
                 <div id="board_top_btn">
-                <% if(loginUser != null) { %>
-					<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/watcha_insert.jsp'">글쓰기</button>
-				<% } %>
+                	<% if(loginUser != null) { %>
+						<button type="button" class="btn" id="updateBtn" onclick="location.href='<%= request.getContextPath() %>/views/board/qa_insert.jsp'">글쓰기</button>
+					<% } %>
                 </div>
             </div>
             <div class="board_table">
@@ -306,6 +304,7 @@
                     		<td><%= b.getBrd_cnt() %></td>
                     		<td><%= b.getBrd_date() %></td>
 						</tr>
+						
                     	<% } %>
                     <% } %>
                    </tbody>
@@ -313,16 +312,16 @@
             </div>
             <div class="pagingArea">
                 <% if(s == null) { %>
-					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=1'"> &lt;&lt; </button>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=1'"> &lt;&lt; </button>
 				<% } else { %>
-					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=1&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &lt;&lt; </button>
 				<% } %>
                 
                 
                 <% if(pi.getCurrentPage() == 1) { %>
                 	<button class="btn" id="pagingBtn" disabled> &lt; </button>
                 <% } else { %>
-                	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+                	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
                 <% } %>
                 
                 
@@ -330,9 +329,9 @@
                 	<% if(p == pi.getCurrentPage()) { %>
                 		<button class="btn" id="pagingBtn" style="background:lightgray;" disabled><%= p %></button>
                 	<% } else if(s == null) { %>
-             			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= p %>'"> <%= p %> </button>
+             			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=<%= p %>'"> <%= p %> </button>
            			<% } else { %>
-               			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/search?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> <%= p %> </button>
+               			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/search?currentPage=<%= p %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> <%= p %> </button>
                 	<% } %>
                 <% } %>
                 
@@ -340,19 +339,19 @@
                 <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
                 	<button class="btn" id="pagingBtn" disabled> &gt; </button>
                 <% } else { %>
-                 	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+                 	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
          		<% } %>
          		
          		
          		<% if(s == null) { %>
-					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
 				<% } else { %>
-					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/watcha/list?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/qa/list?currentPage=<%= pi.getMaxPage() %>&searchCondition=<%= searchCondition %>&search=<%= search %>'"> &gt;&gt; </button>
 				<% } %>
             </div>
             <br>
             <div class="searchArea">
-            	<form action="<%= request.getContextPath() %>/watcha/search" method="get">
+            	<form action="<%= request.getContextPath() %>/qa/search" method="get">
 					<select id="searchCondition" name="searchCondition">
 						<option>----</option>
 						<option value="writer" <%= selected[0] %>>작성자</option>
@@ -379,50 +378,57 @@
         };
     </script>
     <script>
- 	// 넷플릭스 버튼
-	const netflix = document.getElementById('netflix');
-	netflix.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/netflix/list';
-	});
-	
-	const netflix1 = document.getElementById('netflix1');
-	netflix1.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/netflix/list';
-	});
-	
-	
-	// 왓챠 버튼
-	const watcha = document.getElementById('watcha');
-	watcha.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/watcha/list';
-	});
-	
-	// Q&A 버튼
-	const qa = document.getElementById('qa');
-	qa.addEventListener('click', function(){
-		location.href='<%= request.getContextPath() %>/qa/list';
-	});
+    	// 넷플릭스 버튼
+    	const netflix = document.getElementById('netflix');
+    	netflix.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/netflix/list';
+    	});
+    	
+    	const netflix1 = document.getElementById('netflix1');
+    	netflix1.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/netflix/list';
+    	});
+    	
+    	// 왓챠 버튼
+    	const watcha = document.getElementById('watcha');
+    	watcha.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/watcha/list';
+    	});
+    	
+    	// Q&A 버튼
+    	const qa = document.getElementById('qa');
+    	qa.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/qa/list';
+    	});
+    	
+    	const qa1 = document.getElementById('qa1');
+    	qa1.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/qa/list';
+    	});
+
 
     </script>
-    <script>
- // 게시판 상세 보기  기능
-	$(function() {
-		$(".list_table td").mouseenter(function(){
-			$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
-		}).mouseout(function(){
-			$(this).parent().css("background", "#363636");
-		}).click(function(){
-			var brd_no = $(this).parent().children().eq(0).text();
-			console.log(brd_no);
-			<% if(loginUser != null) { %>
-				location.href='<%= request.getContextPath() %>/watcha/detail?brd_no=' + brd_no;
-			<% } else { %>
-				alert('로그인 후 게시글 보기가 가능합니다.');
-			<% } %>
-		});
-	});
-		
-		
-		
-	</script>
+     <script>
+							// 게시판 상세 보기  기능
+							$(function() {
+								$(".list_table td").mouseenter(function(){
+									$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
+								}).mouseout(function(){
+									$(this).parent().css("background", "#363636");
+								}).click(function(){
+									var brd_no = $(this).parent().children().eq(0).text();
+									<% if(loginUser != null) { %>
+										<% if(loginUser.getMemNo() == bd.getMem_no()) { %>
+											location.href='<%= request.getContextPath() %>/qa/detail?brd_no=' + brd_no;
+										<% } else { %>
+											alert('작성자만 볼 수 있습니다.');	
+										<% } %>
+									<% } else { %>
+										alert('로그인 후 게시글 보기가 가능합니다.');
+									<% } %>
+
+								});
+							});
+							</script>
+
 </html>
