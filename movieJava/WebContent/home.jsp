@@ -527,7 +527,7 @@ h3 {
 <br>
 <a id="netflix">공유 계정</a>
 <br>
-<a href="<%=request.getContextPath()%>/views/board/QA.jsp">Q&A</a>
+<a id="qa">Q&A</a>
 <a href="<%=request.getContextPath()%>/views/store/store_goods.jsp">STORE</a>
 </div>
 <script>
@@ -535,6 +535,12 @@ h3 {
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/netflix/list';
+});
+
+//Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
 });
 </script>
 
