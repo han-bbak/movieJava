@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.service.BoardService;
 import board.model.vo.Board;
-import board.model.vo.PageInfo;
+import manager.model.service.ManagerService;
+import manager.model.vo.PageInfo;
 
 /**
  * Servlet implementation class ShareNetflixListServlet
@@ -39,9 +40,9 @@ public class ShareNetflixListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		BoardService bs = new BoardService();
+		ManagerService ms = new ManagerService();
 		
-		int listCount = bs.getListCount();
+		int listCount = ms.boardCount();
 //		System.out.println("listCount: " + listCount);
 		
 		int pageLimit = 10;
@@ -63,7 +64,7 @@ public class ShareNetflixListServlet extends HttpServlet {
 		// 페이징 처리와 관련된 변수를 클래스 형식으로 만들어 담기
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Board> list = bs.selectList(pi);
+		ArrayList<Board> list = ms.selectBoardList(pi);
 		
 //		System.out.println("pi: " + pi);
 //		System.out.println("list: " + list );

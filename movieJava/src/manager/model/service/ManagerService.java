@@ -277,10 +277,49 @@ public class ManagerService {
 	}
 
 	// 넷플릭스 게시판 검색 결과 리스트
-	public ArrayList<Board> selectSearchNetflix(board.model.vo.PageInfo pi, Search s) {
+	public ArrayList<Board> selectSearchNetflix(PageInfo pi, Search s) {
 		Connection conn = getConnection();
 		
 		ArrayList<Board> list = new ManagerDao().selectSearchNetflix(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 게시글 상세보기용
+	public Board selectBoard(int brdNo) {
+		Connection conn = getConnection();
+		
+		Board b = new ManagerDao().selectBoard(conn, brdNo);
+		
+		close(conn);
+		
+		return b;
+	}
+
+	// 게시글 삭제
+	public int removeBoard(int brdNo) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().removeBoard(conn, brdNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 게시글 페이징 된 리스트
+	public ArrayList<Board> selectBoardList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectBoardList(conn, pi);
 		
 		close(conn);
 		

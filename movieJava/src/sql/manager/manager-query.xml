@@ -367,6 +367,9 @@
 		     , DEFAULT
 		)
 	</entry>
+	
+<!-- ============================ Board ============================ -->
+	
 	<entry key="boardCount">
 		SELECT
 		       COUNT(*)
@@ -431,6 +434,48 @@
 			      AND BRD_TITLE LIKE '%' || ? || '%'
 			 ORDER BY BRD_NO DESC
 		  )
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectBoard">
+		SELECT
+		       BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		       BOARD
+		       JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+		 WHERE
+		       BRD_NO = ?
+	</entry>
+	<entry key="removeBoard">
+		UPDATE
+		       BOARD
+		   SET 
+		       BRD_STATUS = 'N'
+		 WHERE 
+		       BRD_NO = ?
+	</entry>
+	<entry key="selectBoardList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		       NLIST_M
 	     WHERE
 	           RNUM BETWEEN ? AND ?
 	</entry>

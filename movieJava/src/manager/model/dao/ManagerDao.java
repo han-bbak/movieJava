@@ -646,7 +646,7 @@ public class ManagerDao {
 	}
 
 	// 넷플릭스 게시판 검색 결과 리스트
-	public ArrayList<Board> selectSearchNetflix(Connection conn, board.model.vo.PageInfo pi, Search s) {
+	public ArrayList<Board> selectSearchNetflix(Connection conn, PageInfo pi, Search s) {
 		ArrayList<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -661,6 +661,104 @@ public class ManagerDao {
 			pstmt.setString(1, s.getSearch());
 			pstmt.setInt(2, startRow);
 			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 게시글 상세 보기용
+	public Board selectBoard(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		Board b = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt(1),
+				           rset.getInt(2),
+				           rset.getString(3),
+				           rset.getString(4),
+				           rset.getString(5),
+				           rset.getInt(6),
+				           rset.getDate(7),
+				           rset.getDate(8),
+				           rset.getString(9));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return b;
+	}
+
+	// 게시글 삭제
+	public int removeBoard(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("removeBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 게시글 페이징 된 리스트
+	public ArrayList<Board> selectBoardList(Connection conn, PageInfo pi) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
