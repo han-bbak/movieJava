@@ -19,6 +19,10 @@
 	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+</style>
 <style>
 #menu-icon {
 	color: #ffffff;
@@ -420,6 +424,11 @@ h3 {
 	background-color: #FFFFFF;
 	color: #181C25;
 }
+
+.font1{
+		font-size : 30px
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
 </style>
 </head>
 
@@ -469,11 +478,11 @@ h3 {
 							onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
 					</div>
 					<br clear="both">
-					<div id="searchDiv">
-						<a
-							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디
+					<div id="searchDiv" class="font1">
+						<a 
+							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>&nbsp;&nbsp;&nbsp;&nbsp;아이디
 								찾기</span></a> <a
-							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호
+							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>&emsp;&nbsp;&nbsp;비밀번호
 								찾기</span></a>
 					</div>
 				</div>
