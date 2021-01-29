@@ -297,10 +297,8 @@
                 </table>
                 <div class="btnArea">
                     <button type="button" class="button" id="backBtn">목록</button>
-                    
-                    <% if(loginUser.getMemNo() == b.getMem_no()) { %>
-                    	<button type="button" class="button" id="updateBtn">수정</button>
-                    	<button type="button" class="button" id="deleteBtn">삭제</button>
+                    <button type="button" class="button" id="updateBtn">수정</button>
+                    <button type="button" class="button" id="deleteBtn">삭제</button>
                     	
                     	<script>
 							// 수정
@@ -317,7 +315,6 @@
 								$("#brd_noForm").submit();
 							});
 						</script>
-					<% } %>
                 </div>
                 <hr>
                 <div class="replyArea">
@@ -339,7 +336,6 @@
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
                     			<tr>
-                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no()) { %>
                     				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
@@ -353,7 +349,7 @@
                     						<input type="hidden" name="rp_content" value="<%= r.getRp_content() %>" />
                     					</form>
                     				</td>
-                    			<% } %>
+
                     			</tr>
                     		<% } %>
                     	<% } else { %>

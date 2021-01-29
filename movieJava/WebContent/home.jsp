@@ -123,6 +123,7 @@ a:-webkit-any-link {
 }
 
 #search-input {
+	padding-left: 15px;
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
@@ -437,22 +438,24 @@ h3 {
 				<a href="home.jsp"><img class="logo" src="images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
-				<form id="search-form">
+			
+			<!----- 영화 검색 ----->
+				<form id="search-form" action="./views/movie/search/result.jsp"" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-									d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                           </svg>
 						</button>
 					</section>
 					<section id="search-text-area">
-						<input type="text" id="search-input" name="search-input"
-							placeholder="  보고싶은 영화를 검색해보세요.">
+						<input type="text" id="search-input" name="search"
+							placeholder="보고싶은 영화를 검색해보세요.">
 					</section>
-
 				</form>
+			<!-- ------------- -->
+			
 			</div>
 			<div class="header" id="header3">
 				<% if(loginUser == null) { %>
@@ -527,7 +530,7 @@ h3 {
 <br>
 <a id="netflix">공유 계정</a>
 <br>
-<a id="qa">Q&A</a>
+<a href="<%=request.getContextPath()%>/views/board/QA.jsp">Q&A</a>
 <a href="<%=request.getContextPath()%>/views/store/store_goods.jsp">STORE</a>
 </div>
 <script>
@@ -535,12 +538,6 @@ h3 {
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/netflix/list';
-});
-
-//Q&A 버튼
-const qa = document.getElementById('qa');
-qa.addEventListener('click', function(){
-	location.href='<%= request.getContextPath() %>/qa/list';
 });
 </script>
 
@@ -680,6 +677,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 	margin: 10;
 	list-style: none;
 	text-align: center;
+	
 }
 
  .slick-dots li {
@@ -693,7 +691,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 } 
 
 .slick-dots li button {
-	display: block;
+	display: inline-block;
 	width: 20px;
 	height: 20px;
 	padding: 5px;
@@ -710,7 +708,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 /* 도트 */
 .slick-dots li button:before {
 	font-family: 'slick';
-	font-size: 10px;
+	font-size: 15px;
 	line-height: 40px;
 	position: absolute;
 	top: 0;
@@ -718,12 +716,10 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 	width: 20px;
 	height: 20px;
 	content: '●';
-	font-size: 1.2em;
 	text-align: center;
 	opacity: .25;
 	color: black;
 	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 .slick-dots li.slick-active button:before {

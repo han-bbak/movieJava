@@ -416,7 +416,9 @@
 			<% if(loginUser != null) { %>
 				var userNo = <%= loginUser.getMemNo() %>;
 				var writer = $(this).parent().children().eq(0).val();
-				if(userNo == writer) {
+				var admin = <%= loginUser.getMemId().equals("admin") %>;
+				
+				if(userNo == writer || admin) {
 					location.href='<%= request.getContextPath() %>/qa/detail?brd_no=' + brd_no;
 				} else {
 					alert('작성자만 조회할 수 있습니다.');	

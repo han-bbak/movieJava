@@ -301,7 +301,7 @@
                 <div class="btnArea">
                     <button type="button" class="button" id="backBtn">목록</button>
                     
-                    <% if(loginUser.getMemNo() == b.getMem_no()) { %>
+                    <% if(loginUser.getMemNo() == b.getMem_no() || loginUser.getMemId().equals("admin")) { %>
                     	<button type="button" class="button" id="updateBtn">수정</button>
                     	<button type="button" class="button" id="deleteBtn">삭제</button>
                     	
@@ -343,11 +343,11 @@
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
                     			<tr>
-                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no()) { %>
+                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no() || loginUser.getMemId().equals("admin")) { %>
                     				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
-                    				<% if(loginUser.getMemNo() == r.getRp_writer()) { %>
+                    				<% if(loginUser.getMemNo() == r.getRp_writer() ||  loginUser.getMemId().equals("admin")) { %>
                     					<td><%= r.getRp_date() %></td>
                     					<td>
                     						<button class="button" type="button" id="replyUpdate">수정</button>
