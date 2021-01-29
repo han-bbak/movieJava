@@ -13,6 +13,7 @@ public class Board {
 	private Date brd_date;			// 작성일
 	private Date brd_modify;		// 수정일
 	private String brd_status;		// 활성화
+	private String brd_qa_wait;		// 문의 답변 상태
 	
 	public Board() {}
 
@@ -52,6 +53,22 @@ public class Board {
 		this.brd_title = brd_title;
 		this.brd_content = brd_content;
 		this.mem_no = mem_no;
+	}
+	
+	public Board(int brd_no, int brd_category, String brd_title, String brd_content, int mem_no, String brd_writer,
+			int brd_cnt, Date brd_date, Date brd_modify, String brd_status, String brd_qa_wait) {
+		super();
+		this.brd_no = brd_no;
+		this.brd_category = brd_category;
+		this.brd_title = brd_title;
+		this.brd_content = brd_content;
+		this.mem_no = mem_no;
+		this.brd_writer = brd_writer;
+		this.brd_cnt = brd_cnt;
+		this.brd_date = brd_date;
+		this.brd_modify = brd_modify;
+		this.brd_status = brd_status;
+		this.brd_qa_wait = brd_qa_wait;
 	}
 
 	public int getBrd_no() {
@@ -134,14 +151,20 @@ public class Board {
 		this.brd_status = brd_status;
 	}
 
+	public String getBrd_qa_wait() {
+		return brd_qa_wait;
+	}
+
+	public void setBrd_qa_wait(String brd_qa_wait) {
+		this.brd_qa_wait = brd_qa_wait;
+	}
+
 	@Override
 	public String toString() {
 		return "Board [brd_no=" + brd_no + ", brd_category=" + brd_category + ", brd_title=" + brd_title
 				+ ", brd_content=" + brd_content + ", mem_no=" + mem_no + ", brd_writer=" + brd_writer + ", brd_cnt="
 				+ brd_cnt + ", brd_date=" + brd_date + ", brd_modify=" + brd_modify + ", brd_status=" + brd_status
-				+ "]";
+				+ ", brd_qa_wait=" + brd_qa_wait + "]";
 	}
-	
-	
 
 }
