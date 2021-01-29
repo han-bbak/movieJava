@@ -411,7 +411,7 @@
 			
 			console.log(u_rp_content);
 			
-			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/updateReply");
+			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/qa/updateReply");
 			$("#rp_noForm").submit();
 		}
 	});
@@ -422,9 +422,9 @@
 		var text = $(this).text();
 
 		if(text == '취소') {
-			location.href='<%= request.getContextPath() %>/netflix/detail?brd_no=<%= b.getBrd_no() %>';
+			location.href='<%= request.getContextPath() %>/qa/detail?brd_no=<%= b.getBrd_no() %>';
 		} else if(text == '삭제') {
-			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/deleteReply");
+			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/qa/deleteReply");
 			$("#rp_noForm").submit();
 		}
 	});
