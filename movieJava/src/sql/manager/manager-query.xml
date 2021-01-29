@@ -367,6 +367,9 @@
 		     , DEFAULT
 		)
 	</entry>
+	
+<!-- ============================ Board ============================ -->
+	
 	<entry key="boardCount">
 		SELECT
 		       COUNT(*)
@@ -433,5 +436,196 @@
 		  )
 	     WHERE
 	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectBoard">
+		SELECT
+		       BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		     , BRD_QA_WAIT
+		  FROM
+		       BOARD
+		       JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+		 WHERE
+		       BRD_NO = ?
+	</entry>
+	<entry key="removeBoard">
+		UPDATE
+		       BOARD
+		   SET 
+		       BRD_STATUS = 'N'
+		 WHERE 
+		       BRD_NO = ?
+	</entry>
+	<entry key="selectNetflixList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		       NLIST_M
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectWatchaList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		       WLIST_M
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="countSearchWatcha">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 2
+		   AND BRD_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchWatcha">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		  FROM
+		  (
+		       SELECT
+		              ROWNUM RNUM
+		            , BRD_NO
+				    , BRD_CATEGORY
+				    , BRD_TITLE
+				    , BRD_CONTENT
+				    , MEM_NAME
+				    , BRD_CNT
+				    , BRD_DATE
+				    , BRD_MODIFY
+				    , BRD_STATUS
+				 FROM
+				      BOARD
+				      JOIN MEMBER ON (BRD_WRITER = MEM_NO)
+			    WHERE
+			          BRD_CATEGORY = 2
+			      AND BRD_TITLE LIKE '%' || ? || '%'
+			 ORDER BY BRD_NO DESC
+		  )
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="qaCount">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 3
+	</entry>
+		<entry key="qaWaitCount">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 3
+		   AND BRD_QA_WAIT LIKE '%' || '대기' || '%'
+	</entry>
+		<entry key="qaCompleteCount">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       BOARD
+		 WHERE
+		       BRD_CATEGORY = 3
+		   AND BRD_QA_WAIT LIKE '%' || '완료' || '%'
+	</entry>
+	<entry key="selectQaList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		     , BRD_QA_WAIT
+		  FROM
+		       QLIST_M
+	     WHERE
+	           RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="insertAnswer">
+		INSERT
+		  INTO QA_ANS
+		  (
+		       ANS_NO
+		     , ANS_CONTENT
+		     , ANS_DATE
+		     , ANS_MODIFY_DATE
+		     , ANS_WRITER
+		     , QA_NO
+		  )
+		VALUES
+		(
+		       SEQ_QA_ANS_NO.NEXTVAL
+		     , ?
+		     , SYSDATE
+		     , SYSDATE
+		     , DEFAULT
+		     , ?
+		)
+	</entry>
+	<entry key="selectQA">
+		SELECT
+		       ANS_NO
+		     , ANS_CONTENT
+		     , ANS_DATE
+		     , ANS_MODIFY_DATE
+		     , ANS_WRITER
+		     , QA_NO
+		  FROM
+		       QA_ANS
+		 WHERE
+		       QA_NO = ?
+	</entry>
+	<entry key="changeWait">
+		UPDATE
+		       BOARD
+		   SET
+		       BRD_QA_WAIT = '답변 완료'
+		 WHERE
+		       BRD_NO = ?
 	</entry>
 </properties>

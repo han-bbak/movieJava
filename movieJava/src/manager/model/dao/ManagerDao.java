@@ -17,6 +17,7 @@ import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
 
@@ -646,7 +647,7 @@ public class ManagerDao {
 	}
 
 	// 넷플릭스 게시판 검색 결과 리스트
-	public ArrayList<Board> selectSearchNetflix(Connection conn, board.model.vo.PageInfo pi, Search s) {
+	public ArrayList<Board> selectSearchNetflix(Connection conn, PageInfo pi, Search s) {
 		ArrayList<Board> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -684,6 +685,406 @@ public class ManagerDao {
 		}
 		
 		return list;
+	}
+
+	// 게시글 상세 보기용
+	public Board selectBoard(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		Board b = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				b = new Board(rset.getInt(1),
+				           rset.getInt(2),
+				           rset.getString(3),
+				           rset.getString(4),
+				           rset.getString(5),
+				           rset.getInt(6),
+				           rset.getDate(7),
+				           rset.getDate(8),
+				           rset.getString(9),
+				           rset.getString(10));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return b;
+	}
+
+	// 게시글 삭제
+	public int removeBoard(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("removeBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 게시글 페이징 된 리스트
+	public ArrayList<Board> selectNetflixList(Connection conn, PageInfo pi) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectNetflixList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 게시글 페이징 된 리스트(왓챠)
+	public ArrayList<Board> selectWatchaList(Connection conn, PageInfo pi) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectWatchaList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 검색 게시글 갯수(왓챠)
+	public int countSearchWatcha(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("countSearchWatcha");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 검색 게시글 리스트(왓챠)
+	public ArrayList<Board> selectSearchWatcha(Connection conn, PageInfo pi, Search s) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSearchWatcha");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 문의글 갯수 세기
+	public int qaCount(Connection conn) {
+		Statement stmt = null;
+		int qaCount = 0;
+		ResultSet rset = null;
+		String sql = prop.getProperty("qaCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				qaCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return qaCount;
+	}
+
+	public int qaWaitCount(Connection conn) {
+		Statement stmt = null;
+		int qaWaitCount = 0;
+		ResultSet rset = null;
+		String sql = prop.getProperty("qaWaitCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				qaWaitCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return qaWaitCount;
+	}
+
+	public int qaCompleteCount(Connection conn) {
+		Statement stmt = null;
+		int qaCompleteCount = 0;
+		ResultSet rset = null;
+		String sql = prop.getProperty("qaCompleteCount");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				qaCompleteCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return qaCompleteCount;
+	}
+
+	public ArrayList<Board> selectQAList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("selectQaList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10),
+						           rset.getString(11)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	// 문의 답변 달기
+	public int insertAnswer(Connection conn, QAAnswer qa) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		ResultSet rset = null;
+		String sql = prop.getProperty("insertAnswer");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, qa.getAnsContent());
+			pstmt.setInt(2, qa.getBrdNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	// 문의 답변 가져오기
+	public QAAnswer selectQA(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		QAAnswer qa = null;
+		String sql = prop.getProperty("selectQA");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				qa = new QAAnswer(rset.getInt(1),
+						          rset.getString(2),
+						          rset.getDate(3),
+						          rset.getDate(4),
+						          rset.getString(5),
+						          rset.getInt(6));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return qa;
+	}
+
+	// 답변 대기 -> 답변 완료 변경
+	public int changeWait(Connection conn, int brdNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("changeWait");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, brdNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }

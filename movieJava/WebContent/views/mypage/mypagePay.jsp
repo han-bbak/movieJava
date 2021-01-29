@@ -15,7 +15,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+</style>
 
         <style>
         
@@ -400,8 +402,8 @@ h3 {
 	background-color: #FFFFFF;
 	color: #181C25;
 	}
-         table {
-        background-color: papayawhip;
+        table {
+        background-color:  #dfe9f5;
         width: 100%;
         border-top: 1px solid #444444;
         border-collapse: collapse;
@@ -409,10 +411,32 @@ h3 {
       th, td {
         border-bottom: 1px solid #444444;
         padding: 10px;
-        text-align: center;
+        text-align: right;
       }
+      
+      .thead1{
+      background-color : #95c1f7;
+      }
+      
+      .content11{
+      	width: 50%;
+      }
+      .font1{
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
+      #h1con{
+      	font-size : 30px;
+      	color : white;
+      	text-align : center;
+      }
+      
+      
+      
+      
+      
         </style>
     
+    	
 </head>
 
 <body>
@@ -508,29 +532,169 @@ h3 {
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
-		<p>zz</p>
         <div id="content">
-            <table>
-                <thead>
-                  <tr>
-                    <th>품목</th><th>상세</th><th>원(비우자)</th><th>배송</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><img src=""></td><td>물품설명</td><td>15,000원</td><td>배송중</td>
-                  </tr>
-                  <tr>
-                    <td>이미지</td><td>물품설명</td><td>15,000원</td><td>배송중</td>
-                  </tr>
-                  <tr>
-                    <td>1</td><td>물품설명</td><td>15,000원</td><td>배송중</td>
-                  </tr>
-                  
-                </tbody>
-              </table>
-        </div>
-    </div>
+            <h1 class="font1" id="h1con">결제내역</h1>
+              
+              <table class="font1" id="dataTable" width="100%" cellspacing="0">
+                                        <thead class="thead1">
+                                            <tr>
+                                                <th>사진</th>
+                                                <th>상품명</th>
+                                                <th>수량</th>
+                                                <th>적립</th>
+                                               <th>금액</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr>
+                                               <th>사진</th>
+                                                <th>상품명</th>
+                                                <th>수량</th>
+                                                <th>적립</th>
+                                                 <th>금액</th>
+                                            </tr>
+                                            
+                                           
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>총 결제금액</th>
+                                        
+                                        <th>금액</th>
+                                        </tfoot>
+                                    </table>
+                                    <br><br><br>
+                            
+                            <table class="font1" id="title1" width="100%" cellspacing="0">
+                                        <thead class="thead1">
+                                            <tr>
+                                            
+                                                <th colspan="6">결제방법</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr>
+                                            
+                                            
+                                               
+                                               
+                                               <th>신용카드</th>
+                                               
+                                               
+                                               
+                                                <th>이름</th>
+                                                
+                                            </tr>
+                                            
+                                           
+                                        </tbody>
+                                        
+                                    </table>
+                            
+                            
+                            <br><br><br>
+                           
+                            <table class="font1" id="dataTable" width="100%" cellspacing="0">
+                                        <thead >
+                                            <tr class="thead1">
+                                            
+                                               
+                                               
+                                               
+                                                <th colspan="6">주문자 정보</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr>
+                                            <th></th>
+                                            <th></th>
+                                               <th></th>
+                                               <th></th>
+                                               <th>이름</th>
+                                               
+                                               
+                                                <th><%= loginUser.getMemName() %></th>
+                                                
+                                            </tr>
+                                            <tr>
+                                            <th></th>
+                                            <th></th>
+                                               <th></th>
+                                               <th></th>
+                                            	<th>이메일</th>
+                                            	<th><%= loginUser.getEmail() %></th>
+                                            	
+                                            </tr>
+                                           
+                                           <tr>
+                                           		<th></th>
+                                           		<th></th>
+                                               <th></th>
+                                               <th></th>
+                                           		
+                                           		<th>연락처</th>
+                                           		<th><%= loginUser.getPhone() %></th>
+                                           </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                            
+                           
+                            <br><br><br>
+                            
+                            <table class="font1" id="dataTable" width="100%" cellspacing="0">
+                                        <thead >
+                                            <tr class="thead1">
+                                            
+                                               
+                                               
+                                               
+                                                <th colspan="6">배송 정보</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                            <tr>
+                                            <th></th>
+                                            <th></th>
+                                               <th></th>
+                                               <th></th>
+                                               <th>이름</th>
+                                               
+                                               
+                                                <th><%= loginUser.getMemName() %></th>
+                                                
+                                            </tr>
+                                            <tr>
+                                            <th></th>
+                                            <th></th>
+                                               <th></th>
+                                               <th></th>
+                                            	<th>연락처</th>
+                                            	<th><%= loginUser.getPhone() %></th>
+                                            	
+                                            </tr>
+                                           
+                                           <tr>
+                                           		<th></th>
+                                           		<th></th>
+                                               <th></th>
+                                               <th></th>
+                                           		
+                                           		<th>주소</th>
+                                           		<th><%= loginUser.getAddress() %></th>
+                                           </tr>
+                                        </tbody>
+                                        
+                                    </table>
+                            
+                            
 </body>
 <script>
 $(".btn").click(function () { 

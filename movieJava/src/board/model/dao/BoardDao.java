@@ -553,6 +553,178 @@ public class BoardDao {
 		return result;
 	}
 
+	public int getListCount2(Connection conn) {
+		int listCount = 0;
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getListCount2");
+
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectList2(Connection conn, PageInfo pi) {
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectList2");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+									rset.getInt(3),
+									rset.getString(4),
+									rset.getString(5),
+									rset.getInt(6),
+									rset.getString(7),
+									rset.getInt(8),
+									rset.getDate(9),
+									rset.getDate(10),
+									rset.getString(11)));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int getSearchListCount2(Connection conn, Search s) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		if(s.getSearchCondition().equals("writer")) {
+			sql = prop.getProperty("getSearchWriterListCount2");
+		} else if(s.getSearchCondition().equals("title")) {
+			sql = prop.getProperty("getSearchTitleListCount2");
+		} else {
+			sql = prop.getProperty("getSearchContentListCount2");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectSearchList2(Connection conn, PageInfo pi, Search s) {
+		ArrayList<Board> list = new ArrayList<> ();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		
+		if(s.getSearchCondition().equals("writer")) {
+			sql = prop.getProperty("selectSearchWriterList2");
+		} else if(s.getSearchCondition().equals("title")) {
+			sql = prop.getProperty("selectSearchTitleList2");
+		} else {
+			sql = prop.getProperty("selectSearchContentList2");
+		}
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+									rset.getInt(3),
+									rset.getString(4),
+									rset.getString(5),
+									rset.getString(6),
+									rset.getInt(7),
+									rset.getDate(8),
+									rset.getDate(9),
+									rset.getString(10)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int insertBoard2(Connection conn, Board b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBoard2");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getBrd_title());
+			pstmt.setString(2, b.getBrd_content());
+			pstmt.setInt(3, b.getMem_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 
 	
 

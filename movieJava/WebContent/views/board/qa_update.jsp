@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board"%>
+<%
+	Board b = (Board)request.getAttribute("board");
+%>
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -20,7 +22,6 @@
             color: whitesmoke;
             font-size: xx-large;
             font-weight: 500;
-
             top: 0;
             bottom: 0;
             left: 0;
@@ -33,97 +34,51 @@
 			margin: 20px 50px;
 			max-width: 130%;
         }
-
+        
         #board_top_title {
             float: left;
             width: 50%;
             height: 100%;
             position: relative;
         }
-
         .tableArea {
             padding: 20px;
-            width: 850px;
-            height: 900px;
+            width: 700px;
+            height: 650px;
             margin: auto;
             background: gray;
         }
-   
-        #contentTable {
+    
+        .input_area {
+            border: solid 1px #dadada;
+            padding: 10px 10px 14px 10px;
+            background: white;
             width: 95%;
-            height: 50%;
-            border:5px solid white;
-            text-align: center;
-            margin:auto; 
         }
-
-        #contentTop {
-            height: 50px;
+    
+        .input_area input {
+            width: 95%;
+            height: 30px;
+            border: 0;
         }
-
-        #contentTable #content {
-            text-align:left;
-            color: black;
-            border-top: 1px solid;
-            margin: auto;
-            padding-top: 10px;
-        }
-
-        #contentTable td {
-            padding: 0;
-        }
-   
-        #contentTable td:nth-child(1) {
-          width : 50px;
-          color: white;
-        }
-   
-        #contentTable td:nth-child(2) {
-          width : 500px;
-        }
-   
-        #contentTable td:nth-child(3) {
-            width: 80px;
-            color: white;
-        }
-   
-        #contentTable td:nth-child(4) {
-          width : 110px;
-        }
-   
-        #contentTable td:nth-child(5) {
-          width : 70px;
-          color: white;
-        }
-   
-        #contentTable td:nth-child(6) {
-          width : 10px;
-        }
-
-        #contentTable td:nth-child(7) {
-          width : 70px;
-          color: white;
-        }
-
-        #contentTable td:nth-child(8) {
-          width : 110px;
+        
+        textarea {
+        	width: 95%;
+            height: 400px;
+            border: 0;
         }
     
         .btnArea {
-            text-align: right;
+            text-align: center;
             padding-top: 10px;
-            padding-right: 15px;
         }
-
         #title {
             margin-top: 0;
         }
-
         #btn {
             cursor: pointer;
             width: 80px;
             height: 30px;
-
             background: rgb(62, 103, 184);
             border: rgb(62, 103, 184);
             border-top-right-radius: 5px;
@@ -131,26 +86,18 @@
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             color: white;
-            margin-left: 5px;
+            margin-left: 10px;
         }
 
-        .input_area {
-            /* border: solid 1px red; */
-            padding: 10px 10px 10px 10px;
-            background: white;
-        }
-    
-        .input_area input {
-            width: 70%;
-            border: 0;
-        }
-
-        .replyArea {
-            margin: auto;
-            height: 40%;
-            text-align: center;
-        }
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -163,7 +110,7 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -199,11 +146,11 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
-			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
-			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="메인페이지.html">Home</a>
+            <a href="마이페이지.html">마이페이지</a><br>
+            <a href="관심영화.html">관심 영화</a><br>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -212,55 +159,47 @@
                 <div id="board_top_title"><h1 id="board_name">Q&A</h1></div>
             </div>
             <div class="tableArea"> 
-                <table id="contentTable">
-                    <tr id="contentTop">
-                        <td>제목</td>
-                        <td>이것은 게시글의 제목입니다</td>
-                        <td>작성자</td>
-                        <td>작성자이름</td>
-                        <td>조회수</td>
-                        <td>0</td>
-                        <td>작성일</td>
-                        <td>2021-01-07</td>
-                    </tr>
-                    <tr>
-                        <td colspan ="8">
-                            <p id="content">게시글 내용 1!!!@!!!!!</p>
-                        </td>
-                    </tr>
-                </table>
-                <div class="btnArea">
-                    <button type="button" id="btn" onclick="history.back();">목록</button>
-                    <button type="button" id="btn">수정</button>
-                    <button type="button" id="btn">삭제</button>
-                </div>
-                <hr>
-                <div class="replyArea">
-                    <br>
+            <form action="<%= request.getContextPath() %>/qa/update" method="post">
+			<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
+                    <h4 class="board_title" id="title">제목</h4>
                     <span class="input_area">
-                        <input type="text" name="input" placeholder="댓글을 작성해 보세요">
+                        <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
-                    <button type="button" id="btn">등록하기</button>
-                    <table id="replyTable">
-                        <tr>
-                            <td>댓글 table</td>
-                        </tr>
-                    </table>
-                </div>
+                    
+                    <h4 class="board_title">내용</h4>
+                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
+                    
+                    <div class="btnArea">
+                        <button type="submit" id="btn">등록</button>
+                        <button type="button" id="btn" onclick="history.back();">취소</button>
+                    </div>
+            </form>
             </div>
         </div>
     </div>
 </body>
 <script>
-       $(".menuBtn").click(function () { 
-           $("#menu,.page_cover,html").addClass("open"); 
-            window.location.hash = "#open"; 
-        }); 
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
 
-        window.onhashchange = function () { 
-            if(location.hash != "#open") {
-                $("#menu,.page_cover,html").removeClass("open");  
-            } 
-        };
+// Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
+});
+</script>
+<script>
+		$(".menuBtn").click(function () { 
+    		$("#menu,.page_cover,html").addClass("open"); 
+    		 window.location.hash = "#open"; 
+ 		}); 
+ 		window.onhashchange = function () { 
+     		if(location.hash != "#open") {
+       		  $("#menu,.page_cover,html").removeClass("open");  
+    		 } 
+ 		};
     </script>
 </html>

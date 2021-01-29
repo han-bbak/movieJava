@@ -171,7 +171,14 @@
         }
         
     </style>
-    
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -254,7 +261,7 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -394,6 +401,12 @@
     	const watcha = document.getElementById('watcha');
     	watcha.addEventListener('click', function(){
     		location.href='<%= request.getContextPath() %>/watcha/list';
+    	});
+    	
+    	// Q&A 버튼
+    	const qa = document.getElementById('qa');
+    	qa.addEventListener('click', function(){
+    		location.href='<%= request.getContextPath() %>/qa/list';
     	});
 
     </script>

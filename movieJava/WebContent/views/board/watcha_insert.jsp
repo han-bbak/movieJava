@@ -89,6 +89,14 @@ Member loginUser = (Member)session.getAttribute("loginUser");
             margin-left: 10px;
         }
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -170,8 +178,8 @@ Member loginUser = (Member)session.getAttribute("loginUser");
             <a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -198,6 +206,19 @@ Member loginUser = (Member)session.getAttribute("loginUser");
         </div>
     </div>
 </body>
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
+
+// Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
+});
+</script>
 <script>
        $(".btn").click(function () { 
            $("#menu,.page_cover,html").addClass("open"); 

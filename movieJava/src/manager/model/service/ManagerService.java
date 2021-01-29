@@ -10,6 +10,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
+import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
 
@@ -277,7 +278,7 @@ public class ManagerService {
 	}
 
 	// 넷플릭스 게시판 검색 결과 리스트
-	public ArrayList<Board> selectSearchNetflix(board.model.vo.PageInfo pi, Search s) {
+	public ArrayList<Board> selectSearchNetflix(PageInfo pi, Search s) {
 		Connection conn = getConnection();
 		
 		ArrayList<Board> list = new ManagerDao().selectSearchNetflix(conn, pi, s);
@@ -285,6 +286,165 @@ public class ManagerService {
 		close(conn);
 		
 		return list;
+	}
+
+	// 게시글 상세보기용
+	public Board selectBoard(int brdNo) {
+		Connection conn = getConnection();
+		
+		Board b = new ManagerDao().selectBoard(conn, brdNo);
+		
+		close(conn);
+		
+		return b;
+	}
+
+	// 게시글 삭제
+	public int removeBoard(int brdNo) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().removeBoard(conn, brdNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 게시글 페이징 된 리스트(넷플릭스)
+	public ArrayList<Board> selectNetflixList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectNetflixList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 게시글 페이징 된 리스트(왓챠)
+	public ArrayList<Board> selectWatchaList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectWatchaList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 검색 게시글 갯수 (왓챠)
+	public int countSearchWatcha(Search s) {
+		Connection conn = getConnection();
+		
+		int searchWatcha = new ManagerDao().countSearchWatcha(conn, s);
+		
+		close(conn);
+		
+		return searchWatcha;
+	}
+
+	// 검색 게시글 리스트(왓챠)
+	public ArrayList<Board> selectSearchWatcha(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectSearchWatcha(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 문의글 갯수 세기
+	public int qaCount() {
+		Connection conn = getConnection();
+		
+		int qaCount = new ManagerDao().qaCount(conn);
+		
+		close(conn);
+		
+		return qaCount;
+	}
+
+	public int qaWaitCount() {
+		Connection conn = getConnection();
+		
+		int qaWaitCount = new ManagerDao().qaWaitCount(conn);
+		
+		close(conn);
+		
+		return qaWaitCount;
+	}
+
+	public int qaCompleteCount() {
+		Connection conn = getConnection();
+		
+		int qaCompleteCount = new ManagerDao().qaCompleteCount(conn);
+		
+		close(conn);
+		
+		return qaCompleteCount;
+	}
+
+	// 문의글 전체 목록(페이징)
+	public ArrayList<Board> selectQAList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectQAList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 문의 답변 달기
+	public int insertAnswer(QAAnswer qa) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().insertAnswer(conn, qa);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 문의 답변내용 가져오기
+	public QAAnswer selectQA(int brdNo) {
+		Connection conn = getConnection();
+		
+		QAAnswer qa = new ManagerDao().selectQA(conn, brdNo);
+		
+		close(conn);
+		
+		return qa;
+	}
+
+	// 답변 대기 -> 답변 완료 변경
+	public int changeWait(int brdNo) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().changeWait(conn, brdNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 
 }

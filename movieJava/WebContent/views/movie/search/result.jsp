@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	import="member.model.vo.Member, java.util.ArrayList, java.net.URLEncoder"%>
+<%
+	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
+	String result = request.getParameter("result");
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>검색 결과 화면</title>
-</head>
-<body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>영화 검색 결과</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"
+	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
 <style>
@@ -18,8 +25,7 @@
 	padding: 30px 0;
 	font-size: 4em;
 }
-</style>
-<style>
+
 .logo {
 	position: relative;
 	margin: 20px 50px;
@@ -30,7 +36,7 @@ body {
 	background: #363636;
 }
 
-/*
+/* // div선
  		div {
 			border: 1px solid white;
 			box-sizing: border-box;
@@ -39,6 +45,11 @@ body {
 p {
 	color: white;
 	text-align: center;
+}
+
+a:-webkit-any-link {
+	color: -webkit-link;
+	cursor: pointer;
 }
 
 #wrapper {
@@ -59,9 +70,11 @@ p {
 }
 
 #footer {
+	margin-top: 70px;
+	padding: 20px;
 	background-color: rgb(24, 24, 24);
 	width: 100%;
-	height: 10%;
+	height: 150px;
 }
 
 .header {
@@ -80,7 +93,7 @@ p {
 }
 
 #header2 {
-	width: 55%;
+	width: 53%;
 	height: 100%;
 	position: relative;
 }
@@ -109,6 +122,7 @@ p {
 }
 
 #search-input {
+	padding-left: 15px;
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
@@ -128,41 +142,72 @@ p {
 	width: 25%;
 	height: 100%;
 	position: relative;
+	padding: 10px;
+	text-align: center;
 }
 
-#header3 a {
-	text-decoration: none;
-	font-size: 18px;
-	color: #949494;
-	font-weight: bold;
-	float: left;
-}
-
-#logform {
-	width: 60%;
-	height: 20%;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
+#loginArea {
+	width: 100%;
+	padding: 20px;
 	margin: auto;
-	position: absolute;
+	text-align: center;
 }
 
-#loginform {
-	height: 100%;
-	width: 50%;
+#loginform, #joinform {
+	margin: 10px 5px 10px;
+	width: 40%;
 	float: left;
 }
 
-#joinform {
-	height: 100%;
-	width: 50%;
-	float: left;
+#searchDiv {
+	width: 100%;
+	text-align: left;
 }
 
-#header3 a:hover {
-	color: #f1f1f1;
+#searchDiv span {
+	color: #fff;
+	font-size: 12px;
+	margin: 0px 16px;
+}
+
+.loginJoin {
+	width: 100%;
+	height: 40px;
+	background: #1c81ff;
+	border: 1px solid #1b7df8;
+	font-size: 14px;
+	color: #fff;
+	cursor: pointer;
+	transition: background-color 0.3s, border-color 0.3s;
+}
+
+.loginJoin:hover, #userInfoBtn button:hover {
+	background-color: #0065e3;
+	border-color: #0061db;
+}
+
+#userInfo {
+	color: white;
+	padding-top: 35px;
+	padding-bottom: 5px;
+}
+
+#userInfo span {
+	font-weight: lighter;
+}
+
+#userInfo b {
+	font-weight: bold;
+}
+
+#userInfoBtn button {
+	margin: 5px;
+	background: #1c81ff;
+	color: #fff;
+	border: 1px solid #1b7df8;
+	cursor: pointer;
+	outline: none;
+	transition: background-color 0.3s, border-color 0.3s;
 }
 
 #content1 {
@@ -171,6 +216,7 @@ p {
 }
 
 #content2 {
+	background-color: black;
 	letter-spacing: 0.2ch;
 	font-weight: bold;
 	font-size: x-large;
@@ -262,89 +308,93 @@ html.open {
 	z-index: 4;
 	display: none;
 }
+</style>
+<style>
+.right-align {
+	text-align: right;
+}
 
-    .right-align {
-      text-align: right;
-    }
-    
-    
-    @media only screen and (min-width: 0) {
-      html {
-        font-size: 14px;
-      }
-    }
-    
-    @media only screen and (min-width: 992px) {
-      html {
-        font-size: 14.5px;
-      }
-    }
-    
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 400;
-      line-height: 1.3;
-    }
-    
-    h3 {
-      font-size: 2.92rem;
-    }
-    
-    
-    .mslider {
-      position: relative;
-      height: 400px;
-      width: 100%;
-    }
-    
-    .mslider.fullscreen {
-      height: 100%;
-      width: 100%;
-      position: relative;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-    }
-    
+@media only screen and (min-width: 0) {
+	html {
+		font-size: 14px;
+	}
+}
 
-    
-    .mslider .slidess {
-      background-color: #9e9e9e;
-      margin: 0;
-      height: 400px;
-    }
-    
-    .mslider .slidess li {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      width: 100%;
-      height: inherit;
-      overflow: hidden;
-    }
-    
-    .mslider .slidess li img {
-      height: 100%;
-      width: 100%;
-      background-size: cover;
-      background-position: relative;
-    }
-    
-    .mslider .slidess li .caption {
-      color: #fff;
-      position: absolute;
-      top: 15%;
-      left: 15%;
-      width: 70%;
-      opacity: 0;
-    }
+@media only screen and (min-width: 992px) {
+	html {
+		font-size: 14.5px;
+	}
+}
 
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 400;
+	line-height: 1.3;
+}
 
-     /* 바로가기 버튼 */
-     .linkbtn{
+h3 {
+	font-size: 2.92rem;
+}
+
+.mslider {
+	position: relative;
+	height: 400px;
+	width: 100%;
+}
+
+.mslider.fullscreen {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.mslider.fullscreen ul.slides {
+	height: 100%;
+}
+
+.mslider.fullscreen ul.indicators {
+	z-index: 2;
+	bottom: 30px;
+}
+
+.mslider .slides {
+	background-color: #9e9e9e;
+	margin: 0;
+	height: 400px;
+}
+
+.mslider .slides li {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: inherit;
+	overflow: hidden;
+}
+
+.mslider .slides li img {
+	height: 100%;
+	width: 100%;
+	background-size: cover;
+	background-position: relative;
+}
+
+.mslider .slides li .caption {
+	color: #fff;
+	position: absolute;
+	top: 22%;
+	left: 15%;
+	width: 70%;
+	opacity: 0;
+}
+
+/* 바로가기 버튼 */
+.linkbtn {
 	width: 157px;
 	height: 44px;
 	border-radius: 5px;
@@ -355,19 +405,20 @@ html.open {
 	color: #FFFFFF;
 	outline: none;
 	margin: 10px;
-  transition: all .2s ease-in-out;
-  cursor: pointer;
+	transition: all .2s ease-in-out;
+	cursor: pointer;
 }
-	/* Outline Button */
-	.btn-outline{
-		border: 2px solid #FFFFFF;
-		background: transparent;
-	}
-  .btn-outline:hover,
-	.btn-outline-hover{
-		background-color: #FFFFFF;
-		color: #181C25;
-	}
+
+/* Outline Button */
+.btn-outline {
+	border: 2px solid #FFFFFF;
+	background: transparent;
+}
+
+.btn-outline:hover, .btn-outline-hover {
+	background-color: #FFFFFF;
+	color: #181C25;
+}
 </style>
 </head>
 
@@ -383,10 +434,13 @@ html.open {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<img class="logo" src="images/logo.png">
+				<a href="home.jsp"><img class="logo"
+					src="/movieJava/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
-				<form id="search-form">
+
+				<!----- 영화 검색 ----->
+				<form id="search-form" action="/movieJava/index.jsp" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -397,23 +451,59 @@ html.open {
 						</button>
 					</section>
 					<section id="search-text-area">
-						<input type="text" id="search-input" name="search-input"
-							placeholder="  보고싶은 영화를 검색해보세요.">
+						<input type="text" id="search-input" name="search"
+							placeholder="보고싶은 영화를 검색해보세요.">
 					</section>
-
 				</form>
+				<!-- ------------- -->
+
 			</div>
 			<div class="header" id="header3">
-
-				<form id="logform">
-					<section id="loginform">
-						<a href="<%=request.getContextPath()%>/views/member/loginView.jsp">로그인</a>
-					</section>
-					<section id="joinform">
+				<% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn"
+							onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn"
+							onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
 						<a
-							href="<%=request.getContextPath()%>/views/member/joinMember.jsp">회원가입</a>
-					</section>
-				</form>
+							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디
+								찾기</span></a> <a
+							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호
+								찾기</span></a>
+					</div>
+				</div>
+				<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+						<button id="managerPage">관리자 메뉴</button>
+						<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+					-->
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+				<% } %>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
@@ -427,52 +517,190 @@ html.open {
 						d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path>
                   </svg>
 
-			</div>
-			<br> <br> <br> <br> <a href="#">HOME</a><br>
-			<a href="#">마이페이지</a><br> <a href="#">관심 영화</a><br> <a
-				href="#">Watcha Party</a><br> <a href="#">Netflix Party</a><br>
-			<a href="#">Q&amp;A</a><br> <a href="#">STORE - Goods</a><br>
-			<a href="#">STORE - Ticket</a><br>
+				<script>
+                    $(".btn").click(function () { 
+                        $("#menu,.page_cover,html").addClass("open"); 
+                         window.location.hash = "#open"; 
+                     }); 
+             
+                     window.onhashchange = function () { 
+                         if(location.hash != "#open") {
+                             $("#menu,.page_cover,html").removeClass("open");  
+                         } 
+                     };
+                     
+                     
+                 </script>
+</body>
+</div>
+<br>
+<br>
+<br>
+<br>
+<a href="<%= request.getContextPath() %>home.jsp">HOME</a>
+<br>
+<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
+<br>
+<a
+	href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심
+	영화</a>
+<br>
+<a id="netflix">공유 계정</a>
+<br>
+<a href="<%=request.getContextPath()%>/views/board/QA.jsp">Q&A</a>
+<a href="<%=request.getContextPath()%>/views/store/store_goods.jsp">STORE</a>
+</div>
+
+<head>
+<style>
+.sub {
+	text-align: center;
+	font: bold 15px Arial;
+	padding: 10px;
+	border-bottom: 2px solid rgb(41, 41, 41);
+	width: 1230px;
+	margin: 0 auto 25px;
+}
+
+/* .toggles{ 
+  width: 800px;
+  margin: auto;
+  display: block;
+  clear: both;
+  overflow: hidden;
+} */
+option {
+	color: rgb(0, 0, 0);
+}
+
+#filter option[value="all"] {
+	color: rgb(165, 165, 165);
+}
+
+#filter2 {
+	margin-left: 1100px
+}
+
+[id^=filter] {
+	border: 0px solid;
+	border-radius: 10px;
+	display: block;
+	float: left;
+	padding: 7px;
+	width: 100px;
+	cursor: pointer;
+	font-size: 14px;
+	margin: 0 50px;
+}
+/* 
+#wwrapper{
+    width: 1200px;
+} */
+.posts div {
+	font: 16px/250px Arial;
+	width: 245px;
+	height: 250px;
+	float: left;
+	margin: 10px;
+	display: block;
+	text-align: center;
+	background: black;
+	color: #fff;
+}
+</style>
+</head>
+<body>
+	<script>
+    $(function() {			
+		$('#search-input').add('#filter').add('#filter2').on('keyup change', function() {
+			$('.item').hide();
+		
+			var search = $('#search-input').val();
+			/*  console.log('#search-input.val()'); */
+			var select = $('#filter').val();
+		    var select2 = $('#filter2').val();
+			/* console.log('#filter.val()');
+			console.log('#filter2.val()'); */
+			select = select == "all" ? "item" : select;
+		    select2 = select2 == "all" ? "item" : select2;
+			search = search == "" ? "item" : search;
+				$('.item').each(function() {
+				var $this = $(this)
+				if ($this.is('[class*=' + search + ']') && $this.is('[class*=' + select + ']') && $this.is('[class*=' + select2 + ']')) {
+					$this.show(500);
+				}}
+				)}
+				)});
+
+</script>
+</body>
+<div id="content">
+	<div class="content" id="content1">
+		<h1 class="sub">
+			<br>"
+			<!--@코드@-->
+			" 영화 검색 결과입니다.
+		</h1>
+		<div class="toggles">
+			<select id="filter" name="genre">
+				<option value="all">장르선택</option>
+				<option value="드라마">드라마</option>
+				<option value="액션">액션</option>
+				<option value="멜로">멜로</option>
+				<option value="액션">로맨스</option>
+				<option value="코미디">코미디</option>
+				<option value="스릴러">스릴러</option>
+				<option value="범죄">범죄</option>
+				<option value="전쟁">전쟁</option>
+				<option value="판타지">판타지</option>
+				<option value="어드벤처">어드벤처</option>
+				<option value="미스터리">미스터리</option>
+				<option value="SF">SF</option>
+				<option value="애니메이션">애니메이션</option>
+				<option value="모험">모험</option>
+				<option value="뮤지컬">뮤지컬</option>
+			</select> <select id="filter2">
+				<option value="all">정렬</option>
+				<option value="one" disabled>추천순</option>
+				<option value="two" disabled>인기순</option>
+				<option value="three" disabled>최신개봉순</option>
+			</select>
 		</div>
 
-		<div id="content">
-			<div class="content" id="content1">
-				<body>
-					<div class="mslider">
-						<ul class="slidess">
-							<li><img src="views/movie/image/slide/banner1.jpg">
-								<div class="caption right-align">
-									<h3 class="push_1">역대 국내 흥행영화</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-							<li><img src="views/movie/image/slide/banner2.jpg">
-								<div class="caption right-align">
-									<h3 class=push_2>
-										나만 넷플릭스 없을땐?<br>파티구하기!
-									</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-							<li><img src="views/movie/image/slide/banner3.jpg">
-								<div class="caption right-align">
-									<h3 class=push_3>
-										영화 굿즈<br>온라인 단독 판매
-									</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-						</ul>
-					</div>
-					<script
-						src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.js'></script>
 
-					 <script id="rendered-js">
-	                  const mslider = document.querySelector('.mslider');
-	                  M.mslider.init(mslider, {
-	                    height: 400,
-	                    indicators: false,
-	                    interval: 5000,
-	                    transition: 5000
-	                  });
-            
-              </script>
+		<div class="posts">
+			<br> <br>
+			<div class="드라마 item">드라마영화</div>
+			<div class="액션 item">액션영화</div>
+			<div class="멜로 item">멜로영화</div>
+			<div class="로맨스 item">로맨스영화</div>
+			<div class="코미디 item">코미디영화</div>
+			<div class="스릴러 item">스릴러영화</div>
+			<div class="범죄 item">범죄영화</div>
+			<div class="전쟁 item">전쟁영화</div>
+			<div class="판타지 item">판타지영화</div>
+			<div class="어드벤처 item">어드벤처영화</div>
+			<div class="미스터리 item">미스터리영화</div>
+			<div class="SF item">SF영화</div>
+			<div class="애니메이션 item">애니메이션영화</div>
+			<div class="모험 item">모험영화</div>
+			<div class="뮤지컬 item">뮤지컬영화</div>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+<div id="footer">
+	<p>
+		<br> © 2021 MOVIEJAVA | 요금제 및 소개 : NETFLIX(넷플릭스) | 왓챠플레이<br>
+		Data &amp; Content Image Based On Netflix.inc , Watcha.inc, TVNNG<br>
+		<br> <br> Copyright© 2021, MOVIEJAVA , All Rights Reserved.
+	</p>
+</div>
+</div>
+</body>
+
 </body>
 </html>

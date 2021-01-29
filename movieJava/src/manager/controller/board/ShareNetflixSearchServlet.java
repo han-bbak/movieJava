@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.vo.Board;
 import manager.model.service.ManagerService;
-import board.model.vo.PageInfo;
+import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 
 /**

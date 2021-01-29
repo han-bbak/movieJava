@@ -197,6 +197,14 @@
         
         
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -264,7 +272,7 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -293,7 +301,7 @@
                 <div class="btnArea">
                     <button type="button" class="button" id="backBtn">목록</button>
                     
-                    <% if(loginUser.getMemNo() == b.getMem_no()) { %>
+                    <% if(loginUser.getMemNo() == b.getMem_no() || loginUser.getMemId().equals("admin")) { %>
                     	<button type="button" class="button" id="updateBtn">수정</button>
                     	<button type="button" class="button" id="deleteBtn">삭제</button>
                     	
@@ -315,14 +323,15 @@
 					<% } %>
                 </div>
                 <hr>
-                <div class="replyArea">
+
+				<div class="replyArea">
                     <br>
                     <span class="input_area">
                         <input id="replyContent" type="text" name="input" placeholder="댓글을 작성해 보세요">
                     </span>
                     <button class="button" type="button" id="replyBtn">등록하기</button>
-                 </div>
-                 <div class="replyListArea">
+           		</div>
+				<div class="replyListArea">
                  	<table class="replyTable">
                  	<colgroup>
                         <col width="5%" />
@@ -334,11 +343,11 @@
                    	 <% if(rList != null && !rList.isEmpty()) { %>
                     	<% for(Reply r : rList) { %>
                     			<tr>
-                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no()) { %>
+                    			<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemNo() == b.getMem_no() || loginUser.getMemId().equals("admin")) { %>
                     				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
-                    				<% if(loginUser.getMemNo() == r.getRp_writer()) { %>
+                    				<% if(loginUser.getMemNo() == r.getRp_writer() ||  loginUser.getMemId().equals("admin")) { %>
                     					<td><%= r.getRp_date() %></td>
                     					<td>
                     						<button class="button" type="button" id="replyUpdate">수정</button>
@@ -394,7 +403,12 @@
 		$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/watcha/deleteReply");
 		$("#rp_noForm").submit();
 	});
-	
+
+	// Q&A 버튼
+	const qa = document.getElementById('qa');
+	qa.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/qa/list';
+	});
 	
 	// 댓글 수정 -> 나중에..ㅠ
 //	const replyUpdate = document.getElementById('replyUpdate');
@@ -419,41 +433,49 @@
 //		}
 //	});
 	
+	
 	$(function() {
-		$("#replyBtn").click(function() {
+		$("#replyBtn").on('click', function() {
 			var rp_writer = <%= loginUser.getMemNo() %>;
 			var brd_no = <%= b.getBrd_no() %>;
 			var content = $("#replyContent").val();
 			
-			$.ajax({
-				url: "<%= request.getContextPath() %>/watcha/insertReply",
-				type: "post",
-				dataTaype: "json",
-				data: {rp_writer:rp_writer, brd_no:brd_no, content:content},
-				success: function(data) {
-					replyTable = $(".replyTable");
-					replyTable.html("");
+			if(content == '') {
+				alert("내용을 작성해 주세요");
+				$("#replyContent").val('');
+				$("#replyContent").focus();
+			} else {
+				$.ajax({
+					url: "<%= request.getContextPath() %>/watcha/insertReply",
+					type: "post",
+					dataTaype: "json",
+					data: {rp_writer:rp_writer, brd_no:brd_no, content:content},
+					success: function(data) {
+						replyTable = $(".replyTable");
+						replyTable.html("");
 					
-					for(var key in data){
-						var tr = $("<tr>");
-						var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
-						var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
-						var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
+						for(var key in data){
+							var tr = $("<tr>");
+							var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
+							var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
+							var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
 				
-						tr.append(writerTd, contentTd, dateTd);
+							tr.append(writerTd, contentTd, dateTd);
 						
-						replyTable.append(tr);
-					}
+							replyTable.append(tr);
+						}
 					
-					$("#replyContent").val("");
+						$("#replyContent").val("");
 			
-				}, 
-				error: function(e) {
-					console.log(e);
-				}
-			});
+					}, 
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			}
 		});
 	});
+
 </script>
 <script>
        $(".menuBtn").click(function () { 

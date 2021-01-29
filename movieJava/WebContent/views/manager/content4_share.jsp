@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.Board, board.model.vo.PageInfo, manager.model.vo.Search" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, board.model.vo.Board, manager.model.vo.*" %>
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
@@ -80,7 +80,7 @@
         }
         
         .tableDiv th:nth-child(3) {
-        	width : 100px;
+        	width : 80px;
         }
         
         .tableDiv th:nth-child(4) {
@@ -88,7 +88,15 @@
         }
         
         .tableDiv th:nth-child(5) {
-        	width : 150px;
+        	width : 120px;
+        }
+        
+        .tableDiv th:nth-child(6) {
+        	width : 50px;
+        }
+        
+        td #removeBrd {
+        	cursor : pointer;
         }
         
         .pagingBtnDiv {
@@ -132,6 +140,14 @@
             cursor: pointer;
         }
     </style>
+    <% if(request.getAttribute("msg") != null) { %>
+    	<script>
+    		alert('<%= request.getAttribute("msg") %>');
+    	</script>
+    <%
+    	request.removeAttribute("msg");
+    	}
+    %>
 </head>
 <body>
 	<%@ include file="/views/common/manager_main.jsp" %>
@@ -145,11 +161,11 @@
                 </p>
                 <p class="subText" id="p-sub4">넷플릭스</p>
                 <p class="subText" id="p-sub5">
-                    <a href="<%= request.getContextPath() %>/manager/shareNetflix"><span id="countNetflix">1,000,000</span></a>건
+                    <a href="<%= request.getContextPath() %>/manager/shareNetflix"><span id="countNetflix">000</span></a>건
                 </p>
                 <p class="subText" id="p-sub6">왓챠</p>
                 <p class="subText" id="p-sub7">
-                    <a href="content4_2_shareWatcha.jsp"><span id="countWatcha">1,000,000</span></a>건
+                    <a href="<%= request.getContextPath() %>/manager/shareWatcha"><span id="countWatcha">000</span></a>건
                 </p>
                 <hr>
 
@@ -180,10 +196,11 @@
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
+                        <th>상태</th>
                     </tr>
                     <% if(list.isEmpty()) { %>
                     	<tr>
-                    		<td colspan="5">조회 된 회원이 없습니다.</td>
+                    		<td colspan="6">조회 된 게시글이 없습니다.</td>
                     	</tr>
                     <% } else {%>
                     	<% for(Board b : list) { %>
@@ -193,6 +210,7 @@
 	                    		<td><%= b.getBrd_writer() %></td>
 	                    		<td><%= b.getBrd_cnt() %></td>
 	                    		<td><%= b.getBrd_date() %></td>
+	                    		<td><%= b.getBrd_status() %></td>
                     		</tr>
                     	<% } %>
                     <% } %>
@@ -272,7 +290,7 @@
 				$(".tableDiv tr:first-child").css({"background":"#fff" , "color":"black"});
 			}).click(function() {
 				var num = $(this).parent().children().eq(0).text();
-				location.href="<%= request.getContextPath() %>/manager/memberDetail?memNo=" + num;
+				location.href="<%= request.getContextPath() %>/manager/netflixDetail?brdNo=" + num;
 			});
 		});
 	</script>

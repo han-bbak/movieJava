@@ -41,6 +41,7 @@ public class netflixInsertServlet extends HttpServlet {
 		int result = new BoardService().insertBoard(b);
 		
 		if(result > 0) {
+			request.getSession().setAttribute("msg", "게시글이 등록되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/netflix/list");
 		}
 	}

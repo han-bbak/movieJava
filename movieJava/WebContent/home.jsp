@@ -19,6 +19,10 @@
 	type="text/javascript"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+</style>
 <style>
 #menu-icon {
 	color: #ffffff;
@@ -123,6 +127,7 @@ a:-webkit-any-link {
 }
 
 #search-input {
+	padding-left: 15px;
 	width: 100%;
 	height: 100%;
 	box-sizing: border-box;
@@ -419,6 +424,11 @@ h3 {
 	background-color: #FFFFFF;
 	color: #181C25;
 }
+
+.font1{
+		font-size : 30px
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
 </style>
 </head>
 
@@ -437,22 +447,24 @@ h3 {
 				<a href="home.jsp"><img class="logo" src="images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
-				<form id="search-form">
+			
+			<!----- 영화 검색 ----->
+				<form id="search-form" action="./views/movie/search/result.jsp"" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                            <path
-									d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
                           </svg>
 						</button>
 					</section>
 					<section id="search-text-area">
-						<input type="text" id="search-input" name="search-input"
-							placeholder="  보고싶은 영화를 검색해보세요.">
+						<input type="text" id="search-input" name="search"
+							placeholder="보고싶은 영화를 검색해보세요.">
 					</section>
-
 				</form>
+			<!-- ------------- -->
+			
 			</div>
 			<div class="header" id="header3">
 				<% if(loginUser == null) { %>
@@ -466,11 +478,11 @@ h3 {
 							onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
 					</div>
 					<br clear="both">
-					<div id="searchDiv">
-						<a
-							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디
+					<div id="searchDiv" class="font1">
+						<a 
+							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>&nbsp;&nbsp;&nbsp;&nbsp;아이디
 								찾기</span></a> <a
-							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호
+							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>&emsp;&nbsp;&nbsp;비밀번호
 								찾기</span></a>
 					</div>
 				</div>
@@ -555,7 +567,7 @@ onclick="location.href='<%=request.getContextPath()%>#">바로가기</button>
 								나만 넷플릭스 없을땐?<br>파티구하기!
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp">바로가기</button>
+onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">바로가기</button>
 						</div></li>
 					<li><img src="views/movie/image/slide/banner3.jpg">
 						<div class="caption right-align">
@@ -563,7 +575,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp">�
 								영화 굿즈<br>온라인 단독 판매
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.jsp">바로가기</button>
+onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.jsp'">바로가기</button>
 						</div></li>
 				</ul>
 			</div>
@@ -674,6 +686,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 	margin: 10;
 	list-style: none;
 	text-align: center;
+	
 }
 
  .slick-dots li {
@@ -687,7 +700,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 } 
 
 .slick-dots li button {
-	display: block;
+	display: inline-block;
 	width: 20px;
 	height: 20px;
 	padding: 5px;
@@ -704,7 +717,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 /* 도트 */
 .slick-dots li button:before {
 	font-family: 'slick';
-	font-size: 10px;
+	font-size: 15px;
 	line-height: 40px;
 	position: absolute;
 	top: 0;
@@ -712,12 +725,10 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 	width: 20px;
 	height: 20px;
 	content: '●';
-	font-size: 1.2em;
 	text-align: center;
 	opacity: .25;
 	color: black;
 	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 }
 
 .slick-dots li.slick-active button:before {
