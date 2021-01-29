@@ -126,6 +126,7 @@
     <% if(request.getAttribute("msg") != null) { %>
     	<script>
     		alert('<%= request.getAttribute("msg") %>');
+    		window.opener.location.reload();
     		window.close();
     	</script>
     <%

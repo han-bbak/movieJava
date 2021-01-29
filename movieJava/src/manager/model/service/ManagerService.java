@@ -10,6 +10,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
+import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
 
@@ -357,6 +358,93 @@ public class ManagerService {
 		close(conn);
 		
 		return list;
+	}
+
+	// 문의글 갯수 세기
+	public int qaCount() {
+		Connection conn = getConnection();
+		
+		int qaCount = new ManagerDao().qaCount(conn);
+		
+		close(conn);
+		
+		return qaCount;
+	}
+
+	public int qaWaitCount() {
+		Connection conn = getConnection();
+		
+		int qaWaitCount = new ManagerDao().qaWaitCount(conn);
+		
+		close(conn);
+		
+		return qaWaitCount;
+	}
+
+	public int qaCompleteCount() {
+		Connection conn = getConnection();
+		
+		int qaCompleteCount = new ManagerDao().qaCompleteCount(conn);
+		
+		close(conn);
+		
+		return qaCompleteCount;
+	}
+
+	// 문의글 전체 목록(페이징)
+	public ArrayList<Board> selectQAList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectQAList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 문의 답변 달기
+	public int insertAnswer(QAAnswer qa) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().insertAnswer(conn, qa);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 문의 답변내용 가져오기
+	public QAAnswer selectQA(int brdNo) {
+		Connection conn = getConnection();
+		
+		QAAnswer qa = new ManagerDao().selectQA(conn, brdNo);
+		
+		close(conn);
+		
+		return qa;
+	}
+
+	// 답변 대기 -> 답변 완료 변경
+	public int changeWait(int brdNo) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().changeWait(conn, brdNo);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 
 }

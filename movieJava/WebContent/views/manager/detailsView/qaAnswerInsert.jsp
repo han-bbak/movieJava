@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board, qaAnswer.model.vo.QAAnswer" %>
+<%
+	Board b = (Board)request.getAttribute("board");
+	QAAnswer qa = (QAAnswer)request.getAttribute("qa");
+	
+	String answer = "";
+	
+	if(qa != null) {
+		answer = (qa.getAnsContent()).replace("\n", "<br>");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -155,6 +165,7 @@
     <% if(request.getAttribute("msg") != null) { %>
     	<script>
     		alert('<%= request.getAttribute("msg") %>');
+    		window.opener.location.reload();
     		window.close();
     	</script>
     <%
@@ -169,94 +180,57 @@
         </div>
 
         <div class="insertDiv">
-            <form id="answerInsertForm" action="<%= request.getContextPath() %>/manager/storeInsert" method="post">
+            <form id="answerInsertForm" action="<%= request.getContextPath() %>/manager/answerInsert" method="post">
             <br>
                 <div class="tableDiv pDiv">
                 	<table>
                 		<thead>
 	                		<tr>
-	                			<td>제목</td>
+	                			<td><%= b.getBrd_title() %></td>
 	                			<td>작성자</td>
-	                			<td>이윤재</td>
+	                			<td><%= b.getBrd_writer() %></td>
 	                			<td>작성일</td>
-	                			<td>2021-01-20</td>
+	                			<td><%= b.getBrd_modify() %></td>
 	                		</tr>
                 		</thead>
                 		<tbody>
 	                		<tr>
 	                			<td colspan="5">
-	                				<p id="qaContent">4623723634</p>
+	                				<p id="qaContent"><%= (b.getBrd_content()).replace("\n", "<br>") %></p>
 	                			</td>
 	                		</tr>
 	                		<tr>
 	                			<td colspan="5">
-	                				<textarea rows="15" cols="5" id="qaAnswer" style="resize:none"></textarea>
+	                				<textarea rows="15" cols="5" id="qaAnswer" name="qaAnswer" style="resize:none"><%= answer %></textarea>
+	                				<input type="hidden" name="brdNo" value="<%= b.getBrd_no() %>">
 	                			</td>
 	                		</tr>
                 		</tbody>
                 	</table>
                 </div>
                 <div class="btnDiv">
-                    <button id="insertBtn" onclick="onSubmit();">답변 등록</button>
+                    <button id="insertBtn" onclick="onSubmit();">
+                    	<% if(qa == null) { %>
+                    		답변 등록
+                    	<% } else { %>
+                    		답변 수정
+                    	<% } %>
+                    </button>
                 </div>
             </form>
         </div>
     </section>
     <script>
-        $(function(){
-            $("[type=file]").change(function(){
-                loadImg(this);
-            });
-
-            function loadImg(element) {
-                if(element.files && element.files[0]) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        $("#previewImg").attr("src", e.target.result).css({width:"300px", height:"150px", border:"1px solid rgb(255,192,0)"})
-                    }
-
-                    reader.readAsDataURL(element.files[0]);
-                }
-            }
-            
-            // $("#pQuantity").change(function(){
-            // 		$("#pQuan").val($(this).val());
-            // });
-            
-        });
-
         function onSubmit() {
-            var pName = document.getElementById("pName");
-            var pContent = document.getElementById("pContent");
-            var pImg = document.getElementById("pImg");
-            var pQuantity = document.getElementById("pQuantity");
-            var pPrice = document.getElementById("pPrice");
+            var qaAnswer = document.getElementById("qaAnswer");
 
-            if (pName.value == "") {
-                alert('상품명을 입력해주세요.');
-                pName.focus();
+            if (qaAnswer.value == "") {
+                alert('답변을 입력해주세요.');
+                qaAnswer.focus();
                 return;
             }
 
-            if (pContent.value == "") {
-                alert('상품 설명을 입력해주세요');
-                pContent.focus();
-                return;
-            }
-            
-            if (pPrice.value == "") {
-                alert('상품 가격을 입력해주세요');
-                pPrice.focus();
-                return;
-            }
-
-            if(!(pImg.files && pImg.files[0])) {
-                alert('상품 이미지를 등록해주세요.')
-                return;
-            }
-
-            $("#insertBtn").submit();
+            $("#answerInsertForm").submit();
         }
         
         function refreshAndClose(){

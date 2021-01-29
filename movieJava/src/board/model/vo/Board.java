@@ -46,8 +46,6 @@ public class Board {
 		this.brd_status = brd_status;
 	}
 
-
-
 	public Board(String brd_title, String brd_content, int mem_no) {
 		super();
 		this.brd_title = brd_title;
@@ -55,6 +53,21 @@ public class Board {
 		this.mem_no = mem_no;
 	}
 	
+	public Board(int brd_no, int brd_category, String brd_title, String brd_content, String brd_writer, int brd_cnt,
+			Date brd_date, Date brd_modify, String brd_status, String brd_qa_wait) {
+		super();
+		this.brd_no = brd_no;
+		this.brd_category = brd_category;
+		this.brd_title = brd_title;
+		this.brd_content = brd_content;
+		this.brd_writer = brd_writer;
+		this.brd_cnt = brd_cnt;
+		this.brd_date = brd_date;
+		this.brd_modify = brd_modify;
+		this.brd_status = brd_status;
+		this.brd_qa_wait = brd_qa_wait;
+	}
+
 	public Board(int brd_no, int brd_category, String brd_title, String brd_content, int mem_no, String brd_writer,
 			int brd_cnt, Date brd_date, Date brd_modify, String brd_status, String brd_qa_wait) {
 		super();
