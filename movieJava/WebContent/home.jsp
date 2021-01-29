@@ -558,7 +558,7 @@ onclick="location.href='<%=request.getContextPath()%>#">바로가기</button>
 								나만 넷플릭스 없을땐?<br>파티구하기!
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp">바로가기</button>
+onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">바로가기</button>
 						</div></li>
 					<li><img src="views/movie/image/slide/banner3.jpg">
 						<div class="caption right-align">
@@ -566,7 +566,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp">�
 								영화 굿즈<br>온라인 단독 판매
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.jsp">바로가기</button>
+onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.jsp'">바로가기</button>
 						</div></li>
 				</ul>
 			</div>
