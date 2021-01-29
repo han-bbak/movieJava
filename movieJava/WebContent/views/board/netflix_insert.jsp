@@ -125,7 +125,7 @@ Member loginUser = (Member)session.getAttribute("loginUser");
                 </form>
             </div>
             <div class="header" id="header3">
-<% if(loginUser == null) { %>
+			<% if(loginUser == null) { %>
 				<div id="loginArea">
 					<div id="loginform">
 						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
