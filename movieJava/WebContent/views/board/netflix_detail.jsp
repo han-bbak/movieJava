@@ -379,7 +379,6 @@
 				<form action="" id="brd_noForm" method="post">
 					<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
 				</form>
-
 <script>
 	//넷플릭스 버튼
 	const netflix = document.getElementById('netflix');
@@ -393,13 +392,6 @@
 		location.href='<%= request.getContextPath() %>/netflix/list';
 	});
 	
-	// 댓글 삭제
-	const replyDelete = document.getElementById('replyDelete');
-	$("#replyDelete").on("click", function(){
-		$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/deleteReply");
-		$("#rp_noForm").submit();
-	});
-	
 	// Q&A 버튼
 	const qa = document.getElementById('qa');
 	qa.addEventListener('click', function(){
@@ -407,28 +399,46 @@
 	});
 	
 	
-	// 댓글 수정 -> 나중에..ㅠ
-//	const replyUpdate = document.getElementById('replyUpdate');
-//	$("#replyUpdate").on("click", function(){
-//		var text = $(this).text();
-//		if(text == '수정') {
-//			var rp_content = $(this).parent().parent().children().eq(2).text();
-//			var rp_no = $(this).parent().parent().children().eq(0).text();
-//			console.log(rp_content);
-//			console.log(rp_no);
-//			$($(this).parent().parent().children().eq(2)).html("<input type='text' name='comment' style='width : 100%; padding:5px 5px 5px 5px;' value='" + rp_content + "'>");
-//			$(this).parent().children().eq(0).text('완료');
-//			$(this).parent().children().eq(1).text('취소');
-//		} else if(text == '완료') {
-//			var rp_content = $(this).parent().parent().children().eq(2).text();
-//			var rp_no = $(this).parent().parent().children().eq(0).text();
-//			$('input[name=rp_content]').val(rp_content);
-//			
-//			$(this).parent().parent().children().eq(2).submit();
-//		} else if (text == '취소'){
-//			$(this).attr("action", "<%= request.getContextPath() %>/netflix/detail?brd_no='<%= b.getBrd_no() %>'");
-//		}
-//	});
+	// 댓글 수정 
+	const replyUpdate = document.getElementById('replyUpdate');
+	$("#replyUpdate").on("click", function(){
+		var text = $(this).text();
+		
+		if(text == '수정') {
+			var rp_content = $(this).parent().parent().children().eq(2).text();
+			var rp_no = $(this).parent().parent().children().eq(0).text();
+
+			$($(this).parent().parent().children().eq(2)).html("<input type='text' name='comment' style='width : 100%; padding:5px 5px 5px 5px;' value='" + rp_content + "'>");
+			$(this).parent().children().eq(0).text('완료');
+			$(this).parent().children().eq(1).text('취소');
+			// rp_content focus
+			
+		} else if(text == '완료') {
+			var rp_no = $(this).parent().parent().children().eq(0).text();
+			var u_rp_content = $(this).parent().parent().children().eq(2).children().val();
+
+			
+			$('input[name=rp_content]').val(u_rp_content);
+			
+			console.log(u_rp_content);
+			
+			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/updateReply");
+			$("#rp_noForm").submit();
+		}
+	});
+	
+	// 댓글 삭제
+	const replyDelete = document.getElementById('replyDelete');
+	$("#replyDelete").on("click", function(){
+		var text = $(this).text();
+
+		if(text == '취소') {
+			location.href='<%= request.getContextPath() %>/netflix/detail?brd_no=<%= b.getBrd_no() %>';
+		} else if(text == '삭제') {
+			$("#rp_noForm").attr("action", "<%= request.getContextPath() %>/netflix/deleteReply");
+			$("#rp_noForm").submit();
+		}
+	});
 	
 $(function() {
 		$("#replyBtn").on('click', function() {

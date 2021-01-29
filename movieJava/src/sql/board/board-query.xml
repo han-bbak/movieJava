@@ -709,4 +709,12 @@
 			DEFAULT
 		)
 	</entry>
+	<entry key="updateReply">
+		UPDATE 
+			REPLY 
+		SET 
+			RP_CONTENT = ?,
+			RP_MODIFY = SYSDATE
+		WHERE RP_NO = ?
+	</entry>
 </properties>

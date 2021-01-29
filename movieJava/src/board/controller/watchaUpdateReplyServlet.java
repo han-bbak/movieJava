@@ -11,16 +11,16 @@ import board.model.service.BoardService;
 import board.model.vo.Reply;
 
 /**
- * Servlet implementation class netflixUpdateReplyServlet
+ * Servlet implementation class watchaUpdateReplyServlet
  */
-@WebServlet("/netflix/updateReply")
-public class netflixUpdateReplyServlet extends HttpServlet {
+@WebServlet("/watcha/updateReply")
+public class watchaUpdateReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public netflixUpdateReplyServlet() {
+    public watchaUpdateReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +43,7 @@ public class netflixUpdateReplyServlet extends HttpServlet {
 		
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "댓글이 수정되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/netflix/detail?brd_no=" + brd_no);
+			response.sendRedirect(request.getContextPath() + "/watcha/detail?brd_no=" + brd_no);
 		}
 	}
 
