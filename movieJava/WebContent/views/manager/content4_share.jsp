@@ -200,7 +200,7 @@
                     </tr>
                     <% if(list.isEmpty()) { %>
                     	<tr>
-                    		<td colspan="5">조회 된 게시글이 없습니다.</td>
+                    		<td colspan="6">조회 된 게시글이 없습니다.</td>
                     	</tr>
                     <% } else {%>
                     	<% for(Board b : list) { %>

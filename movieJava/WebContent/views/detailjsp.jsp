@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>정렬 결과</title>
+<title>Insert title here</title>
 </head>
 <body>
 
