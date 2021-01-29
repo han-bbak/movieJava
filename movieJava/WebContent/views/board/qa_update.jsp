@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="board.model.vo.Board"%>
+<%
+	Board b = (Board)request.getAttribute("board");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -19,7 +22,6 @@
             color: whitesmoke;
             font-size: xx-large;
             font-weight: 500;
-
             top: 0;
             bottom: 0;
             left: 0;
@@ -32,14 +34,13 @@
 			margin: 20px 50px;
 			max-width: 130%;
         }
-
+        
         #board_top_title {
             float: left;
             width: 50%;
             height: 100%;
             position: relative;
         }
-
         .tableArea {
             padding: 20px;
             width: 700px;
@@ -52,7 +53,7 @@
             border: solid 1px #dadada;
             padding: 10px 10px 14px 10px;
             background: white;
-            width: 550px;
+            width: 95%;
         }
     
         .input_area input {
@@ -60,28 +61,24 @@
             height: 30px;
             border: 0;
         }
-    
-        #detail_content {
-            width: 95%; 
-            height: 300px;
-            padding: 10px 10px 14px 10px;
-            border: solid 1px #dadada;
+        
+        textarea {
+        	width: 95%;
+            height: 400px;
+            border: 0;
         }
     
         .btnArea {
             text-align: center;
             padding-top: 10px;
         }
-
         #title {
             margin-top: 0;
         }
-
         #btn {
             cursor: pointer;
             width: 80px;
             height: 30px;
-
             background: rgb(62, 103, 184);
             border: rgb(62, 103, 184);
             border-top-right-radius: 5px;
@@ -91,7 +88,16 @@
             color: white;
             margin-left: 10px;
         }
+
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -104,7 +110,7 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -140,11 +146,11 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
-			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
-			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="메인페이지.html">Home</a>
+            <a href="마이페이지.html">마이페이지</a><br>
+            <a href="관심영화.html">관심 영화</a><br>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
         </div>
 
@@ -153,37 +159,47 @@
                 <div id="board_top_title"><h1 id="board_name">Q&A</h1></div>
             </div>
             <div class="tableArea"> 
+            <form action="<%= request.getContextPath() %>/qa/update" method="post">
+			<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
                     <h4 class="board_title" id="title">제목</h4>
                     <span class="input_area">
-                        <input type="text" name="title">
-                    </span>
-                    
-                    <h4 class="board_title">작성자</h4>
-                    <span class="input_area">
-                        <input type="text" name="writer">
+                        <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
                     
                     <h4 class="board_title">내용</h4>
-                    <textarea id="detail_content" style="resize:none;"></textarea>
+                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     
                     <div class="btnArea">
-                        <button type="button" id="btn">등록</button>
+                        <button type="submit" id="btn">등록</button>
                         <button type="button" id="btn" onclick="history.back();">취소</button>
                     </div>
+            </form>
             </div>
         </div>
     </div>
 </body>
 <script>
-       $(".btn").click(function () { 
-           $("#menu,.page_cover,html").addClass("open"); 
-            window.location.hash = "#open"; 
-        }); 
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
 
-        window.onhashchange = function () { 
-            if(location.hash != "#open") {
-                $("#menu,.page_cover,html").removeClass("open");  
-            } 
-        };
+// Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
+});
+</script>
+<script>
+		$(".menuBtn").click(function () { 
+    		$("#menu,.page_cover,html").addClass("open"); 
+    		 window.location.hash = "#open"; 
+ 		}); 
+ 		window.onhashchange = function () { 
+     		if(location.hash != "#open") {
+       		  $("#menu,.page_cover,html").removeClass("open");  
+    		 } 
+ 		};
     </script>
 </html>

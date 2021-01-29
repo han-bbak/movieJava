@@ -1,28 +1,31 @@
 package board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import board.model.service.BoardService;
 import board.model.vo.Reply;
 
 /**
- * Servlet implementation class netflixDeleteReplyServlet
+ * Servlet implementation class qaInsertReplyServlet
  */
-@WebServlet("/netflix/deleteReply")
-public class netflixDeleteReplyServlet extends HttpServlet {
+@WebServlet("/qa/insertReply")
+public class qaInsertReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public netflixDeleteReplyServlet() {
+    public qaInsertReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +34,20 @@ public class netflixDeleteReplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int rp_no = Integer.parseInt(request.getParameter("rp_no"));
+		int writer = Integer.parseInt(request.getParameter("rp_writer"));
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-		int result = new BoardService().deleteReply(rp_no);
+		String content = request.getParameter("content");
 		
-		if(result > 0) {
-			request.getSession().setAttribute("msg", "댓글이 삭제되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/netflix/detail?brd_no=" + brd_no);
-		}
-	
+		Reply r = new Reply();
+		r.setRp_writer(writer);
+		r.setBrd_no(brd_no);
+		r.setRp_content(content);
+		
+		ArrayList<Reply> rList = new BoardService().insertReply(r);
+		
+		response.setContentType("application/json; charset=utf-8"); 
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+		gson.toJson(rList, response.getWriter());
 	}
 
 	/**

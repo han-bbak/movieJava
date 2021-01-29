@@ -193,10 +193,15 @@
         	width: 40px;
         	height:30px;
         }
-        
-        
-        
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -321,7 +326,7 @@
                         <input id="replyContent" type="text" name="input" placeholder="댓글을 작성해 보세요">
                     </span>
                     <button class="button" type="button" id="replyBtn">등록하기</button>
-                 </div>
+           		</div>
                  <div class="replyListArea">
                  	<table class="replyTable">
                  	<colgroup>
@@ -425,39 +430,45 @@
 //		}
 //	});
 	
-	$(function() {
-		$("#replyBtn").click(function() {
+$(function() {
+		$("#replyBtn").on('click', function() {
 			var rp_writer = <%= loginUser.getMemNo() %>;
 			var brd_no = <%= b.getBrd_no() %>;
 			var content = $("#replyContent").val();
 			
-			$.ajax({
-				url: "<%= request.getContextPath() %>/netflix/insertReply",
-				type: "post",
-				dataTaype: "json",
-				data: {rp_writer:rp_writer, brd_no:brd_no, content:content},
-				success: function(data) {
-					replyTable = $(".replyTable");
-					replyTable.html("");
+			if(content == '') {
+				alert("내용을 작성해 주세요");
+				$("#replyContent").val('');
+				$("#replyContent").focus();
+			} else {
+				$.ajax({
+					url: "<%= request.getContextPath() %>/netflix/insertReply",
+					type: "post",
+					dataTaype: "json",
+					data: {rp_writer:rp_writer, brd_no:brd_no, content:content},
+					success: function(data) {
+						replyTable = $(".replyTable");
+						replyTable.html("");
 					
-					for(var key in data){
-						var tr = $("<tr>");
-						var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
-						var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
-						var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
+						for(var key in data){
+							var tr = $("<tr>");
+							var writerTd = $("<td style='width : 10%; background: #dadada; opacity: 80%;'>").text(data[key].mem_name);
+							var contentTd = $("<td style='width : 75%; background: gray; text-align:left;'>").text(data[key].rp_content);
+							var dateTd = $("<td style='width : 15%;'>").text(data[key].rp_date);
 				
-						tr.append(writerTd, contentTd, dateTd);
+							tr.append(writerTd, contentTd, dateTd);
 						
-						replyTable.append(tr);
-					}
+							replyTable.append(tr);
+						}
 					
-					$("#replyContent").val("");
+						$("#replyContent").val("");
 			
-				}, 
-				error: function(e) {
-					console.log(e);
-				}
-			});
+					}, 
+					error: function(e) {
+						console.log(e);
+					}
+				});
+			}
 		});
 	});
 </script>

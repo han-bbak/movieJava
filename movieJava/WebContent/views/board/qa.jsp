@@ -3,7 +3,6 @@
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	Board bd = (Board)request.getAttribute("board");
 	
 	Search s = (Search)request.getAttribute("search");
 	String search = "";
@@ -172,7 +171,14 @@
         }
         
     </style>
-    
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>    
 </head>
 
 <body>
@@ -275,6 +281,7 @@
             <div class="board_table">
                 <table class="list_table">
                     <colgroup>
+                    	
                         <col width="15%" />
                         <col width="45%" />
                         <col width="15%" />
@@ -298,13 +305,13 @@
                     <% } else { %>
                     	<% for(Board b : list) { %>
                     	<tr>
+                    		<input type="hidden" value="<%= b.getMem_no() %>">
                     		<td><%= b.getBrd_no() %></td>
                     		<td><%= b.getBrd_title() %></td>
                     		<td><%= b.getBrd_writer() %></td>
                     		<td><%= b.getBrd_cnt() %></td>
                     		<td><%= b.getBrd_date() %></td>
 						</tr>
-						
                     	<% } %>
                     <% } %>
                    </tbody>
@@ -384,17 +391,6 @@
     		location.href='<%= request.getContextPath() %>/netflix/list';
     	});
     	
-    	const netflix1 = document.getElementById('netflix1');
-    	netflix1.addEventListener('click', function(){
-    		location.href='<%= request.getContextPath() %>/netflix/list';
-    	});
-    	
-    	// 왓챠 버튼
-    	const watcha = document.getElementById('watcha');
-    	watcha.addEventListener('click', function(){
-    		location.href='<%= request.getContextPath() %>/watcha/list';
-    	});
-    	
     	// Q&A 버튼
     	const qa = document.getElementById('qa');
     	qa.addEventListener('click', function(){
@@ -408,27 +404,28 @@
 
 
     </script>
-     <script>
-							// 게시판 상세 보기  기능
-							$(function() {
-								$(".list_table td").mouseenter(function(){
-									$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
-								}).mouseout(function(){
-									$(this).parent().css("background", "#363636");
-								}).click(function(){
-									var brd_no = $(this).parent().children().eq(0).text();
-									<% if(loginUser != null) { %>
-										<% if(loginUser.getMemNo() == bd.getMem_no()) { %>
-											location.href='<%= request.getContextPath() %>/qa/detail?brd_no=' + brd_no;
-										<% } else { %>
-											alert('작성자만 볼 수 있습니다.');	
-										<% } %>
-									<% } else { %>
-										alert('로그인 후 게시글 보기가 가능합니다.');
-									<% } %>
-
-								});
-							});
-							</script>
+	<script>
+	// 게시판 상세 보기  기능
+	$(function() {
+		$(".list_table td").mouseenter(function(){
+			$(this).parent().css({"background":"lightgray", "cursor":"pointer"});
+		}).mouseout(function(){
+			$(this).parent().css("background", "#363636");
+		}).click(function(){
+			var brd_no = $(this).parent().children().eq(1).text();
+			<% if(loginUser != null) { %>
+				var userNo = <%= loginUser.getMemNo() %>;
+				var writer = $(this).parent().children().eq(0).val();
+				if(userNo == writer) {
+					location.href='<%= request.getContextPath() %>/qa/detail?brd_no=' + brd_no;
+				} else {
+					alert('작성자만 조회할 수 있습니다.');	
+				}
+			<% } else { %>
+				alert('로그인 후 게시글 보기가 가능합니다.');
+			<% } %>
+		});
+	});
+	</script>
 
 </html>

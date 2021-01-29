@@ -170,7 +170,14 @@
             border: gray;
         }
     </style>
-    
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>

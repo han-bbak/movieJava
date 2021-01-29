@@ -89,6 +89,14 @@ Member loginUser = (Member)session.getAttribute("loginUser");
             margin-left: 10px;
         }
     </style>
+    <% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>

@@ -1,7 +1,6 @@
 package board.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import board.model.service.BoardService;
-import board.model.vo.Reply;
 
 /**
- * Servlet implementation class netflixDeleteReplyServlet
+ * Servlet implementation class qaDeleteReplyServlet
  */
-@WebServlet("/netflix/deleteReply")
-public class netflixDeleteReplyServlet extends HttpServlet {
+@WebServlet("/qa/deleteReply")
+public class qaDeleteReplyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public netflixDeleteReplyServlet() {
+    public qaDeleteReplyServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,9 +35,8 @@ public class netflixDeleteReplyServlet extends HttpServlet {
 		
 		if(result > 0) {
 			request.getSession().setAttribute("msg", "댓글이 삭제되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/netflix/detail?brd_no=" + brd_no);
+			response.sendRedirect(request.getContextPath() + "/qa/detail?brd_no=" + brd_no);
 		}
-	
 	}
 
 	/**

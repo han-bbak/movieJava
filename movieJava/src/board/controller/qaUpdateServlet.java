@@ -1,28 +1,26 @@
 package board.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import board.model.service.BoardService;
-import board.model.vo.Reply;
+import board.model.vo.Board;
 
 /**
- * Servlet implementation class netflixDeleteReplyServlet
+ * Servlet implementation class qaUpdateServlet
  */
-@WebServlet("/netflix/deleteReply")
-public class netflixDeleteReplyServlet extends HttpServlet {
+@WebServlet("/qa/update")
+public class qaUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public netflixDeleteReplyServlet() {
+    public qaUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +29,22 @@ public class netflixDeleteReplyServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int rp_no = Integer.parseInt(request.getParameter("rp_no"));
+		request.setCharacterEncoding("UTF-8");
+		
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		int brd_no = Integer.parseInt(request.getParameter("brd_no"));
-		int result = new BoardService().deleteReply(rp_no);
+		
+		Board b = new Board();
+		b.setBrd_title(title);
+		b.setBrd_content(content);
+		b.setBrd_no(brd_no);
+		
+		int result = new BoardService().updateBoard(b);
 		
 		if(result > 0) {
-			request.getSession().setAttribute("msg", "댓글이 삭제되었습니다.");
-			response.sendRedirect(request.getContextPath() + "/netflix/detail?brd_no=" + brd_no);
+			request.getSession().setAttribute("msg", "게시글이 수정되었습니다.");
+			response.sendRedirect(request.getContextPath() + "/qa/detail?brd_no=" + brd_no);
 		}
 	
 	}

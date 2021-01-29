@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="board.model.vo.Board"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
-	Board b = (Board)request.getAttribute("board");
+Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
+	<link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -88,7 +88,6 @@
             color: white;
             margin-left: 10px;
         }
-
     </style>
     <% if(session.getAttribute("msg") != null) { %>
 	<script>
@@ -110,7 +109,7 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -126,15 +125,45 @@
                 </form>
             </div>
             <div class="header" id="header3">
-
-                <form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+<% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
+			<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+			<% } %>
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -156,24 +185,23 @@
 
         <div id="content">
             <div id="board_top">
-                <div id="board_top_title"><h1 id="board_name">Watcha</h1></div>
+                <div id="board_top_title"><h1 id="board_name">Q&A</h1></div>
             </div>
             <div class="tableArea"> 
-            <form action="<%= request.getContextPath() %>/watcha/update" method="post">
-			<input type="hidden" name="brd_no" value="<%= b.getBrd_no() %>">
+            <form action="<%= request.getContextPath() %>/qa/insert" method="post">
                     <h4 class="board_title" id="title">제목</h4>
                     <span class="input_area">
-                        <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
+                        <input type="text" name="title" required>
                     </span>
                     
                     <h4 class="board_title">내용</h4>
-                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
+                    <textarea class="input_area" id="centent" name="content" style="resize:none;" required></textarea>
                     
                     <div class="btnArea">
                         <button type="submit" id="btn">등록</button>
                         <button type="button" id="btn" onclick="history.back();">취소</button>
                     </div>
-            </form>
+             </form>
             </div>
         </div>
     </div>
@@ -185,21 +213,21 @@ netflix.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/netflix/list';
 });
 
-// Q&A 버튼
+//Q&A 버튼
 const qa = document.getElementById('qa');
 qa.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/qa/list';
 });
 </script>
 <script>
-		$(".menuBtn").click(function () { 
-    		$("#menu,.page_cover,html").addClass("open"); 
-    		 window.location.hash = "#open"; 
- 		}); 
- 		window.onhashchange = function () { 
-     		if(location.hash != "#open") {
-       		  $("#menu,.page_cover,html").removeClass("open");  
-    		 } 
- 		};
+       $(".btn").click(function () { 
+           $("#menu,.page_cover,html").addClass("open"); 
+            window.location.hash = "#open"; 
+        }); 
+        window.onhashchange = function () { 
+            if(location.hash != "#open") {
+                $("#menu,.page_cover,html").removeClass("open");  
+            } 
+        };
     </script>
 </html>
