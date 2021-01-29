@@ -438,29 +438,7 @@ html.open {
 		<div id="content">
 			<div class="content" id="content1">
 				<body>
-					<div class="mslider">
-						<ul class="slidess">
-							<li><img src="views/movie/image/slide/banner1.jpg">
-								<div class="caption right-align">
-									<h3 class="push_1">역대 국내 흥행영화</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-							<li><img src="views/movie/image/slide/banner2.jpg">
-								<div class="caption right-align">
-									<h3 class=push_2>
-										나만 넷플릭스 없을땐?<br>파티구하기!
-									</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-							<li><img src="views/movie/image/slide/banner3.jpg">
-								<div class="caption right-align">
-									<h3 class=push_3>
-										영화 굿즈<br>온라인 단독 판매
-									</h3>
-									<button class="linkbtn btn-outline">바로가기</button>
-								</div></li>
-						</ul>
-					</div>
+
 					<script
 						src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.js'></script>
 
