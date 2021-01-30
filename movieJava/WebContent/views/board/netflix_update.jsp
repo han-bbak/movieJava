@@ -13,11 +13,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- 	
+
  	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
+
   
     <style>
     #summernote {
@@ -99,7 +101,8 @@
             color: white;
             margin-left: 10px;
         }
-
+        
+        body { background:#363636; }
     </style>
     <% if(session.getAttribute("msg") != null) { %>
 	<script>
@@ -206,7 +209,7 @@
                     <span class="input_area">
                         <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
-                    <br><br>
+                    
                     <h4 class="board_title">내용</h4>
                     <textarea class="input_area" rows="5" id="summernote" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     
@@ -246,6 +249,7 @@ qa.addEventListener('click', function(){
 
     </script>
     <script>
+
   	$('#summernote').summernote({
         height: 380, 
         toolbar: [
@@ -262,6 +266,7 @@ qa.addEventListener('click', function(){
           disableResizeEditor: true,
           resize: false  
       });
+
   </script>
     
 </html>

@@ -79,9 +79,11 @@
             text-align: center;
             padding-top: 10px;
         }
+        
         #title {
             margin-top: 0;
         }
+        
         #btn {
             cursor: pointer;
             width: 80px;
@@ -95,6 +97,9 @@
             color: white;
             margin-left: 10px;
         }
+        
+        body { background:#363636; }
+
 
     </style>
     <% if(session.getAttribute("msg") != null) { %>
@@ -204,7 +209,7 @@
                     </span>
                     
                     <h4 class="board_title">내용</h4>
-                    <textarea class="input_area" id="summernote" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
+                    <textarea class="input_area" rows="5" id="summernote" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     
                     <div class="btnArea">
                         <button type="submit" id="btn">등록</button>
@@ -239,7 +244,8 @@ qa.addEventListener('click', function(){
     		 } 
  		};
     </script>
-        <script>
+
+<script>
   	$('#summernote').summernote({
         height: 380, 
         toolbar: [
@@ -257,4 +263,6 @@ qa.addEventListener('click', function(){
           resize: false  
       });
   </script>
+	
+	
 </html>

@@ -95,7 +95,8 @@
             color: white;
             margin-left: 10px;
         }
-
+        
+        body { background:#363636; }
     </style>
     <% if(session.getAttribute("msg") != null) { %>
 	<script>
