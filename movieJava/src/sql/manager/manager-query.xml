@@ -628,4 +628,41 @@
 		 WHERE
 		       BRD_NO = ?
 	</entry>
+	<entry key="selectQAWaitList">
+		SELECT
+		       RNUM
+		     , BRD_NO
+		     , BRD_CATEGORY
+		     , BRD_TITLE
+		     , BRD_CONTENT
+		     , MEM_NAME
+		     , BRD_CNT
+		     , BRD_DATE
+		     , BRD_MODIFY
+		     , BRD_STATUS
+		     , BRD_QA_WAIT
+		  FROM
+		  (    SELECT
+				       ROWNUM RNUM
+				     , BRD_NO
+				     , BRD_CATEGORY
+				     , BRD_TITLE
+				     , BRD_CONTENT
+				     , MEM_NAME
+				     , BRD_CNT
+				     , BRD_DATE
+				     , BRD_MODIFY
+				     , BRD_STATUS
+				     , BRD_QA_WAIT
+				  FROM
+				       BOARD
+				       JOIN MEMBER ON(BRD_WRITER = MEM_NO)
+				 WHERE
+				       BRD_CATEGORY = 3
+				   AND BRD_QA_WAIT LIKE '%' || '대기' || '%'
+			  ORDER BY BRD_NO DESC
+		  )
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
 </properties>

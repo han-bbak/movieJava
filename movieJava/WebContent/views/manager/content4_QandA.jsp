@@ -120,7 +120,7 @@
                 </p>
                 <p class="subText" id="p-sub4">답변 대기</p>
                 <p class="subText" id="p-sub5">
-                    <a href="content4_1_wait.jsp"><span id="countWait">000</span></a>건
+                    <a href="<%= request.getContextPath() %>/manager/qaWait"><span id="countWait">000</span></a>건
                 </p>
                 <p class="subText" id="p-sub6">답변 완료</p>
                 <p class="subText" id="p-sub7">

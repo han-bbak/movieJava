@@ -1087,4 +1087,45 @@ public class ManagerDao {
 		return result;
 	}
 
+	// 답변 대기 문의글 리스트
+	public ArrayList<Board> selectQAWaitList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("selectQAWaitList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Board(rset.getInt(2),
+						           rset.getInt(3),
+						           rset.getString(4),
+						           rset.getString(5),
+						           rset.getString(6),
+						           rset.getInt(7),
+						           rset.getDate(8),
+						           rset.getDate(9),
+						           rset.getString(10),
+						           rset.getString(11)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
 }

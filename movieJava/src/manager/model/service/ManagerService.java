@@ -447,4 +447,15 @@ public class ManagerService {
 		return result;
 	}
 
+	// 답변 대기 문의글 리스트
+	public ArrayList<Board> selectQAWaitList(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> list = new ManagerDao().selectQAWaitList(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
 }
