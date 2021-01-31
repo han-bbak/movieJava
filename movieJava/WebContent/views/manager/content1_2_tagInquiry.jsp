@@ -60,7 +60,7 @@
                 <ul>
                     <li><a href="content1_1_inquiry.jsp">전체 목록 조회</a></li>
                     <li><a href="content1_2_tagInquiry.jsp">태그별 목록 조회</a></li>
-                    <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li>
+                    <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
                 </ul>
 
                 <!-- <span class="subText" id="span-sub1">등록 영화 관리</span> -->
@@ -76,5 +76,21 @@
             </div>
         </div>
     </section>
+    <script>
+	    $(function(){
+			var countMovie = $("#countMovie");
+			
+			$.ajax({
+				url : "<%= request.getContextPath() %>/manager/movieCount",
+				type : "post",
+				success : function(data){
+					countMovie.text(data);
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		});
+    </script>
 </body>
 </html>

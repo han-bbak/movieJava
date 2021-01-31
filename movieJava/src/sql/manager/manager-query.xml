@@ -665,4 +665,10 @@
 		 WHERE
 		       RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="countMovie">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       MOVIE		       
+	</entry>	
 </properties>

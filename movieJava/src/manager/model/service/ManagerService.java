@@ -457,5 +457,18 @@ public class ManagerService {
 		
 		return list;
 	}
+	
+// -----------------------------------  Movie  --------------------------------------------------
+
+	// 영화 등록된 갯수
+	public int countMovie() {
+		Connection conn = getConnection();
+		
+		int countMovie = new ManagerDao().countMovie(conn);
+		
+		close(conn);
+		
+		return countMovie;
+	}
 
 }

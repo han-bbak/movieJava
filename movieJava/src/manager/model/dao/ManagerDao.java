@@ -1128,4 +1128,32 @@ public class ManagerDao {
 		return list;
 	}
 
+// -----------------------------------  Movie  --------------------------------------------------
+	
+	// 등록된 영화 갯수
+	public int countMovie(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("countMovie");
+		int countMovie = 0;
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				countMovie = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return countMovie;
+	}
+
 }
