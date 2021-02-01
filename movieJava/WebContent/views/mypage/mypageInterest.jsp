@@ -565,7 +565,7 @@ h3 {
                 <div class="product-info">
                   <div class="name">영화 제목</div>
                   <div class="dis">영화 설명</div>
-                  <a class="btn1" href="#">보러 가기</a>
+                  <a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">보러 가기</a>
                 </div>
               
               </div>
