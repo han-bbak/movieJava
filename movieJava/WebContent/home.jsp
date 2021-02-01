@@ -546,7 +546,7 @@ h3 {
 <br>
 <a id="qa">Q&A</a>
 <br>
-<a href="<%=request.getContextPath()%>/views/store/store_goods.jsp">STORE</a>
+<a id="store">STORE</a>
 </div>
 <script>
 //넷플릭스 버튼
@@ -559,6 +559,12 @@ netflix.addEventListener('click', function(){
 const qa = document.getElementById('qa');
 qa.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/qa/list';
+});
+
+//Store 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
 });
 </script>
 
