@@ -235,10 +235,11 @@
 		     , ST_PATH
 		     , ST_ONAME
 		     , ST_RNAME
+		     , ST_CATEGORY
 		  FROM
 		     (
 		        SELECT
-				       ROWNUM RNUM 
+				       ROW_NUMBER() OVER(ORDER BY ST_NO DESC) AS RNUM 
 		             , ST_NO
 				     , ST_CONTENT
 				     , ST_TITLE
@@ -247,9 +248,9 @@
 				     , ST_PATH
 				     , ST_ONAME
 				     , ST_RNAME
+				     , ST_CATEGORY
 				  FROM
 				       STORE
-		      ORDER BY ST_NO DESC
 		     )
 	     WHERE
 		       RNUM BETWEEN ? AND ?
@@ -272,6 +273,7 @@
 		     , ST_PATH
 		     , ST_ONAME
 		     , ST_RNAME
+		     , ST_CATEGORY
 		  FROM
 		     (
 		        SELECT
@@ -284,6 +286,7 @@
 				     , ST_PATH
 				     , ST_ONAME
 				     , ST_RNAME
+				     , ST_CATEGORY
 				  FROM
 				       STORE
 				 WHERE
@@ -305,10 +308,12 @@
 		  	 , ST_PATH
 		  	 , ST_ONAME
 		  	 , ST_RNAME
+		  	 , ST_CATEGORY
 		  )
 		VALUES
 		(
 			   SEQ_ST_NO.NEXTVAL
+			 , ?
 			 , ?
 			 , ?
 			 , ?

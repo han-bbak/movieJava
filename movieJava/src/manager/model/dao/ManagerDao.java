@@ -333,7 +333,8 @@ public class ManagerDao {
 						           rset.getInt(6),
 						           rset.getString(7),
 						           rset.getString(8),
-						           rset.getString(9)));
+						           rset.getString(9),
+						           rset.getInt(10)));
 			}
 			
 		} catch (SQLException e) {
@@ -400,7 +401,8 @@ public class ManagerDao {
 						           rset.getInt(6),
 						           rset.getString(7),
 						           rset.getString(8),
-						           rset.getString(9)));
+						           rset.getString(9),
+						           rset.getInt(10)));
 			}
 			
 		} catch (SQLException e) {
@@ -426,6 +428,7 @@ public class ManagerDao {
 			pstmt.setString(5, st.getStorePath());
 			pstmt.setString(6, st.getOriginName());
 			pstmt.setString(7, st.getRename());
+			pstmt.setInt(8, st.getStCategory());
 			
 			result = pstmt.executeUpdate();
 			
