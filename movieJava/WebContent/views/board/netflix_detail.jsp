@@ -399,6 +399,12 @@
 		location.href='<%= request.getContextPath() %>/qa/list';
 	});
 	
+	//Store 버튼
+	const store = document.getElementById('store');
+	store.addEventListener('click', function(){
+		location.href='<%= request.getContextPath() %>/store/list';
+	});
+	
 	
 	// 댓글 수정 
 	const replyUpdate = document.getElementById('replyUpdate');

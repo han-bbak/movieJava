@@ -71,6 +71,7 @@
             display: flex;
             justify-content: center;
             align-self: center;
+            text-align:center;
         }
 
         .store_list {
@@ -79,8 +80,10 @@
             display:inline-block;
             padding:10px;
             margin:10px;
+            margin-left: 15px;
+            margin-right: 15px;
             text-align:center;
-            display: table;
+           
             
         }
 
@@ -116,6 +119,10 @@
             width: 30px;
             height: 30px;
         }
+        
+        #storewidth {
+        	width: 960px;
+        	display:inline-block;
         
     </style>
 </head>
@@ -203,14 +210,14 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="store">STORE</a>
         </div>
 
         <div id="content">
             <div id="store_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp"><span id="goods">Goods</span></a>
+                        <a id="goods" style="color:white;">Goods</a>
                         /
                         <a href="<%= request.getContextPath() %>/views/store/store_ticket.jsp"><span id="ticket">Ticket</span></a>
                         <br>
@@ -218,15 +225,16 @@
                 </div>
             </div>
             <div class="storeArea">
+            <div id="storewidth">
                 	<% for(Store s : list) { %>
                 	<div class="store_list">
                 		<input type="hidden" value="<%= s.getStoreNo() %>">
                 		<img src="<%= request.getContextPath() %><%= s.getStorePath() %><%= s.getRename() %>" width="150px" height="150px">
                 		<p><%= s.getStoreTitle() %></p>
-                		<p><%= s.getStorePrice() %></p>
+                		<p><%= s.getStorePrice() %>원</p>
                 	</div>
                 	<% } %>   
-             
+             </div>
                 
             </div>
             <div class="pagingArea">
@@ -249,6 +257,18 @@ netflix.addEventListener('click', function(){
 const qa = document.getElementById('qa');
 qa.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/qa/list';
+});
+
+//STORE 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+
+//goods 버튼
+const goods = document.getElementById('goods');
+goods.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
 });
 
 </script>
