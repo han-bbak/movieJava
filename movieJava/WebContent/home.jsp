@@ -92,6 +92,7 @@ a:-webkit-any-link {
 	position: relative;
 }
 
+
 #header1 {
 	width: 15%;
 	height: 100%;
