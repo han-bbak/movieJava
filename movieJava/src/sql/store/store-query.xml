@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
-<entry key="getListCount">
+	<entry key="getListCount">
 		SELECT
 			COUNT(*)
 		FROM
@@ -70,4 +70,92 @@
 		WHERE
 			RNUM BETWEEN ? AND ?
 	</entry>
+		<entry key="getListCount1">
+		SELECT
+			COUNT(*)
+		FROM
+			STORE
+		WHERE
+			ST_CATEGORY = 2
+	</entry>
+	<entry key="selectList1">
+		SELECT 
+			RNUM,
+			ST_NO,
+		    ST_CONTENT,
+		    ST_TITLE,
+		    ST_PRICE,
+		    ST_QUAN,
+		    ST_PATH,
+		    ST_ONAME,
+		    ST_RNAME,
+		    ST_CATEGORY
+		FROM
+			TLIST
+		WHERE
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="getSearchTitleListCount1">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       STORE
+		 WHERE
+		       ST_TITLE LIKE '%' || ? || '%'
+		       AND ST_CATEGORY = 2
+	</entry>
+	<entry key="selectSearchList1">
+		SELECT 
+			RNUM,
+			ST_NO,
+			ST_CONTENT,
+			ST_TITLE,
+			ST_PRICE,
+			ST_QUAN,
+			ST_PATH,
+			ST_ONAME,
+			ST_RNAME,
+			ST_CATEGORY
+		FROM
+			(
+				SELECT
+					ROWNUM RNUM, 
+					ST_NO,
+					ST_CONTENT,
+					ST_TITLE,
+					ST_PRICE,
+					ST_QUAN,
+					ST_PATH,
+					ST_ONAME,
+					ST_RNAME,
+					ST_CATEGORY
+				FROM
+					STORE
+				WHERE
+					ST_TITLE LIKE '%' || ? || '%'
+					AND ST_CATEGORY = 2
+				ORDER BY ST_NO DESC
+			)
+		WHERE
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectGoods">
+		SELECT
+			ST_NO,
+			ST_CONTENT,
+			ST_TITLE,
+			ST_PRICE,
+			ST_QUAN,
+			ST_PATH,
+			ST_ONAME,
+			ST_RNAME,
+			ST_CATEGORY
+		FROM
+			STORE
+		WHERE
+			ST_NO = ?
+			AND ST_CATEGORY = 1
+		ORDER BY ST_NO
+	</entry>
+	
 </properties>

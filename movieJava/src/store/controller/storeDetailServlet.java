@@ -3,28 +3,26 @@ package store.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import store.model.vo.PageInfo;
 import store.model.service.StoreService;
 import store.model.vo.Store;
 
 /**
- * Servlet implementation class storeListServlet
+ * Servlet implementation class storeDetailServlet
  */
-@WebServlet("/store/list")
-public class storeListServlet extends HttpServlet {
+@WebServlet("/store/detail")
+public class storeDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public storeListServlet() {
+    public storeDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,40 +31,19 @@ public class storeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-int currentPage = 1;
-		
-		if(request.getParameter("currentPage") != null) {
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-		
+		int storeNo = Integer.parseInt(request.getParameter("storeNo"));
+
 		StoreService ss = new StoreService();
+		Store s = null;
 		
-		int listCount = ss.getListCount();
+		s = ss.selectGoods(storeNo);
 		
-		int pageLimit = 10;
-		int boardLimit = 6;
-		int maxPage;
-		int startPage;
-		int endPage;
-		
-		maxPage = (int)Math.ceil((double)listCount / boardLimit);
-		
-		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
-		
-		endPage = startPage + pageLimit - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
+		if(s != null) {
+			request.setAttribute("store", s);
+			request.getRequestDispatcher("/views/store/store_goods_detail.jsp").forward(request, response);
+		} else {
+			request.setAttribute("msg", "게시글 상세 조회에 실패하였습니다.");
 		}
-		
-		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
-		ArrayList<Store> list = ss.selectList(pi);
-		
-		request.setAttribute("pi", pi);
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("/views/store/store_goods.jsp").forward(request, response);
 	}
 
 	/**
