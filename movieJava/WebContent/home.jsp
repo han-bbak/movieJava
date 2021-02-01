@@ -169,6 +169,10 @@ a:-webkit-any-link {
 	text-align: left;
 }
 
+#searchDiv a {
+	text-decoration : none;
+}
+
 #searchDiv span {
 	color: #fff;
 	font-size: 12px;
@@ -429,6 +433,7 @@ h3 {
 		font-size : 30px
       	font-family: 'Noto Sans KR', sans-serif;
       }
+
 </style>
 </head>
 
