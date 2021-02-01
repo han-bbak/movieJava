@@ -170,4 +170,11 @@
 		       MEM_ID = ?
 		   AND MEM_STATUS = 'Y'
 	</entry>
+	<entry key="paymentselect">
+	SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code, p.pay_date
+	FROM MEMBER M, PAYMENT P
+	WHERE M.MEM_NO = P.MEM_NO
+	AND M.MEM_NO = ?
+	
+	</entry>
 </properties>

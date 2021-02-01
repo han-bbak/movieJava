@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, payment.model.vo.Payment" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	//Payment pay = (Payment)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -587,7 +588,7 @@ h3 {
                                                
                                                
                                                
-                                                <th>이름</th>
+                                                <th>zz</th>
                                                 
                                             </tr>
                                             

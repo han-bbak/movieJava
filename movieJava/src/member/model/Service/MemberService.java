@@ -6,6 +6,8 @@ import java.sql.Connection;
 
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import payment.model.dao.PaymentDao;
+import payment.model.vo.Payment;
 public class MemberService {
 
 	// 로그인용
@@ -108,4 +110,6 @@ public class MemberService {
 			}
 			return updateMember;
 		}
+		
+		
 }
