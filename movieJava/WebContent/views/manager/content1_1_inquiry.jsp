@@ -79,22 +79,15 @@
         </div>
         <div class="contentWrap">
             <div class="titleDiv">
-                <p>전체 목록 조회</p>
+                <p>영화 조회</p>
             </div>
+            <hr>
             <div class="tableDiv">
-                <form>
-                    <div class="allSelectDiv">
-                        <input type="checkbox" name="allSelect">
-                        <input type="button" value="모두 선택/해제">&nbsp;
-                        <input type="submit" value="선택한 영화 삭제">
-                    </div>
-                    <!-- 검색 결과 출력 -->
-                    <table>
-                        <tr>
-                            <th>이름</th>
-                        </tr>
-                    </table>
-                </form>
+                <table>
+                    <tr>
+                        <th>이름</th>
+                    </tr>
+                </table>
             </div>
         </div>
     </section>

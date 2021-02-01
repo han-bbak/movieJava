@@ -295,7 +295,7 @@
                     <p><%= viewId %></p>
 
                 </div>
-                <button type="button" class="login_ok" onclick="location.href='loginView.html'">확인</button> <!-- 로그인 화면으로 -->
+                <button type="button" class="login_ok" onclick="location.href='<%= request.getContextPath() %>/views/member/loginView.jsp'">확인</button> <!-- 로그인 화면으로 -->
                 <ul class="list">
                     <li>
                         <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>

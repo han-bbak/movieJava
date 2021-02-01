@@ -167,7 +167,7 @@
                     <img id="previewImg">
                 </div>
                 <div class="btnDiv pDiv">
-                    <button id="insertBtn" onclick="onSubmit();">상품 등록</button>
+                    <button type="button" id="insertBtn" onclick="onSubmit();">상품 등록</button>
                 </div>
             </form>
         </div>

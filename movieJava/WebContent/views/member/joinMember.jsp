@@ -387,6 +387,12 @@
             if(!chk(/^[0-9]{1,}$/, birthday, "생년월일을 다시 입력해주세요.")) {
                 return;
             }
+            
+            if(userPwd.value != userPwd2.value) {
+            	alert("비밀번호가 일치하지 않습니다.")
+            	userPwd2.focus();
+            	return;
+            }
 
             $("#joinForm").submit();
         }
