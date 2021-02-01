@@ -206,7 +206,6 @@
 				type : "post",
 				dataType : "json",
 				success : function(data){
-					console.log(data);
 					count.text(data[0]);
 					countWait.text(data[1]);
 					countComplete.text(data[2]);

@@ -18,6 +18,7 @@ import manager.model.vo.Search;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
 import movie.MovieVO;
+import movieTag.model.vo.MovieTag;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
@@ -1261,6 +1262,76 @@ public class ManagerDao {
 									 rset.getString(10),
 									 rset.getInt(11),
 									 rset.getString(12)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 태그가 달리지 않은 영화 목록 갯수
+	public int countNotMovieTag(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int countNotMovieTag = 0;
+		String sql = prop.getProperty("countNotMovieTag");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				countNotMovieTag = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return countNotMovieTag;
+	}
+
+	// 태그가 달리지 않은 영화 목록 리스트
+	public ArrayList<MovieTag> selectMovieTagList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MovieTag> list = new ArrayList<>();
+		String sql = prop.getProperty("selectMovieTagList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new MovieTag(rset.getString(2),
+									  rset.getString(3),
+									  rset.getString(4),
+									  rset.getString(5),
+									  rset.getString(6),
+									  rset.getString(7),
+									  rset.getString(8),
+									  rset.getString(9),
+									  rset.getString(10),
+									  rset.getString(11),
+									  rset.getInt(12),
+									  rset.getString(13)));
 			}
 			
 		} catch (SQLException e) {
