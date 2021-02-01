@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, tag.model.vo.Tag" %>
 <%
-	ArrayList<Tag> list = (ArrayList<Tag>)request.getAttribute("list");
+	ArrayList<Tag> list = (ArrayList<Tag>)request.getAttribute("list");	
 %>
 <!DOCTYPE html>
 <html>

@@ -226,7 +226,7 @@
                 return;
             }
 
-            $("#insertBtn").submit();
+            $("#productInsertForm").submit();
         }
         
         function refreshAndClose(){

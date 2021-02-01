@@ -38,13 +38,15 @@ public class TagAddServlet extends HttpServlet {
 		int result = new ManagerService().addTag(tagName);
 		
 		ArrayList<Tag> list = new ManagerService().selectTagList();
-		request.setAttribute("list", list);
+		// request.getSession().setAttribute("list", list);
 		
 		if(result <= 0) {
 			request.setAttribute("msg", "태그 등록에 실패하였습니다.");
+			request.getRequestDispatcher("/views/manager/content1_4_tagManager.jsp").forward(request, response);
+		} else {
+			response.sendRedirect(request.getContextPath() + "/manager/tagList");
 		}
 		
-		request.getRequestDispatcher("/views/manager/content1_4_tagManager.jsp").forward(request, response);
 	}
 
 	/**

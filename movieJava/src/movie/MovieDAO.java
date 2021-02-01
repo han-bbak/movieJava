@@ -1,7 +1,9 @@
 package movie;
 
-import static common.JDBCTemplate.close;
+import static common.JDBCTemplate.*;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -9,62 +11,117 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Properties;
+import java.util.Vector;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
+import common.JDBCTemplate;
+import manager.model.vo.PageInfo;
+import member.model.dao.MemberDao;
 import member.model.vo.Member;
 
-public class MovieDAO {
+public class MovieDAO {	
+	
+	private Properties prop = new Properties();
+  	Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs =null;
+    
+	// 전체 영화 검색
+    public ArrayList<Bean> getAllMovie() {
+    	
+    	Connection conn = getConnection();
+    	ArrayList<Bean> list = new ArrayList<>();
+    	Bean been = null;
+   
+    	
+    	try {
+    		
+            String sql = "select * from movie";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            
+            // 데이터 저장
+            while (rs.next()) { 
+                Bean bean = new Bean();
+                bean.setM_code(rs.getString("m_code"));
+                bean.setM_title(rs.getString("m_title"));
+                bean.setM_genre(rs.getString("m_genre"));
+                bean.setM_director(rs.getString("m_director"));
+                bean.setM_date(rs.getString("m_date"));
+                bean.setM_country(rs.getString("m_country"));
+                bean.setM_image(rs.getString("m_image"));
+                bean.setM_summary(rs.getString("m_summary"));
+                bean.setM_rating(rs.getString("m_rating"));
+                bean.setM_grade(rs.getInt("m_grade"));
+                bean.setStatus(rs.getString("status"));
+                // 벡터에 빈 클래스를 저장
+                list.add(bean);
+ 
+            }
+ 
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+        	close(rs);
+        }
+    	System.out.println(list);
+        return list;
+ 
+    }
 
-	Connection conn = null;
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
+ // 장르별 영화 리스트를 저장하는 메소드
+    public ArrayList<Bean> getGanre(Connection conn,String M_GENRE) {
+        ArrayList<Bean> list = new ArrayList<>();
+ 
+        // 데이터를 저장할 빈 클래스 선언
+        Bean bean = null;
+ 
+ 
+        try {
+            String sql = "select * from movie where m_genre=?";
+            pstmt = conn.prepareStatement(sql);
+ 
+            // ?에 값을 넣는다.
+            pstmt.setString(1, M_GENRE);
+            
+            // 결과를 리턴
+            rs = pstmt.executeQuery();
+            // 반복문을 돌려서 데이터를 저장
+ 
+            while (rs.next()) { // 데이터를 저장할 빈 클래스 생성
+                bean = new Bean();
+                bean.setM_code(rs.getString("m_code"));
+                bean.setM_title(rs.getString("m_title"));
+                bean.setM_genre(rs.getString("m_genre"));
+                bean.setM_director(rs.getString("m_director"));
+                bean.setM_date(rs.getString("m_date"));
+                bean.setM_country(rs.getString("m_country"));
+                bean.setM_image(rs.getString("m_image"));
+                bean.setM_summary(rs.getString("m_summary"));
+                bean.setM_rating(rs.getString("m_rating"));
+                bean.setM_grade(rs.getInt("m_grade"));
+                bean.setStatus(rs.getString("status"));
+                // 벡터에 빈 클래스를 저장
+                list.add(bean);
+ 
+            }
+ 
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+ 
+        return list;
+ 
+    }
 
-	public ArrayList<MovieVO> getList (String movies, String searchType, String search, int pageNumber){
-		if(movies.equals("전체")) {
-			movies= ""; //항상 포함
-		}
-		ArrayList<MovieVO> movieList = null;
-		Member loginUser = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = "";
-		
-		try {
-			if(searchType.equals("추천순")) {
-				sql = "SELECT * FROM MOVIE WHERE movies LIKE ? AND CONCAT(M_TITLE,M_DIRECTOR) LIKE"
-						+ "? ORDER BY M_RATING DESC";
-			}else if(searchType.equals("최신개봉순")) {
-				sql = "SELECT * FROM MOVIE ? ORDER BY M_DATE DESC";
-			
-//			conn = ?.getConnection
-//			conn.setAutoCommit(false);
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + movies + "%");
-			pstmt.setString(2, "%" + search + "%");
-			rset = pstmt.executeQuery();
-			movieList = new ArrayList<MovieVO>();
-/*			while(rset.next()) {
-				MovieVO searchResult = new MovieVO(rset.getString(1),
-							                rset.getString(2),
-							                rset.getString(3),
-							                rset.getString(4),
-							                rset.getString(5),
-							                rset.getString(6),
-							                rset.getString(7),
-							                rset.getString(8),
-							                rset.getString(9),
-							                rset.getNumber(10),
-							                rset.getString(11)
-				};
-				movieList.add(searchResult);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {*/
-			close(rset);
-			close(pstmt);
-		}
-		
-		return movieList;
-		}
+    
+ 
+    
+    
 }
-}
-
