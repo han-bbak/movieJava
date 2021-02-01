@@ -1,17 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="member.model.vo.Member"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"
-	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
-	crossorigin="anonymous"></script>
-<link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+
 <style>
 #board_top {
 	width: 100%;
@@ -118,8 +120,8 @@ select {
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
-            </div> 
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+            </div>  
 			<div class="header" id="header2">
 				<form id="search-form">
 					<section id="search-btn-area">
@@ -131,33 +133,45 @@ select {
 						</button>
 					</section>
 					<section id="search-text-area">
-						<input type="text" id="search-input" name="search-input"
-							placeholder="보고 싶은 영화를 검색해 보세요.">
-					</section>
+                        <input type="text" id="search-input" name="search-input" placeholder="보고 싶은 영화를 검색해 보세요.">
+                    </section>
 
 				</form>
 			</div>
 			<div class="header" id="header3">
-
-				<form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
 		<div id="menu">
 			<div onclick="history.back();" class="close">
-				<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"
-					fill="#a49e9e" class="bi bi-x-circle" viewBox="0 0 16 16">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="#a49e9e" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                   </svg>
-			</div>
+            </div>
 			<br><br><br><br>
 			<a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
@@ -184,17 +198,20 @@ select {
 						</span></td>
 					</tr>
 					<tr>
-						<td colspan="2"><span>우편번호:</span> &nbsp; <span
-							class="input_area" id="short"> <input type="text"
-								name="address" id="short" class="postcodify_postcode5" readonly>
+						<td colspan="2">
+						<span>우편번호:</span> &nbsp; 
+						<span class="input_area" id="short"> 
+							<input type="text" name="address" id="short" class="postcodify_postcode5" readonly>
 						</span> &nbsp;
 							<button type="button" class="btn" id="postcodify_search_button">검색</button>
-							&nbsp;&nbsp; <span>도로명 주소: </span> &nbsp; <span
-							class="input_area"> <input type="text" name="address"
-								class="postcodify_address" readonly>
-						</span> &nbsp;&nbsp; <span>상세 주소: </span> &nbsp; <span class="input_area">
-								<input type="text" name="address" class="postcodify_address">
-						</span></td>
+							&nbsp;&nbsp; <span>도로명 주소: </span> &nbsp; 
+							<span class="input_area"> <input type="text" name="address" class="postcodify_address" readonly></span> 
+							&nbsp;&nbsp; <span>상세 주소: </span> &nbsp; <span class="input_area">
+							<input type="text" name="address" class="postcodify_details" placeholder="상세 주소를 입력해 주세요.">
+						</span>
+						</td>
+						
+						
 					</tr>
 					<tr>
 						<td colspan="2"><span>카드사: </span> &nbsp; <select>
@@ -222,7 +239,6 @@ select {
 		</div>
 	</div>
 </body>
-<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
 <script>
        $(".menuBtn").click(function () { 
@@ -235,5 +251,10 @@ select {
                 $("#menu,.page_cover,html").removeClass("open");  
             } 
         };
+    </script>
+    <script> 
+    	$(function() { 
+    		$("#postcodify_search_button").postcodifyPopUp(); 
+		}); 
     </script>
 </html>

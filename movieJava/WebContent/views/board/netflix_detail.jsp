@@ -271,7 +271,7 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="store">STORE</a><br>
         </div>
 
         <div id="content">

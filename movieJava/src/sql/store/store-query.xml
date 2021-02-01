@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="getListCount">
+		SELECT
+			COUNT(*)
+		FROM
+			STORE
+	</entry>
+	<entry key="selectList">
+		SELECT 
+			RNUM,
+			ST_NO,
+		    ST_CONTENT,
+		    ST_TITLE,
+		    ST_PRICE,
+		    ST_QUAN,
+		    ST_PATH,
+		    ST_ONAME,
+		    ST_RNAME
+		FROM
+			(
+				SELECT
+					ROWNUM RNUM ,
+					ST_NO,
+					ST_CONTENT,
+					ST_TITLE,
+					ST_PRICE,
+					ST_QUAN,
+					ST_PATH,
+					ST_ONAME,
+					ST_RNAME
+				FROM
+				       STORE
+				ORDER BY ST_NO DESC
+		     )
+		WHERE
+			RNUM BETWEEN ? AND ?
+	</entry>
+</properties>
