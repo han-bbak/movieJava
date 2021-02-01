@@ -15,6 +15,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+</style>
     <style> 
 #menu-icon {
 	color: #ffffff;
@@ -436,6 +439,9 @@ h3 {
         text-align: center;
       }
 
+	.font1{
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
     </style>
     
 </head>
@@ -533,7 +539,7 @@ h3 {
             <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
-        <div id="content">
+        <div id="content" class="font1">
             <img class="masthead-avatar mb-5" src="avataaars.svg" alt="" width="300px" height="300px">
             <h1><%= loginUser.getMemId() %>님의 포인트</h1>
             

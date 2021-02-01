@@ -61,11 +61,7 @@ public class Payment {
 		this.payNum = payNum;
 	}
 
-	@Override
-	public String toString() {
-		return "Payment [payCode=" + payCode + ", payCard=" + payCard + ", payCardNo=" + payCardNo + ", payDate="
-				+ payDate + ", payNum=" + payNum + "]";
-	}
+	
 	
 	
 }

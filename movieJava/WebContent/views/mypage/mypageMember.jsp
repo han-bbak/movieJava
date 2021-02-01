@@ -32,8 +32,10 @@
 	crossorigin="anonymous"></script>
 <link href="../../resources/css/form.css" rel="stylesheet"
 	type="text/css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+</style>
 <style>
 #menu-icon {
 	color: #ffffff;
@@ -577,6 +579,10 @@ h1 {
 	transform: translate(-50%);
 	width: 460px;
 }
+
+.font1{
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
 </style>
 
 </head>
@@ -684,7 +690,7 @@ h1 {
 		</div>
 
 
-		<div id="wrapper1">
+		<div id="wrapper1" class="font1">
 
 			<!-- content-->
 			<div id="content1">
