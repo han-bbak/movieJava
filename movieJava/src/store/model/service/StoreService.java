@@ -6,9 +6,9 @@ import static common.JDBCTemplate.getConnection;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import board.model.dao.BoardDao;
-import board.model.vo.PageInfo;
 import manager.model.dao.ManagerDao;
+import store.model.vo.PageInfo;
+import store.model.vo.Search;
 import store.model.dao.StoreDao;
 import store.model.vo.Store;
 
@@ -33,4 +33,25 @@ public class StoreService {
 		
 		return list;
 	}
+
+	public int getSearchListCount(Search s) {
+		Connection conn = getConnection();
+		
+		int listCount = new StoreDao().getSearchListCount(conn, s);
+		
+		close(conn);
+		
+		return listCount;
+	}
+
+	public ArrayList<Store> selectSearchList(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Store> storeList = new StoreDao().selectSearchList(conn, pi, s);
+		
+		close(conn);
+		
+		return storeList;
+	}
+
 }

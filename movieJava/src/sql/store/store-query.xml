@@ -6,6 +6,8 @@
 			COUNT(*)
 		FROM
 			STORE
+		WHERE
+			ST_CATEGORY = 1
 	</entry>
 	<entry key="selectList">
 		SELECT 
@@ -17,11 +19,38 @@
 		    ST_QUAN,
 		    ST_PATH,
 		    ST_ONAME,
-		    ST_RNAME
+		    ST_RNAME,
+		    ST_CATEGORY
+		FROM
+			GLIST
+		WHERE
+			RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="getSearchTitleListCount">
+		SELECT
+		       COUNT(*)
+		  FROM 
+		       STORE
+		 WHERE
+		       ST_TITLE LIKE '%' || ? || '%'
+		       AND ST_CATEGORY = 1
+	</entry>
+	<entry key="selectSearchList">
+		SELECT 
+			RNUM,
+			ST_NO,
+			ST_CONTENT,
+			ST_TITLE,
+			ST_PRICE,
+			ST_QUAN,
+			ST_PATH,
+			ST_ONAME,
+			ST_RNAME,
+			ST_CATEGORY
 		FROM
 			(
 				SELECT
-					ROWNUM RNUM ,
+					ROWNUM RNUM, 
 					ST_NO,
 					ST_CONTENT,
 					ST_TITLE,
@@ -29,11 +58,15 @@
 					ST_QUAN,
 					ST_PATH,
 					ST_ONAME,
-					ST_RNAME
+					ST_RNAME,
+					ST_CATEGORY
 				FROM
-				       STORE
+					STORE
+				WHERE
+					ST_TITLE LIKE '%' || ? || '%'
+					AND ST_CATEGORY = 1
 				ORDER BY ST_NO DESC
-		     )
+			)
 		WHERE
 			RNUM BETWEEN ? AND ?
 	</entry>
