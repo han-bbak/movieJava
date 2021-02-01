@@ -25,7 +25,7 @@ public class PaymentDao {
 		}
 		
 	}
-	public Payment selectPayment(Connection conn, String userId) {
+	public Payment selectPayment(Connection conn, String memId) {
 
 		Payment pay = null;
 		PreparedStatement pstmt = null;
@@ -35,7 +35,7 @@ public class PaymentDao {
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
+			pstmt.setString(1, memId);
 
 			rset = pstmt.executeQuery();
 

@@ -620,7 +620,7 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
            <a href="<%= request.getContextPath() %>/views/mypage/mypageMember.jsp" class="button">개인정보수정</a>
            <a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp" class="button">관심영상목록</a>
            <a href="<%= request.getContextPath() %>/views/mypage/mypagePoint.jsp" class="button">포인트</a>
-           <a href="<%= request.getContextPath() %>/views/mypage/mypagePay.jsp" class="button">결제내역</a>
+           <a href="<%= request.getContextPath() %>/mypage/payment" class="button">결제내역</a>
         
 		
 

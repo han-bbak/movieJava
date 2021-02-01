@@ -10,10 +10,10 @@ import payment.model.vo.Payment;
 
 public class PaymentService {
 
-	public Payment paymentSelect(Payment p) {
+	public Payment paymentSelect(String memId) {
 		Connection conn = getConnection();
 		
-		Payment pay = new PaymentDao().selectPayment(conn, p);
+		Payment pay = new PaymentDao().selectPayment(conn, memId);
 		
 		close(conn);
 		
