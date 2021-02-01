@@ -189,7 +189,7 @@ Member loginUser = (Member)session.getAttribute("loginUser");
             <a href="관심영화.html">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="store">STORE</a>
         </div>
 
         <div id="content">
@@ -227,18 +227,25 @@ const qa = document.getElementById('qa');
 qa.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/qa/list';
 });
+
+//Store 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
 </script>
 <script>
-       $(".btn").click(function () { 
-           $("#menu,.page_cover,html").addClass("open"); 
+    $(".menuBtn").click(function () { 
+        $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 
         }); 
-        window.onhashchange = function () { 
-            if(location.hash != "#open") {
-                $("#menu,.page_cover,html").removeClass("open");  
-            } 
-        };
-    </script>
+
+    window.onhashchange = function () { 
+        if(location.hash != "#open") {
+            $("#menu,.page_cover,html").removeClass("open");  
+        } 
+    };
+</script>
         <script>
 
   	$('#summernote').summernote({
