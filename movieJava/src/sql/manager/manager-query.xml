@@ -670,5 +670,79 @@
 		       COUNT(*)
 		  FROM 
 		       MOVIE		       
-	</entry>	
+	</entry>
+	<entry key="selectListMovie">
+		SELECT
+			   RNUM
+		     , M_CODE
+		     , M_TITLE
+		     , M_GENRE
+		     , M_DIRECTOR
+		     , M_DATE
+		     , M_COUNTRY
+		     , M_IMAGE
+		     , M_SUMMARY
+		     , M_RATING
+		     , M_GRADE
+		     , STATUS
+		  FROM
+		       (SELECT 
+                       ROWNUM RNUM
+                     , M_CODE
+                     , M_TITLE
+                     , M_GENRE
+                     , M_DIRECTOR
+                     , M_DATE
+                     , M_COUNTRY
+                     , M_IMAGE
+                     , M_SUMMARY
+                     , M_RATING
+                     , M_GRADE
+                     , STATUS
+                  FROM
+                       MOVIE)
+         WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="countSearchMovie">
+		SELECT
+		       COUNT(*)
+		  FROM
+		       MOVIE
+		 WHERE
+		       M_TITLE LIKE '%' || ? || '%'
+	</entry>
+	<entry key="selectSearchMovie">
+		SELECT
+			   RNUM
+		     , M_CODE
+		     , M_TITLE
+		     , M_GENRE
+		     , M_DIRECTOR
+		     , M_DATE
+		     , M_COUNTRY
+		     , M_IMAGE
+		     , M_SUMMARY
+		     , M_RATING
+		     , M_GRADE
+		     , STATUS
+		  FROM
+		       (SELECT 
+                       ROWNUM RNUM
+                     , M_CODE
+                     , M_TITLE
+                     , M_GENRE
+                     , M_DIRECTOR
+                     , M_DATE
+                     , M_COUNTRY
+                     , M_IMAGE
+                     , M_SUMMARY
+                     , M_RATING
+                     , M_GRADE
+                     , STATUS
+                  FROM
+                       MOVIE
+                 WHERE 
+                       M_TITLE LIKE '%' || ? || '%')
+         WHERE RNUM BETWEEN ? AND ?
+	</entry>
 </properties>

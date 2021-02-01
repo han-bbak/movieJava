@@ -21,7 +21,7 @@
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="content1_1_inquiry.jsp">전체 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movie">전체 목록 조회</a></li>
                     <li><a href="content1_2_tagInquiry.jsp">태그별 목록 조회</a></li>
                     <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
                 </ul>

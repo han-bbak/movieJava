@@ -10,6 +10,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
+import movie.MovieVO;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
@@ -469,6 +470,39 @@ public class ManagerService {
 		close(conn);
 		
 		return countMovie;
+	}
+
+	// 영화 전체 목록 리스트
+	public ArrayList<MovieVO> selectListMovie(PageInfo pi) {
+		Connection conn = getConnection();
+		
+		ArrayList<MovieVO> list = new ManagerDao().selectListMovie(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// 영화 검색 목록 갯수
+	public int countSearchMovie(Search s) {
+		Connection conn = getConnection();
+		
+		int movieCount = new ManagerDao().countSearchMovie(conn, s);
+		
+		close(conn);
+		
+		return movieCount;
+	}
+
+	// 영화 검색 목록 리스트
+	public ArrayList<MovieVO> selectSearchMovie(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<MovieVO> list = new ManagerDao().selectSearchMovie(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
 	}
 
 }
