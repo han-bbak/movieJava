@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import movie.MovieVO;
+import moviedetail.model.service.MovieService;
+
 /**
  * Servlet implementation class movedetailservlet
  */
-@WebServlet("/detailtest")
-public class movedetailservlet extends HttpServlet {
+@WebServlet("/movie/detail")
+public class MovieDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public movedetailservlet() {
+    public MovieDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,8 +29,20 @@ public class movedetailservlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String mCode = request.getParameter("mCode");
+		
+		MovieVO movie = new MovieService().selectMovie(mCode);
+		
+		if(movie != null) {
+			request.setAttribute("movie", movie);
+			request.getRequestDispatcher("/views/moviedetail/Moviedetails.jsp").forward(request, response);
+		}else {
+			System.out.println("오류발생");
+		}
+		
+	
+		
 	}
 
 	/**
