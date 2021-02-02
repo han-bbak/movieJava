@@ -19,7 +19,7 @@
             box-sizing: border-box;
             display: inline-block;
             width: 400px;
-            height: 730px;
+            height: 780px;
             margin : 0 auto;
             border: 3px solid rgb(255,192,0);
             border-radius: 10px;
@@ -84,6 +84,17 @@
         .insertTitle {
             font-size: 14px;
             font-weight: bold;
+        }
+        
+        #pCategory {
+        	outline: none;
+            width: 365px;
+            height: 40px;
+            padding-left : 15px;
+
+            border: 1px solid #e7e7e7;
+            cursor: pointer;
+        	
         }
 
         #pContent {
@@ -150,6 +161,14 @@
                     <p class="insertTitle">상품 설명</p>
                     <textarea rows="5" id="pContent" name="pContent" placeholder="상품 설명을 입력하세요." style="resize: none;"></textarea>
                 </div>
+                <div class="pCategoryDiv pDiv">
+                	<p class="insertTitle">상품 카테고리</p>
+                	<select id="pCategory" name="pCategory">
+                		<option value="" selected>카테고리</option>
+                		<option value="1">굿즈</option>
+                		<option value="2">티켓</option>
+                	</select>
+                </div>
                 <div class="pPriceDiv pDiv">
                     <p class="insertTitle">상품 가격</p>
                     <input type="text" id="pPrice" name="pPrice" placeholder="상품 가격을 입력하세요.">
@@ -202,6 +221,7 @@
             var pImg = document.getElementById("pImg");
             var pQuantity = document.getElementById("pQuantity");
             var pPrice = document.getElementById("pPrice");
+            var pCategory = document.getElementById("pCategory");
 
             if (pName.value == "") {
                 alert('상품명을 입력해주세요.');
@@ -215,6 +235,11 @@
                 return;
             }
             
+            if(pCategory.value == "") {
+            	alert('상품 카테고리를 선택해주세요');
+            	return;
+            }
+            
             if (pPrice.value == "") {
                 alert('상품 가격을 입력해주세요');
                 pPrice.focus();
@@ -226,7 +251,7 @@
                 return;
             }
 
-            $("#insertBtn").submit();
+            $("#productInsertForm").submit();
         }
         
         function refreshAndClose(){

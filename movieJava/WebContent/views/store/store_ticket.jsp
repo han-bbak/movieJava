@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, store.model.vo.*"%>
+<%
+	ArrayList<Store> list = (ArrayList<Store>)request.getAttribute("list");
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	Search s = (Search)request.getAttribute("search");
+	String search = "";
+	if(s != null) {
+		search = s.getSearch();
+	}
+	
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+     <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #store_top {
@@ -51,10 +64,9 @@
             color: #cecece;
         }
 
-        #ticket {
+        #goods {
             color: white;
         }
-
 
         .storeArea {
             padding: 20px;
@@ -67,6 +79,7 @@
             display: flex;
             justify-content: center;
             align-self: center;
+            text-align:center;
         }
 
         .store_list {
@@ -75,9 +88,9 @@
             display:inline-block;
             padding:10px;
             margin:10px;
+            margin-left: 15px;
+            margin-right: 15px;
             text-align:center;
-            display: table;
-            
         }
 
         .store_list:hover {
@@ -113,6 +126,23 @@
             height: 30px;
         }
         
+        #storewidth {
+        	width: 960px;
+        	display:inline-block;
+        }
+        
+        .searchArea {
+        	text-align: center;
+        }
+        
+        #searchBtn {
+        	width: 60px;
+        	height: 25px;
+        }
+        
+        #search {
+        	padding: 5px;
+        }
     </style>
 </head>
 
@@ -126,33 +156,63 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
-                    <section id="search-btn-area">
-                        <button type="submit" id="search-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                <path
-                                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                            </svg></button>
-                    </section>
-                    <section id="search-text-area">
+					<section id="search-btn-area">
+						<button type="submit" id="search-btn">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                          </svg>
+						</button>
+					</section>
+					<section id="search-text-area">
                         <input type="text" id="search-input" name="search-input" placeholder="보고 싶은 영화를 검색해 보세요.">
                     </section>
 
-                </form>
+				</form>
             </div>
-            <div class="header" id="header3">
-
-                <form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+           <div class="header" id="header3">
+                <% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
+			<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+			<% } %>
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -164,52 +224,119 @@
                 </svg>
             </div>
             <br><br><br><br>
-            <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
         </div>
 
         <div id="content">
             <div id="store_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp"><span id="goods">Goods</span></a>
+                        <a id="goods">Goods</a>
                         /
-                        <a href="<%= request.getContextPath() %>/views/store/store_ticket.jsp"><span id="ticket">Ticket</span></a>
+                        <a id="ticket" style="color:white;">Ticket</a>
                         <br>
                     </h1>
                 </div>
             </div>
             <div class="storeArea">
-                <div class="store_list">
-                    <image class="img" src="" width="150px" height="150px" ></image>
-                    <p>상품 이름1</p>
-                    <p>30,000원</p>
-                </div>
-                <div class="store_list">
-                    <image class="img" src="" width="150px" height="150px" ></image>
-                    <p>상품 이름2</p>
-                    <p>40,000원</p>
-                </div>
-                <div class="store_list">
-                    <image class="img" src="" width="150px" height="150px" ></image>
-                    <p>상품 이름3</p>
-                    <p>50,000원</p>
-                </div>
+            <div id="storewidth">
+                	<% for(Store st : list) { %>
+                	<div class="store_list">
+                		<input type="hidden" value="<%= st.getStoreNo() %>">
+                		<img src="<%= request.getContextPath() %><%= st.getStorePath() %><%= st.getRename() %>" width="150px" height="150px">
+                		<p><%= st.getStoreTitle() %></p>
+                		<p><%= st.getStorePrice() %>원</p>
+                	</div>
+                	<% } %>   
+             </div>
                 
             </div>
             <div class="pagingArea">
-                <button class="btn" id="pagingBtn"> &lt;&lt; </button>
-                <button class="btn" id="pagingBtn"> &lt; </button>
-                <button class="btn" id="pagingBtn"> &gt; </button>
-                <button class="btn" id="pagingBtn"> &gt;&gt; </button>
+                <% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=1'"> &lt;&lt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=1&search=<%= search %>'"> &lt;&lt; </button>
+				<% } %>
+                
+                
+                <% if(pi.getCurrentPage() == 1) { %>
+                	<button class="btn" id="pagingBtn" disabled> &lt; </button>
+                <% } else { %>
+                	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+                <% } %>
+                
+                
+                <% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+                	<% if(p == pi.getCurrentPage()) { %>
+                		<button class="btn" id="pagingBtn" style="background:lightgray;" disabled><%= p %></button>
+                	<% } else if(s == null) { %>
+             			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=<%= p %>'"> <%= p %> </button>
+           			<% } else { %>
+               			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/search?currentPage=<%= p %>&search=<%= search %>'"> <%= p %> </button>
+                	<% } %>
+                <% } %>
+                
+                
+                <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+                	<button class="btn" id="pagingBtn" disabled> &gt; </button>
+                <% } else { %>
+                 	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+         		<% } %>
+         		
+         		
+         		<% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/ticket/list?currentPage=<%= pi.getMaxPage() %>&search=<%= search %>'"> &gt;&gt; </button>
+				<% } %>
+            </div>
+            <br>
+            <div class="searchArea">
+            	<form action="<%= request.getContextPath() %>/ticket/search" method="get">
+					<input type="search" id="search" name="search"<%= search %> placeholder="상품명을 입력해 주세요.">
+					<button class="btn" id="searchBtn" type="submit">검색하기</button>
+				</form>
             </div>
         </div>
     </div>
 </body>
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
+
+//Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
+});
+
+//STORE 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+
+//goods 버튼
+const goods = document.getElementById('goods');
+goods.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+
+//ticket 버튼
+const ticket = document.getElementById('ticket');
+ticket.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/ticket/list';
+});
+
+</script>
 <script>
     $(".menuBtn").click(function () { 
         $("#menu,.page_cover,html").addClass("open"); 

@@ -1,8 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, store.model.vo.Store"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, store.model.vo.*"%>
 <%
 	ArrayList<Store> list = (ArrayList<Store>)request.getAttribute("list");
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	Search s = (Search)request.getAttribute("search");
+	String search = "";
+	if(s != null) {
+		search = s.getSearch();
+	}
+	
+
 %>
 <!DOCTYPE html>
 <html>
@@ -59,7 +68,6 @@
             color: white;
         }
 
-
         .storeArea {
             padding: 20px;
             width: 1000px;
@@ -71,6 +79,7 @@
             display: flex;
             justify-content: center;
             align-self: center;
+            text-align:center;
         }
 
         .store_list {
@@ -79,9 +88,9 @@
             display:inline-block;
             padding:10px;
             margin:10px;
+            margin-left: 15px;
+            margin-right: 15px;
             text-align:center;
-            display: table;
-            
         }
 
         .store_list:hover {
@@ -117,6 +126,23 @@
             height: 30px;
         }
         
+        #storewidth {
+        	width: 960px;
+        	display:inline-block;
+        }
+        
+        .searchArea {
+        	text-align: center;
+        }
+        
+        #searchBtn {
+        	width: 60px;
+        	height: 25px;
+        }
+        
+        #search {
+        	padding: 5px;
+        }
     </style>
 </head>
 
@@ -203,37 +229,78 @@
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="store">STORE</a>
         </div>
 
         <div id="content">
             <div id="store_top">
                 <div id="board_top_title">
                     <h1 id="board_name">
-                        <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp"><span id="goods">Goods</span></a>
+                        <a id="goods" style="color:white;">Goods</a>
                         /
-                        <a href="<%= request.getContextPath() %>/views/store/store_ticket.jsp"><span id="ticket">Ticket</span></a>
+                        <a id="ticket">Ticket</a>
                         <br>
                     </h1>
                 </div>
             </div>
             <div class="storeArea">
-                	<% for(Store s : list) { %>
-                	<div class="store_list">
-                		<input type="hidden" value="<%= s.getStoreNo() %>">
-                		<img src="<%= request.getContextPath() %><%= s.getStorePath() %><%= s.getRename() %>" width="150px" height="150px">
-                		<p><%= s.getStoreTitle() %></p>
-                		<p><%= s.getStorePrice() %></p>
-                	</div>
+            <div id="storewidth">
+                	<% for(Store st : list) { %>
+                		<div class="store_list">
+                			<input type="hidden" value="<%= st.getStoreNo() %>">
+                			<img src="<%= request.getContextPath() %><%= st.getStorePath() %><%= st.getRename() %>" width="150px" height="150px">
+                			<p><%= st.getStoreTitle() %></p>
+                			<p><%= st.getStorePrice() %>원</p>
+                		</div>
                 	<% } %>   
-             
+             </div>
                 
             </div>
             <div class="pagingArea">
-                <button class="btn" id="pagingBtn"> &lt;&lt; </button>
-                <button class="btn" id="pagingBtn"> &lt; </button>
-                <button class="btn" id="pagingBtn"> &gt; </button>
-                <button class="btn" id="pagingBtn"> &gt;&gt; </button>
+                <% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=1'"> &lt;&lt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=1&search=<%= search %>'"> &lt;&lt; </button>
+				<% } %>
+                
+                
+                <% if(pi.getCurrentPage() == 1) { %>
+                	<button class="btn" id="pagingBtn" disabled> &lt; </button>
+                <% } else { %>
+                	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
+                <% } %>
+                
+                
+                <% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
+                	<% if(p == pi.getCurrentPage()) { %>
+                		<button class="btn" id="pagingBtn" style="background:lightgray;" disabled><%= p %></button>
+                	<% } else if(s == null) { %>
+             			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=<%= p %>'"> <%= p %> </button>
+           			<% } else { %>
+               			<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/search?currentPage=<%= p %>&search=<%= search %>'"> <%= p %> </button>
+                	<% } %>
+                <% } %>
+                
+                
+                <% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
+                	<button class="btn" id="pagingBtn" disabled> &gt; </button>
+                <% } else { %>
+                 	<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
+         		<% } %>
+         		
+         		
+         		<% if(s == null) { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
+				<% } else { %>
+					<button class="btn" id="pagingBtn" onclick="location.href='<%= request.getContextPath() %>/store/list?currentPage=<%= pi.getMaxPage() %>&search=<%= search %>'"> &gt;&gt; </button>
+				<% } %>
+            </div>
+            <br>
+            <div class="searchArea">
+            	<form action="<%= request.getContextPath() %>/store/search" method="get">
+					<input type="search" id="search" name="search"<%= search %> placeholder="상품명을 입력해 주세요.">
+					<button class="btn" id="searchBtn" type="submit">검색하기</button>
+				</form>
             </div>
         </div>
     </div>
@@ -251,7 +318,33 @@ qa.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/qa/list';
 });
 
+//STORE 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+
+//goods 버튼
+const goods = document.getElementById('goods');
+goods.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+
+//ticket 버튼
+const ticket = document.getElementById('ticket');
+ticket.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/ticket/list';
+});
+
 </script>
+	<script>
+		$(function(){
+			$(".store_list").click(function(){
+				var storeNo = $(this).children().eq(0).val();
+				location.href='<%= request.getContextPath() %>/store/detail?storeNo='+ storeNo;
+			});
+		});
+	</script>
 <script>
     $(".menuBtn").click(function () { 
         $("#menu,.page_cover,html").addClass("open"); 

@@ -174,7 +174,7 @@
 	SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code, p.pay_date
 	FROM MEMBER M, PAYMENT P
 	WHERE M.MEM_NO = P.MEM_NO
-	AND M.MEM_NO = ?
+	AND M.MEM_ID = ?
 	
 	</entry>
 </properties>

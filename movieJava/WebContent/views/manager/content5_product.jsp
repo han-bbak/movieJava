@@ -92,17 +92,21 @@
         .tableDiv th:nth-child(1) {
             width : 100px;
         }
+        
+        .tableDiv th:nth-child(2) {
+            width : 70px;
+        }
 
-		.tableDiv th:nth-child(2) {
+		.tableDiv th:nth-child(3) {
             width : 200px;
         }
 		
-        .tableDiv th:nth-child(3) {
-            width : 350px;
+        .tableDiv th:nth-child(4) {
+            width : 300px;
         }
 
         .tableDiv th:last-child {
-            width : 100px;
+            width : 80px;
         }
 
         .productInsertDiv {
@@ -170,25 +174,27 @@
                 </form>
             </div>
             <div class="productInsertDiv">
-                <input type="button" value="상품 등록" onclick="window.open('<%= request.getContextPath() %>/views/manager/detailsView/product1_insert.jsp','popup', 'width=450px, height=760px')">
+                <input type="button" value="상품 등록" onclick="window.open('<%= request.getContextPath() %>/views/manager/detailsView/product1_insert.jsp','popup', 'width=450px, height=810px')">
             </div>
             <div class="tableDiv">
                 <!-- 검색 결과 출력 -->
                 <table>
                     <tr>
                         <th>번호</th>
+                        <th>카테고리</th>
                         <th>이미지</th>
                         <th>상품명</th>
                         <th>재고</th>
                     </tr>
                     <% if(list.isEmpty()) { %>
                     	<tr>
-                    		<td colspan="4">조회 된 상품이 없습니다.</td>
+                    		<td colspan="5">조회 된 상품이 없습니다.</td>
                     	</tr>
                     <% } else {%>
                     	<% for(Store st : list) { %>
                     		<tr>
                     			<td><%= st.getStoreNo() %></td>
+                    			<td><%= st.getStCategory() %></td>
                     			<td><img src="<%= request.getContextPath() %><%= st.getStorePath() %><%= st.getRename() %>" width="120px" height="60px"></td>
                     			<td><%= st.getStoreTitle() %></td>
                     			<td><%= st.getStoreQuantity() %></td>

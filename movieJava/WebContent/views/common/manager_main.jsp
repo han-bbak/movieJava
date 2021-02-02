@@ -26,8 +26,8 @@
                     <a href="<%= request.getContextPath() %>/views/manager/content1_movie.jsp">컨텐츠 관리</a>
                     <ul class="subMenu sub1">
                         <li><a href="<%= request.getContextPath() %>/views/manager/content1_movie.jsp">등록 영화 관리</a></li>
-                        <li><a href="<%= request.getContextPath() %>/views/manager/content1_tag.jsp">태그 관리</a></li>
-                        <li><a href="<%= request.getContextPath() %>/views/manager/content1_review.jsp">리뷰 관리</a></li>
+                        <li><a href="<%= request.getContextPath() %>/manager/movieTag">태그 관리</a></li>
+                        <!-- <li><a href="<%= request.getContextPath() %>/views/manager/content1_review.jsp">리뷰 관리</a></li> -->
                     </ul>
                 </li>
                 <li><a href="<%= request.getContextPath() %>/manager/memberList">회원 관리</a></li>

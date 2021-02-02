@@ -17,6 +17,8 @@ import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import movie.MovieVO;
+import movieTag.model.vo.MovieTag;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
@@ -332,7 +334,8 @@ public class ManagerDao {
 						           rset.getInt(6),
 						           rset.getString(7),
 						           rset.getString(8),
-						           rset.getString(9)));
+						           rset.getString(9),
+						           rset.getInt(10)));
 			}
 			
 		} catch (SQLException e) {
@@ -399,7 +402,8 @@ public class ManagerDao {
 						           rset.getInt(6),
 						           rset.getString(7),
 						           rset.getString(8),
-						           rset.getString(9)));
+						           rset.getString(9),
+						           rset.getInt(10)));
 			}
 			
 		} catch (SQLException e) {
@@ -425,6 +429,7 @@ public class ManagerDao {
 			pstmt.setString(5, st.getStorePath());
 			pstmt.setString(6, st.getOriginName());
 			pstmt.setString(7, st.getRename());
+			pstmt.setInt(8, st.getStCategory());
 			
 			result = pstmt.executeUpdate();
 			
@@ -1154,6 +1159,189 @@ public class ManagerDao {
 		}
 		
 		return countMovie;
+	}
+
+	// 영화 전체 목록 리스트
+	public ArrayList<MovieVO> selectListMovie(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectListMovie");
+		ArrayList<MovieVO> list = new ArrayList<>();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new MovieVO(rset.getString(2),
+									 rset.getString(3),
+									 rset.getString(4),
+									 rset.getString(5),
+									 rset.getString(6),
+									 rset.getString(7),
+									 rset.getString(8),
+									 rset.getString(9),
+									 rset.getString(10),
+									 rset.getInt(11),
+									 rset.getString(12)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 영화 검색 목록 갯수
+	public int countSearchMovie(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("countSearchMovie");
+		int movieCount = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, s.getSearch());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				movieCount = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return movieCount;
+	}
+
+	// 영화 검색 목록 리스트
+	public ArrayList<MovieVO> selectSearchMovie(Connection conn, PageInfo pi, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MovieVO> list = new ArrayList<MovieVO>();
+		String sql = prop.getProperty("selectSearchMovie");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setString(1, s.getSearch());
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new MovieVO(rset.getString(2),
+									 rset.getString(3),
+									 rset.getString(4),
+									 rset.getString(5),
+									 rset.getString(6),
+									 rset.getString(7),
+									 rset.getString(8),
+									 rset.getString(9),
+									 rset.getString(10),
+									 rset.getInt(11),
+									 rset.getString(12)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// 태그가 달리지 않은 영화 목록 갯수
+	public int countNotMovieTag(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int countNotMovieTag = 0;
+		String sql = prop.getProperty("countNotMovieTag");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				countNotMovieTag = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return countNotMovieTag;
+	}
+
+	// 태그가 달리지 않은 영화 목록 리스트
+	public ArrayList<MovieTag> selectMovieTagList(Connection conn, PageInfo pi) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MovieTag> list = new ArrayList<>();
+		String sql = prop.getProperty("selectMovieTagList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new MovieTag(rset.getString(2),
+									  rset.getString(3),
+									  rset.getString(4),
+									  rset.getString(5),
+									  rset.getString(6),
+									  rset.getString(7),
+									  rset.getString(8),
+									  rset.getString(9),
+									  rset.getString(10),
+									  rset.getString(11),
+									  rset.getInt(12),
+									  rset.getString(13)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }

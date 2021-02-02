@@ -6,6 +6,12 @@
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	//Payment pay = (Payment)session.getAttribute("loginUser");
+	Payment pay = (Payment)request.getAttribute("payment");
+	String paycard = "";
+	if(pay != null) {
+		paycard = pay.getPayCard();
+	}
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -450,7 +456,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="../../images/logo.png"></a>
+				<a href="home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -588,7 +594,7 @@ h3 {
                                                
                                                
                                                
-                                                <th>zz</th>
+                                                <th><%= paycard %></th>
                                                 
                                             </tr>
                                             

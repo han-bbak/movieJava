@@ -17,14 +17,14 @@ import store.model.vo.Store;
 /**
  * Servlet implementation class storeListServlet
  */
-@WebServlet("/store/list")
-public class storeListServlet extends HttpServlet {
+@WebServlet("/ticket/list")
+public class ticketListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public storeListServlet() {
+    public ticketListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,7 @@ public class storeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-int currentPage = 1;
+		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -41,7 +41,8 @@ int currentPage = 1;
 		
 		StoreService ss = new StoreService();
 		
-		int listCount = ss.getListCount();
+		int listCount = ss.getListCount1();
+//		System.out.println("listCount: " + listCount);
 		
 		int pageLimit = 10;
 		int boardLimit = 6;
@@ -61,12 +62,12 @@ int currentPage = 1;
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Store> list = ss.selectList(pi);
+		ArrayList<Store> list = ss.selectList1(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
-		request.getRequestDispatcher("/views/store/store_goods.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/store/store_ticket.jsp").forward(request, response);
 	}
 
 	/**

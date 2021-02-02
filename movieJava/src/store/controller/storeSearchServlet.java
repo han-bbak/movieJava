@@ -10,21 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import store.model.vo.PageInfo;
 import store.model.service.StoreService;
-import store.model.vo.Store;
+import store.model.vo.PageInfo;
+import store.model.vo.Search;
 
+import store.model.vo.Store;
 /**
- * Servlet implementation class storeListServlet
+ * Servlet implementation class storeSearchServlet
  */
-@WebServlet("/store/list")
-public class storeListServlet extends HttpServlet {
+@WebServlet("/store/search")
+public class storeSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public storeListServlet() {
+    public storeSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,40 +34,38 @@ public class storeListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-int currentPage = 1;
+		String search = request.getParameter("search");
+		
+		Search s = new Search();
+		s.setSearch(search);
+		
+		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
 		StoreService ss = new StoreService();
+		int listCount = ss.getSearchListCount(s);
 		
-		int listCount = ss.getListCount();
+//		System.out.println("검색 기준: " + s);
+//		System.out.println("검색 기준 listCount: " + listCount);
 		
 		int pageLimit = 10;
 		int boardLimit = 6;
-		int maxPage;
-		int startPage;
-		int endPage;
 		
-		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit);
 		
-		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+		ArrayList<Store> list = ss.selectSearchList(pi, s);
 		
-		endPage = startPage + pageLimit - 1;
-		
-		if(maxPage < endPage) {
-			endPage = maxPage;
-		}
-		
-		PageInfo pi = new PageInfo(currentPage, listCount, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
-		ArrayList<Store> list = ss.selectList(pi);
-		
-		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
+		request.setAttribute("search", s);
 		
-		request.getRequestDispatcher("/views/store/store_goods.jsp").forward(request, response);
+		RequestDispatcher view = request.getRequestDispatcher("/views/store/store_goods.jsp");
+		view.forward(request, response);
+		
+		
 	}
 
 	/**

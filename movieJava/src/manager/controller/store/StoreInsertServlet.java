@@ -80,11 +80,13 @@ public class StoreInsertServlet extends HttpServlet {
 			String storeContent = multiRequest.getParameter("pContent");
 			String storePrice = multiRequest.getParameter("pPrice");		// sql varchar2
 			int storeQuantity = Integer.parseInt(multiRequest.getParameter("pQuantity"));
+			int storeCategory = Integer.parseInt(multiRequest.getParameter("pCategory"));
 			
 			st.setStoreTitle(storeTitle);
 			st.setStoreContent(storeContent);
 			st.setStorePrice(storePrice);
 			st.setStoreQuantity(storeQuantity);
+			st.setStCategory(storeCategory);
 			
 			int result = new ManagerService().insertStore(st);
 			

@@ -9,11 +9,12 @@ public class Store {
 	private String storePath;
 	private String originName;
 	private String rename;
+	private int stCategory;
 	
 	public Store() {}
 
 	public Store(int storeNo, String storeContent, String storeTitle, String storePrice, int storeQuantity,
-			String storePath, String originName, String rename) {
+			String storePath, String originName, String rename, int stCategory) {
 		super();
 		this.storeNo = storeNo;
 		this.storeContent = storeContent;
@@ -23,8 +24,9 @@ public class Store {
 		this.storePath = storePath;
 		this.originName = originName;
 		this.rename = rename;
+		this.stCategory = stCategory;
 	}
-
+	
 	public int getStoreNo() {
 		return storeNo;
 	}
@@ -89,11 +91,21 @@ public class Store {
 		this.rename = rename;
 	}
 
+	public int getStCategory() {
+		return stCategory;
+	}
+
+	public void setStCategory(int stCategory) {
+		this.stCategory = stCategory;
+	}
+
 	@Override
 	public String toString() {
 		return "Store [storeNo=" + storeNo + ", storeContent=" + storeContent + ", storeTitle=" + storeTitle
 				+ ", storePrice=" + storePrice + ", storeQuantity=" + storeQuantity + ", storePath=" + storePath
-				+ ", originName=" + originName + ", rename=" + rename + "]";
+				+ ", originName=" + originName + ", rename=" + rename + ", stCategory=" + stCategory + "]";
 	}
+
+	
 	
 }

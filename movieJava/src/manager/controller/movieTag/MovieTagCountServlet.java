@@ -1,7 +1,6 @@
-package manager.controller.tag;
+package manager.controller.movieTag;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +8,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+
 import manager.model.service.ManagerService;
-import tag.model.vo.Tag;
 
 /**
- * Servlet implementation class TagAddServlet
+ * Servlet implementation class MovieTagCountServlet
  */
-@WebServlet("/manager/addTag")
-public class TagAddServlet extends HttpServlet {
+@WebServlet("/manager/movieTagCount")
+public class MovieTagCountServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TagAddServlet() {
+    public MovieTagCountServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,22 +31,17 @@ public class TagAddServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
+		ManagerService ms = new ManagerService();
+		int countMovie = ms.countMovie();
+		int countNotMovieTag = ms.countNotMovieTag();
 		
-		String tagName = request.getParameter("addTagName");
+		JSONArray jArr = new JSONArray();
 		
-		int result = new ManagerService().addTag(tagName);
+		jArr.add(countMovie);
+		jArr.add(countNotMovieTag);
 		
-		ArrayList<Tag> list = new ManagerService().selectTagList();
-		// request.getSession().setAttribute("list", list);
-		
-		if(result <= 0) {
-			request.setAttribute("msg", "태그 등록에 실패하였습니다.");
-			request.getRequestDispatcher("/views/manager/content1_4_tagManager.jsp").forward(request, response);
-		} else {
-			response.sendRedirect(request.getContextPath() + "/manager/tagList");
-		}
-		
+		response.setContentType("application/json; charset=UTF-8"); 
+		response.getWriter().print(jArr);
 	}
 
 	/**
