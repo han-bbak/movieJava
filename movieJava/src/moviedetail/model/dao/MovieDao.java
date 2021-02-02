@@ -70,4 +70,27 @@ STATUS	VARCHAR2(20 BYTE)*/
 		return movie;
 	}
 
+	public int insertStarGrade(Connection conn, int stargrade, String movievo, int memberno) {
+		 int result=0; 
+		 PreparedStatement pstmt = null; 
+		 String sql= prop.getProperty("insertStarGrade");
+		 
+		 try {
+			 pstmt=conn.prepareStatement(sql);
+			 
+			 pstmt.setInt(1,memberno);
+			 pstmt.setString(2,movievo);
+			 pstmt.setInt(3,stargrade);
+			 result=pstmt.executeUpdate(); 
+		 }catch 
+		 (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		 
+		
+	}
+
 }

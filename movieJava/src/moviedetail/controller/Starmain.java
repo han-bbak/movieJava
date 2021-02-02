@@ -7,20 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movie.MovieVO;
 import moviedetail.model.service.MovieService;
 
 /**
- * Servlet implementation class movedetailservlet
+ * Servlet implementation class Starmain
  */
-@WebServlet("/movie/detail")
-public class MovieDetailServlet extends HttpServlet {
+@WebServlet("/Star")
+public class Starmain extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieDetailServlet() {
+    public Starmain() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +28,16 @@ public class MovieDetailServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		   int stargrade =Integer.parseInt(request.getParameter("stargrade"));
+	  	   //회원번호 영화코드 별점이 필요 테이블에 인서트하기위해   
+		  String Movievo = request.getParameter("MovieVo"); 
+		  int memberno =  Integer.parseInt( request.getParameter("memberno"));
+		  
+		   int result=new MovieService().insertStarGrade(stargrade,Movievo,memberno);
 		
-		String mCode = request.getParameter("mCode");
-		MovieVO movie = new MovieService().selectMovie(mCode);
-		System.out.println(movie);
-		
-		if(movie != null) {
-			request.setAttribute("movie", movie);
-			request.getRequestDispatcher("/views/moviedetail/Moviedetails.jsp").forward(request, response);
-		}else {
-			System.out.println("오류발생");
-		}
-		
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	      
 	
-		
 	}
 
 	/**
