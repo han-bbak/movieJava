@@ -3,178 +3,187 @@
 <properties>
 	<entry key="loginMember">
 		SELECT
-			   MEM_NO
-			 , MEM_ID
-			 , MEM_PWD
-			 , MEM_NAME
-			 , MEM_BIRTH
-			 , EMAIL
-			 , PHONE
-			 , ADDRESS
-			 , POINT
-			 , GRADE
-			 , ENT_DATE
-			 , MODIFY_DATE
-			 , MEM_STATUS
-		  FROM
-		       MEMBER
-		 WHERE
-		       MEM_ID = ?
-		   AND MEM_PWD = ?
-		   AND MEM_STATUS = 'Y'
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		FROM
+		MEMBER
+		WHERE
+		MEM_ID = ?
+		AND MEM_PWD = ?
+		AND MEM_STATUS = 'Y'
 	</entry>
 	<entry key="joinMember">
 		INSERT
-		  INTO MEMBER
-		  (
-		  	   MEM_NO
-		  	 , MEM_ID
-		  	 , MEM_PWD
-		  	 , MEM_NAME
-		  	 , MEM_BIRTH
-		  	 , EMAIL
-		  	 , PHONE
-		  	 , ADDRESS
-		  	 , POINT
-		  	 , GRADE
-		  	 , ENT_DATE
-		  	 , MODIFY_DATE
-		  	 , MEM_STATUS
-		  )
+		INTO MEMBER
+		(
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		)
 		VALUES
 		(
-			   SEQ_MEM_NO.NEXTVAL
-			 , ?
-			 , ?
-			 , ?
-			 , ?
-			 , ?
-			 , ?
-			 , ?
-			 , DEFAULT
-			 , DEFAULT
-			 , SYSDATE
-			 , SYSDATE
-			 , DEFAULT
+		SEQ_MEM_NO.NEXTVAL
+		, ?
+		, ?
+		, ?
+		, ?
+		, ?
+		, ?
+		, ?
+		, DEFAULT
+		, DEFAULT
+		, SYSDATE
+		, SYSDATE
+		, DEFAULT
 		)
 	</entry>
 	<entry key="idCheck">
 		SELECT
-		       COUNT(*)
-		  FROM 
-		       MEMBER
-		 WHERE
-		       MEM_ID = ?
+		COUNT(*)
+		FROM
+		MEMBER
+		WHERE
+		MEM_ID = ?
 	</entry>
 	<entry key="idSearch">
 		SELECT
-			   MEM_NO
-			 , MEM_ID
-			 , MEM_PWD
-			 , MEM_NAME
-			 , MEM_BIRTH
-			 , EMAIL
-			 , PHONE
-			 , ADDRESS
-			 , POINT
-			 , GRADE
-			 , ENT_DATE
-			 , MODIFY_DATE
-			 , MEM_STATUS
-		  FROM
-		       MEMBER
-		 WHERE
-		       MEM_NAME = ?
-		   AND MEM_BIRTH = ?
-		   AND EMAIL = ?
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		FROM
+		MEMBER
+		WHERE
+		MEM_NAME = ?
+		AND MEM_BIRTH = ?
+		AND EMAIL = ?
 	</entry>
 	<entry key="pwdSearch">
 		SELECT
-			   MEM_NO
-			 , MEM_ID
-			 , MEM_PWD
-			 , MEM_NAME
-			 , MEM_BIRTH
-			 , EMAIL
-			 , PHONE
-			 , ADDRESS
-			 , POINT
-			 , GRADE
-			 , ENT_DATE
-			 , MODIFY_DATE
-			 , MEM_STATUS
-		  FROM
-		       MEMBER
-		 WHERE
-		       MEM_NAME = ?
-		   AND MEM_ID = ?
-		   AND EMAIL = ?
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		FROM
+		MEMBER
+		WHERE
+		MEM_NAME = ?
+		AND MEM_ID = ?
+		AND EMAIL = ?
 	</entry>
 	<entry key="searchMember">
 		SELECT
-			   MEM_NO
-			 , MEM_ID
-			 , MEM_PWD
-			 , MEM_NAME
-			 , MEM_BIRTH
-			 , EMAIL
-			 , PHONE
-			 , ADDRESS
-			 , POINT
-			 , GRADE
-			 , ENT_DATE
-			 , MODIFY_DATE
-			 , MEM_STATUS
-		  FROM
-		       MEMBER
-		 WHERE
-		       MEM_NO = ?
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		FROM
+		MEMBER
+		WHERE
+		MEM_NO = ?
 	</entry>
 	<entry key="updateTempPwd">
 		UPDATE
-		       MEMBER
-		   SET
-		       MEM_PWD = ?
-		 WHERE
-		       MEM_NO = ?
+		MEMBER
+		SET
+		MEM_PWD = ?
+		WHERE
+		MEM_NO = ?
 	</entry>
-	
+
 	<entry key="updatePwd">
 		UPDATE
-		       MEMBER
-		   SET 
-		       MEM_PWD = ?
-		 WHERE
-		       MEM_ID = ?
-		   AND MEM_PWD = ?
+		MEMBER
+		SET
+		MEM_PWD = ?
+		WHERE
+		MEM_ID = ?
+		AND MEM_PWD = ?
 	</entry>
-	
+
 	<entry key="selectMember">
 		SELECT
-			   MEM_NO
-			 , MEM_ID
-			 , MEM_PWD
-			 , MEM_NAME
-			 , MEM_BIRTH
-			 , EMAIL
-			 , PHONE
-			 , ADDRESS
-			 , POINT
-			 , GRADE
-			 , ENT_DATE
-			 , MODIFY_DATE
-			 , MEM_STATUS
-		  FROM
-		       MEMBER
-		 WHERE
-		       MEM_ID = ?
-		   AND MEM_STATUS = 'Y'
+		MEM_NO
+		, MEM_ID
+		, MEM_PWD
+		, MEM_NAME
+		, MEM_BIRTH
+		, EMAIL
+		, PHONE
+		, ADDRESS
+		, POINT
+		, GRADE
+		, ENT_DATE
+		, MODIFY_DATE
+		, MEM_STATUS
+		FROM
+		MEMBER
+		WHERE
+		MEM_ID = ?
+		AND MEM_STATUS = 'Y'
 	</entry>
 	<entry key="paymentselect">
-	SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code, p.pay_date
-	FROM MEMBER M, PAYMENT P
-	WHERE M.MEM_NO = P.MEM_NO
-	AND M.MEM_ID = ?
-	
+		SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code, p.pay_date
+		FROM MEMBER M, PAYMENT P
+		WHERE M.MEM_NO = P.MEM_NO
+		AND M.MEM_ID = ?
+
+	</entry>
+
+	<entry key="orderListselect">
+		SELECT *
+		FROM MEMBER M, PAYMENT P, ORDER_LIST O, STORE S
+		WHERE m.mem_no = p.mem_no
+		AND p.pay_code = o.pay_code
+		AND o.st_no = s.st_no
+		AND M.MEM_ID = ?
 	</entry>
 </properties>

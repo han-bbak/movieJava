@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import member.model.vo.Member;
+import orderList.model.service.OrderListService;
+import orderList.model.vo.OrderList;
 import payment.model.service.PaymentService;
 import payment.model.vo.Payment;
+import store.model.service.StoreService;
+import store.model.vo.Store;
 
 /**
  * Servlet implementation class PaymentMemberServlet
@@ -35,9 +39,19 @@ public class PaymentMemberServlet extends HttpServlet {
 		Member loginUser = (Member)request.getSession().getAttribute("loginUser");
 		
 		Payment pay = new PaymentService().paymentSelect(loginUser.getMemId());
+		OrderList orderList = new OrderListService().orderListSelect(loginUser.getMemId());
+		Store store = new StoreService().storeSelect(loginUser.getMemId());
+		
 		
 		if(pay != null) {
 			request.setAttribute("payment", pay);
+		}
+		if(orderList != null) {
+			request.setAttribute("orderList", orderList);
+		}
+		if(store != null) {
+			request.setAttribute("store", store);
+			
 		}
 		request.getRequestDispatcher("/views/mypage/mypagePay.jsp").forward(request, response);
 	}
