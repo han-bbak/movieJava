@@ -20,7 +20,8 @@
 		    ST_PATH,
 		    ST_ONAME,
 		    ST_RNAME,
-		    ST_CATEGORY
+		    ST_CATEGORY,
+		    ST_SELQUAN
 		FROM
 			GLIST
 		WHERE
@@ -46,7 +47,8 @@
 			ST_PATH,
 			ST_ONAME,
 			ST_RNAME,
-			ST_CATEGORY
+			ST_CATEGORY,
+			ST_SELQUAN
 		FROM
 			(
 				SELECT
@@ -59,7 +61,8 @@
 					ST_PATH,
 					ST_ONAME,
 					ST_RNAME,
-					ST_CATEGORY
+					ST_CATEGORY,
+					ST_SELQUAN
 				FROM
 					STORE
 				WHERE
@@ -89,7 +92,8 @@
 		    ST_PATH,
 		    ST_ONAME,
 		    ST_RNAME,
-		    ST_CATEGORY
+		    ST_CATEGORY,
+		    ST_SELQUAN
 		FROM
 			TLIST
 		WHERE
@@ -115,7 +119,8 @@
 			ST_PATH,
 			ST_ONAME,
 			ST_RNAME,
-			ST_CATEGORY
+			ST_CATEGORY,
+			ST_SELQUAN
 		FROM
 			(
 				SELECT
@@ -128,7 +133,8 @@
 					ST_PATH,
 					ST_ONAME,
 					ST_RNAME,
-					ST_CATEGORY
+					ST_CATEGORY,
+					ST_SELQUAN
 				FROM
 					STORE
 				WHERE
@@ -149,7 +155,8 @@
 			ST_PATH,
 			ST_ONAME,
 			ST_RNAME,
-			ST_CATEGORY
+			ST_CATEGORY,
+			ST_SELQUAN
 		FROM
 			STORE
 		WHERE
