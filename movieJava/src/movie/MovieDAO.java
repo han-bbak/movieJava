@@ -22,17 +22,28 @@ import common.JDBCTemplate;
 import manager.model.vo.PageInfo;
 import member.model.dao.MemberDao;
 import member.model.vo.Member;
+import payment.model.vo.Payment;
 
 public class MovieDAO {	
-	
 	private Properties prop = new Properties();
-  	Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs =null;
+	public MovieDAO() {
+		String fileName = MemberDao.class.getResource("/sql/member/member-query.xml").getPath();
+		
+		try {
+			prop.loadFromXML(new FileInputStream(fileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+  	//Connection conn = null;
+	//PreparedStatement pstmt = null;
+   // ResultSet rs =null;
     
 	// 전체 영화 검색
     public ArrayList<Bean> getAllMovie() {
-    	
+    	 PreparedStatement pstmt = null;
+    	    ResultSet rs =null;
     	Connection conn = getConnection();
     	ArrayList<Bean> list = new ArrayList<>();
     	Bean been = null;
@@ -77,7 +88,8 @@ public class MovieDAO {
  // 장르별 영화 리스트를 저장하는 메소드
     public ArrayList<Bean> getGanre(Connection conn,String M_GENRE) {
         ArrayList<Bean> list = new ArrayList<>();
- 
+        PreparedStatement pstmt = null;
+        ResultSet rs =null;
         // 데이터를 저장할 빈 클래스 선언
         Bean bean = null;
  
@@ -119,6 +131,42 @@ public class MovieDAO {
         return list;
  
     }
+
+	public MovieVO selectMovie(Connection conn, String memId) {
+		MovieVO movie = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("movieselect");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memId);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				movie = new MovieVO(rset.getString("M_CODE"),
+						rset.getString("M_TITLE"),
+						rset.getString("M_GENRE"),
+						rset.getString("M_DIRECTOR"),
+						rset.getString("M_DATE"),
+						rset.getString("M_COUNTRY"),
+						rset.getString("M_IMAGE"),
+						rset.getString("M_SUMMARY"),
+						rset.getString("M_RATING"),
+						rset.getInt("M_GRADE"),
+						rset.getString("STATUS"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return movie;
+		
+	}
 
     
  

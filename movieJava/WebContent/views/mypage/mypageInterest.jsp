@@ -1,10 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, movie.*, interest.model.vo.*" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	MovieVO movie = (MovieVO)request.getAttribute("movie");
+	Interest interest = (Interest)request.getAttribute("interest");
+	String title = "";
+	String title2 = "";
+	
+	String mcode = "";
+	if(interest != null){
+		mcode = interest.getmCode();
+	}
+	if(movie != null){
+		
+		title = movie.getM_title();
+		title2 = movie.getM_genre();
+	}
+	
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +29,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관심영상</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style> 
 
@@ -471,7 +487,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="../../images/logo.png"></a>
+				<a href="home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -557,14 +573,14 @@ h3 {
         <div id="content">
             <div class="card" padding="50px">
                 <div class="top-section">
-                  <img id="image-container" src="1.png" alt="">
+                  <!-- <img id="image-container" src="1.png" alt=""> -->
                   
                   
                 </div>
               
                 <div class="product-info">
-                  <div class="name">영화 제목</div>
-                  <div class="dis">영화 설명</div>
+                  <div class="name"><%= title %></div>
+                  <div class="dis"><%= title2 %></div>
                   <a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">보러 가기</a>
                 </div>
               
@@ -572,13 +588,13 @@ h3 {
 
               <div class="card">
                 <div class="top-section">
-                  <img id="image-container" src="1.png" alt="">
+                 <!--   <img id="image-container" src="1.png" alt=""> -->
                   
         
                 </div>
               
                 <div class="product-info">
-                  <div class="name">영화 제목</div>
+                  <div class="name"><%= mcode %></div>
                   <div class="dis">영화 설명</div>
                   <a class="btn1" href="#">보러 가기</a>
                 </div>

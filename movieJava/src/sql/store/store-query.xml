@@ -3,166 +3,173 @@
 <properties>
 	<entry key="getListCount">
 		SELECT
-			COUNT(*)
+		COUNT(*)
 		FROM
-			STORE
+		STORE
 		WHERE
-			ST_CATEGORY = 1
+		ST_CATEGORY = 1
 	</entry>
 	<entry key="selectList">
-		SELECT 
-			RNUM,
-			ST_NO,
-		    ST_CONTENT,
-		    ST_TITLE,
-		    ST_PRICE,
-		    ST_QUAN,
-		    ST_PATH,
-		    ST_ONAME,
-		    ST_RNAME,
-		    ST_CATEGORY,
-		    ST_SELQUAN
+		SELECT
+		RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
 		FROM
-			GLIST
+		GLIST
 		WHERE
-			RNUM BETWEEN ? AND ?
+		RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key="getSearchTitleListCount">
 		SELECT
-		       COUNT(*)
-		  FROM 
-		       STORE
-		 WHERE
-		       ST_TITLE LIKE '%' || ? || '%'
-		       AND ST_CATEGORY = 1
+		COUNT(*)
+		FROM
+		STORE
+		WHERE
+		ST_TITLE LIKE '%' || ? || '%'
+		AND ST_CATEGORY = 1
 	</entry>
 	<entry key="selectSearchList">
-		SELECT 
-			RNUM,
-			ST_NO,
-			ST_CONTENT,
-			ST_TITLE,
-			ST_PRICE,
-			ST_QUAN,
-			ST_PATH,
-			ST_ONAME,
-			ST_RNAME,
-			ST_CATEGORY,
-			ST_SELQUAN
-		FROM
-			(
-				SELECT
-					ROWNUM RNUM, 
-					ST_NO,
-					ST_CONTENT,
-					ST_TITLE,
-					ST_PRICE,
-					ST_QUAN,
-					ST_PATH,
-					ST_ONAME,
-					ST_RNAME,
-					ST_CATEGORY,
-					ST_SELQUAN
-				FROM
-					STORE
-				WHERE
-					ST_TITLE LIKE '%' || ? || '%'
-					AND ST_CATEGORY = 1
-				ORDER BY ST_NO DESC
-			)
-		WHERE
-			RNUM BETWEEN ? AND ?
-	</entry>
-		<entry key="getListCount1">
 		SELECT
-			COUNT(*)
+		RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
 		FROM
-			STORE
+		(
+		SELECT
+		ROWNUM RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
+		FROM
+		STORE
 		WHERE
-			ST_CATEGORY = 2
+		ST_TITLE LIKE '%' || ? || '%'
+		AND ST_CATEGORY = 1
+		ORDER BY ST_NO DESC
+		)
+		WHERE
+		RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="getListCount1">
+		SELECT
+		COUNT(*)
+		FROM
+		STORE
+		WHERE
+		ST_CATEGORY = 2
 	</entry>
 	<entry key="selectList1">
-		SELECT 
-			RNUM,
-			ST_NO,
-		    ST_CONTENT,
-		    ST_TITLE,
-		    ST_PRICE,
-		    ST_QUAN,
-		    ST_PATH,
-		    ST_ONAME,
-		    ST_RNAME,
-		    ST_CATEGORY,
-		    ST_SELQUAN
+		SELECT
+		RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
 		FROM
-			TLIST
+		TLIST
 		WHERE
-			RNUM BETWEEN ? AND ?
+		RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key="getSearchTitleListCount1">
 		SELECT
-		       COUNT(*)
-		  FROM 
-		       STORE
-		 WHERE
-		       ST_TITLE LIKE '%' || ? || '%'
-		       AND ST_CATEGORY = 2
+		COUNT(*)
+		FROM
+		STORE
+		WHERE
+		ST_TITLE LIKE '%' || ? || '%'
+		AND ST_CATEGORY = 2
 	</entry>
 	<entry key="selectSearchList1">
-		SELECT 
-			RNUM,
-			ST_NO,
-			ST_CONTENT,
-			ST_TITLE,
-			ST_PRICE,
-			ST_QUAN,
-			ST_PATH,
-			ST_ONAME,
-			ST_RNAME,
-			ST_CATEGORY,
-			ST_SELQUAN
+		SELECT
+		RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
 		FROM
-			(
-				SELECT
-					ROWNUM RNUM, 
-					ST_NO,
-					ST_CONTENT,
-					ST_TITLE,
-					ST_PRICE,
-					ST_QUAN,
-					ST_PATH,
-					ST_ONAME,
-					ST_RNAME,
-					ST_CATEGORY,
-					ST_SELQUAN
-				FROM
-					STORE
-				WHERE
-					ST_TITLE LIKE '%' || ? || '%'
-					AND ST_CATEGORY = 2
-				ORDER BY ST_NO DESC
-			)
+		(
+		SELECT
+		ROWNUM RNUM,
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
+		FROM
+		STORE
 		WHERE
-			RNUM BETWEEN ? AND ?
+		ST_TITLE LIKE '%' || ? || '%'
+		AND ST_CATEGORY = 2
+		ORDER BY ST_NO DESC
+		)
+		WHERE
+		RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key="selectGoods">
 		SELECT
-			ST_NO,
-			ST_CONTENT,
-			ST_TITLE,
-			ST_PRICE,
-			ST_QUAN,
-			ST_PATH,
-			ST_ONAME,
-			ST_RNAME,
-			ST_CATEGORY,
-			ST_SELQUAN
+		ST_NO,
+		ST_CONTENT,
+		ST_TITLE,
+		ST_PRICE,
+		ST_QUAN,
+		ST_PATH,
+		ST_ONAME,
+		ST_RNAME,
+		ST_CATEGORY,
+		ST_SELQUAN
 		FROM
-			STORE
+		STORE
 		WHERE
-			ST_NO = ?
-			AND ST_CATEGORY = 1
+		ST_NO = ?
+		AND ST_CATEGORY = 1
 		ORDER BY ST_NO
 	</entry>
-	
+	<entry key="storeselect">
+		SELECT *
+		FROM MEMBER M, PAYMENT P, ORDER_LIST O, STORE S
+		WHERE m.mem_no = p.mem_no
+		AND p.pay_code = o.pay_code
+		AND o.st_no = s.st_no
+		AND M.MEM_ID = ?
+	</entry>
 </properties>
