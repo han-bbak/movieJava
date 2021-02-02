@@ -817,4 +817,35 @@
 		 WHERE
 		       RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="selectMovie">
+		SELECT
+		       M_CODE
+		     , M_TITLE
+		     , M_GENRE
+		     , M_DIRECTOR
+		     , M_DATE
+		     , M_COUNTRY
+		     , M_IMAGE
+		     , M_SUMMARY
+		     , M_RATING
+		     , M_GRADE
+		     , STATUS
+		  FROM
+		       MOVIE
+		 WHERE
+		       M_CODE = ?
+	</entry>
+	<entry key="addMovieTag">
+		INSERT
+		  INTO MOVIE_TAG
+		  (
+		       TAG_NO
+		     , M_CODE
+		  )
+		VALUES
+		(
+	           ?
+	         , ?
+		)
+	</entry>
 </properties>

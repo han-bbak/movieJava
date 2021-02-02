@@ -96,7 +96,7 @@
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="content1_tag.jsp">태그 미설정 영화</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movieTag">태그 미설정 영화</a></li>
                     <li><a href="<%= request.getContextPath() %>/manager/tagList">태그 추가/삭제</a></li>
                 </ul>
 
