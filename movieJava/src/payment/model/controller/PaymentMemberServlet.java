@@ -8,7 +8,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import interest.model.service.InterestService;
+import interest.model.vo.Interest;
 import member.model.vo.Member;
+import movie.MovieVO;
+import movie.model.service.MovieService;
 import orderList.model.service.OrderListService;
 import orderList.model.vo.OrderList;
 import payment.model.service.PaymentService;
@@ -41,6 +45,8 @@ public class PaymentMemberServlet extends HttpServlet {
 		Payment pay = new PaymentService().paymentSelect(loginUser.getMemId());
 		OrderList orderList = new OrderListService().orderListSelect(loginUser.getMemId());
 		Store store = new StoreService().storeSelect(loginUser.getMemId());
+		Interest interest = new InterestService().interestSelect(loginUser.getMemId());
+		MovieVO movie = new MovieService().movieSelect(loginUser.getMemId());
 		
 		
 		if(pay != null) {
@@ -53,6 +59,7 @@ public class PaymentMemberServlet extends HttpServlet {
 			request.setAttribute("store", store);
 			
 		}
+		
 		request.getRequestDispatcher("/views/mypage/mypagePay.jsp").forward(request, response);
 	}
 

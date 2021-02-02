@@ -8,7 +8,8 @@
 		, MEM_PWD
 		, MEM_NAME
 		, MEM_BIRTH
-		, EMAIL
+		,
+		EMAIL
 		, PHONE
 		, ADDRESS
 		, POINT
@@ -31,7 +32,8 @@
 		, MEM_ID
 		, MEM_PWD
 		, MEM_NAME
-		, MEM_BIRTH
+		,
+		MEM_BIRTH
 		, EMAIL
 		, PHONE
 		, ADDRESS
@@ -52,7 +54,8 @@
 		, ?
 		, ?
 		, DEFAULT
-		, DEFAULT
+		,
+		DEFAULT
 		, SYSDATE
 		, SYSDATE
 		, DEFAULT
@@ -73,7 +76,8 @@
 		, MEM_PWD
 		, MEM_NAME
 		, MEM_BIRTH
-		, EMAIL
+		,
+		EMAIL
 		, PHONE
 		, ADDRESS
 		, POINT
@@ -95,7 +99,8 @@
 		, MEM_PWD
 		, MEM_NAME
 		, MEM_BIRTH
-		, EMAIL
+		,
+		EMAIL
 		, PHONE
 		, ADDRESS
 		, POINT
@@ -117,7 +122,8 @@
 		, MEM_PWD
 		, MEM_NAME
 		, MEM_BIRTH
-		, EMAIL
+		,
+		EMAIL
 		, PHONE
 		, ADDRESS
 		, POINT
@@ -146,7 +152,8 @@
 		MEM_PWD = ?
 		WHERE
 		MEM_ID = ?
-		AND MEM_PWD = ?
+		AND MEM_PWD =
+		?
 	</entry>
 
 	<entry key="selectMember">
@@ -156,7 +163,8 @@
 		, MEM_PWD
 		, MEM_NAME
 		, MEM_BIRTH
-		, EMAIL
+		,
+		EMAIL
 		, PHONE
 		, ADDRESS
 		, POINT
@@ -171,19 +179,39 @@
 		AND MEM_STATUS = 'Y'
 	</entry>
 	<entry key="paymentselect">
-		SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code, p.pay_date
+		SELECT p.mem_no, p.pay_card, p.pay_cardno, p.pay_code,
+		p.pay_date
 		FROM MEMBER M, PAYMENT P
 		WHERE M.MEM_NO = P.MEM_NO
-		AND M.MEM_ID = ?
+		AND
+		M.MEM_ID = ?
 
 	</entry>
 
 	<entry key="orderListselect">
 		SELECT *
-		FROM MEMBER M, PAYMENT P, ORDER_LIST O, STORE S
+		FROM MEMBER M, PAYMENT P, ORDER_LIST O, STORE
+		S
 		WHERE m.mem_no = p.mem_no
 		AND p.pay_code = o.pay_code
-		AND o.st_no = s.st_no
+		AND o.st_no =
+		s.st_no
 		AND M.MEM_ID = ?
+	</entry>
+	<entry key="movieselect">
+		SELECT *
+		FROM MEMBER A, INTEREST B, MOVIE C
+		WHERE
+		A.MEM_NO = B.MEM_NO
+		AND B.M_CODE = C.M_CODE
+		AND A.MEM_ID = ?
+	</entry>
+	<entry key="interestselect">
+		SELECT *
+		FROM MEMBER A, INTEREST B, MOVIE C
+		WHERE A.MEM_NO = B.MEM_NO
+		AND B.M_CODE = C.M_CODE
+		AND A.MEM_ID = ?
+
 	</entry>
 </properties>
