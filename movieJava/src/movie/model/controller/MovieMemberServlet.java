@@ -36,8 +36,7 @@ public class MovieMemberServlet extends HttpServlet {
 		
 		Interest interest = new InterestService().interestSelect(loginUser.getMemId());
 		MovieVO movie = new MovieService().movieSelect(loginUser.getMemId());
-		System.out.println(interest);
-		System.out.println(movie);
+		
 		if(movie != null) {
 			request.setAttribute("movie", movie);
 		}

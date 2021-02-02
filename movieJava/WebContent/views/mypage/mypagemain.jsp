@@ -13,11 +13,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
+    
    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
+	<% 
+	if(loginUser == null) {%>
+	<script>
+	location.href="<%= request.getContextPath() %>/views/member/loginView.jsp";
+
+	</script>
+	<% } %>
     <style> 
 
 #menu-icon {
@@ -620,7 +628,7 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
             <div id="menudiv"></div>
            <a href="<%= request.getContextPath() %>/views/mypage/mypageMember.jsp" class="button">개인정보수정</a>
            <a href="<%= request.getContextPath() %>/mypage/movie" class="button">관심영상목록</a>
-           <a href="<%= request.getContextPath() %>/views/mypage/mypagePoint.jsp" class="button">포인트</a>
+           <a href="<%= request.getContextPath() %>/mypage/point" class="button">포인트</a>
            <a href="<%= request.getContextPath() %>/mypage/payment" class="button">결제내역</a>
         
 		
