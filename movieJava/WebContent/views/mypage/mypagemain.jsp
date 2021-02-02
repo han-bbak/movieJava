@@ -5,6 +5,7 @@
 	String result = request.getParameter("result");
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	//ZZ
 %>
 <!DOCTYPE html>
 <html>

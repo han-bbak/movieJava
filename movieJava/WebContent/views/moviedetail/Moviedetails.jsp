@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="movie.MovieVO" %>
+<%
+	MovieVO movie = (MovieVO)request.getAttribute("movie");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -383,8 +386,8 @@ html.open {
                 </svg>
             </div>
             <br><br><br><br>
-            <a href="#">마이페이지</a><br>
-            <a href="#">관심 영화</a><br>
+            <a href="%>/views/mypage/mypagemain.jsp">마이페이지</a><br>
+            <a href="%>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a href="#">Watcha Party</a><br>
             <a href="#">Netflix Party</a><br>
             <a href="#">Q&amp;A</a><br>
@@ -395,16 +398,15 @@ html.open {
         <!-- 이미지-->
         <div class="moviemain">
             <div id="movieimg" class="inline">
-                <img src="https://nujhrcqkiwag1408085.cdn.ntruss.com/static/upload/movie_poster_images/movie_436_1556125945.jpg
-            " style width="400px" height="500px">
+               <!-- <img class="m_image" style width="400px" height="500px"> --> <img class="m_image" style width="400px" height="500px">
             </div>
 
  </div>   <div id="summary" class="inline">
     <div id="Information">
         <br>
-        <h2>블레이드 러너 2049</h2> 
-        <h3>2017 미국/캐나다/ 액션</h3>
-        <h4> 감독: 드니 빌뇌브 15</h4> 
+        <h2><%= movie.getM_TITLE() %></h2> 
+        <h3><%= movie.getM_DATE() %>/<%= movie.getM_COUNTRY() %>/<%= movie.getM_GENRE() %></h3>
+        <h4><%= movie.getM_DIRECTOR() %></h4> 
         <div id="Average">
             <h3>평균:</h3> </div>
 
@@ -414,14 +416,7 @@ html.open {
     <div id=" story">
     <h2>기본정보</h2> 
     <br>
-    인간과 리플리컨트가 혼재된 2049년. 인간의 통제를 벗어난 리플리컨트를 쫓는 블레이드 러너 K는 임무 수행 도중 약 30년 전 여자 리플리컨트의 유골을 발견하고 충격적으로 출산의
-    흔적까지 찾아낸다. 리플리컨트가 출산까지 가능하다는 사실이 알려지면 사회에 큰 혼란이 야기되므로 이를 덮으려는 경찰 조직과,
-    그 비밀의 단서를 찾아내 더욱 완벽한 리플리컨트를
-    거느리고 세상을 장악하기 위해 K를 쫓는 니안더
-    월레스. 리플리컨트의 숨겨진 진실에 접근할수록
-    점차 정체성의 혼란을 겪게 되는 K는 과거 블레이드 러너
-    였던 릭 데커드를 만나 전혀 상상치 못한
-    진실을 마주하게 되는데.. 
+   <%= movie.getM_SUMMARY() %>
 </div>
            <!--  별점 -->
            <div class="star_rating" >
@@ -434,7 +429,7 @@ html.open {
 
         <!--    버튼-->      
         <div class="Attention">
-            <button class="button">관심목록</button>
+            <smbmit class="submit">관심목록</button>
         </div>
     <details id="detail">
         <summary><h3>더보기</h3></summary>

@@ -139,6 +139,10 @@
         	width: 60px;
         	height: 25px;
         }
+        
+        #search {
+        	padding: 5px;
+        }
     </style>
 </head>
 
@@ -234,7 +238,7 @@
                     <h1 id="board_name">
                         <a id="goods" style="color:white;">Goods</a>
                         /
-                        <a href="<%= request.getContextPath() %>/views/store/store_ticket.jsp"><span id="ticket">Ticket</span></a>
+                        <a id="ticket">Ticket</a>
                         <br>
                     </h1>
                 </div>
@@ -242,12 +246,12 @@
             <div class="storeArea">
             <div id="storewidth">
                 	<% for(Store st : list) { %>
-                	<div class="store_list">
-                		<input type="hidden" value="<%= st.getStoreNo() %>">
-                		<img src="<%= request.getContextPath() %><%= st.getStorePath() %><%= st.getRename() %>" width="150px" height="150px">
-                		<p><%= st.getStoreTitle() %></p>
-                		<p><%= st.getStorePrice() %>원</p>
-                	</div>
+                		<div class="store_list">
+                			<input type="hidden" value="<%= st.getStoreNo() %>">
+                			<img src="<%= request.getContextPath() %><%= st.getStorePath() %><%= st.getRename() %>" width="150px" height="150px">
+                			<p><%= st.getStoreTitle() %></p>
+                			<p><%= st.getStorePrice() %>원</p>
+                		</div>
                 	<% } %>   
              </div>
                 
@@ -294,7 +298,7 @@
             <br>
             <div class="searchArea">
             	<form action="<%= request.getContextPath() %>/store/search" method="get">
-					<input type="search" name="search"<%= search %> placeholder="상품명을 입력해 주세요.">
+					<input type="search" id="search" name="search"<%= search %> placeholder="상품명을 입력해 주세요.">
 					<button class="btn" id="searchBtn" type="submit">검색하기</button>
 				</form>
             </div>
@@ -326,7 +330,21 @@ goods.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/store/list';
 });
 
+//ticket 버튼
+const ticket = document.getElementById('ticket');
+ticket.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/ticket/list';
+});
+
 </script>
+	<script>
+		$(function(){
+			$(".store_list").click(function(){
+				var storeNo = $(this).children().eq(0).val();
+				location.href='<%= request.getContextPath() %>/store/detail?storeNo='+ storeNo;
+			});
+		});
+	</script>
 <script>
     $(".menuBtn").click(function () { 
         $("#menu,.page_cover,html").addClass("open"); 
