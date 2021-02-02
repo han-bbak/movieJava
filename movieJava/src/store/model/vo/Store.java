@@ -43,20 +43,6 @@ public class Store {
 		this.selQuan = selQuan;
 	}
 
-	public Store(int storeNo, String storeContent, String storeTitle, String storePrice, int storeQuantity,
-			String storePath, String originName, String rename, int stCategory) {
-		super();
-		this.storeNo = storeNo;
-		this.storeContent = storeContent;
-		this.storeTitle = storeTitle;
-		this.storePrice = storePrice;
-		this.storeQuantity = storeQuantity;
-		this.storePath = storePath;
-		this.originName = originName;
-		this.rename = rename;
-		this.stCategory = stCategory;
-	}
-
 	public int getStoreNo() {
 		return storeNo;
 	}
