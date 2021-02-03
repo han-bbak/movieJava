@@ -647,44 +647,6 @@ option {
 		
 		
 		<body>
-			<%-- <table width="1000">
-				<tr height="100">
-					<td align="center" colspan="4"><font size="6" color="gray">
-							전체 영화 </font></td>
-				</tr>
-				<%
-					//DB연결을 위해 객체 생성
-					MovieDAO mdao = new MovieDAO();
-
-					ArrayList<Bean> list = mdao.getAllMovie();
-
-					//tr을 3개씩 보여주고 다시 tr을 실행할 수 있도록 하는 변수 선언
-					int j = 0;
-					for (int i = 0; i < list.size(); i++) {
-						//빈 클래스를 추출
-						Bean bean = list.get(i);
-						//3번마다 0이 돌아온다는 뜻. 즉 3번에 한번 실행하도록 하는 구문
-						if (j % 4 == 0) {
-				%>
-				<tr height="220">
-					<%
-						}
-					%>
-					<td width="333" align="center"><a
-						href="home.jsp?Moviedetails.jsp?no=<%=bean.getM_code()%>"> <img
-							alt="" src="<%=bean.getM_image()%>" width="150" height="200">
-						</a>
-							<p>
-							<font size="3" color="gray"><b><%=bean.getM_title()%></b>
-							</font>
-					</td>
-
-					<%
-						j = j + 1; //j값을 증가하여 하나의 행에 총 4개의 차량정보를 보여주기 위해서 증가
-						}
-					%>
-				
-			</table> --%>
 		</body>
 		<div class="toggles">
 		<form id="filtering" action="<%=request.getContextPath()%>/movie/search">
@@ -753,22 +715,7 @@ option {
 					%>
 				
 			</table>
-			<!-- <br> <br>
-			<div class="드라마 item">드라마영화</div>
-			<div class="액션 item">액션영화</div>
-			<div class="멜로 item">멜로영화</div>
-			<div class="로맨스 item">로맨스영화</div>
-			<div class="코미디 item">코미디영화</div>
-			<div class="스릴러 item">스릴러영화</div>
-			<div class="범죄 item">범죄영화</div>
-			<div class="전쟁 item">전쟁영화</div>
-			<div class="판타지 item">판타지영화</div>
-			<div class="어드벤처 item">어드벤처영화</div>
-			<div class="미스터리 item">미스터리영화</div>
-			<div class="SF item">SF영화</div>
-			<div class="애니메이션 item">애니메이션영화</div>
-			<div class="모험 item">모험영화</div>
-			<div class="뮤지컬 item">뮤지컬영화</div> -->
+
 		</div>
 	</div>
 </div>
