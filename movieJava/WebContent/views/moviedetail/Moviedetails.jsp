@@ -575,18 +575,19 @@ html.open {
             $(this).addClass("on").prevAll("a").addClass("on");
             return false;
         });
-           var star= document.getElementsByClassName("on");
-                  // stargrade 에 별점 길이가들어간다 
-           var stargrade= star.length;
+          
                 //페이지가 열렸을때 해당코드를 실행할수있게  $(function(){
                  // 서블렛을 생성하고 url 만들기 
                   $(function(){
                 	  $("#starto").click(function(){
-                  
-                	  $.ajax({
+                		  var star= document.getElementsByClassName("on");
+                          // stargrade 에 별점 길이가들어간다 
+                   		var stargrade= star.length;
+                	  
+                  <% if(loginUser != null) {%>
+                	 $.ajax({
                 		  url: "<%= request.getContextPath()%>/Star",
                 		  data : {stargrade:stargrade,
-                			  memberno:<%=loginUser.getMemNo()%>,
                 			    MovieVo:<%=movie.getM_code()%>
                 			  },
                 		  type :"post", 
@@ -600,13 +601,15 @@ html.open {
                 			  console.log(e);
                 		  }
                 			  
-                	  })})
-                	  
-                  })
+                	  })
+                <% } else { %>
+                alert("로그인후 이용가능한 서비스입니다.");
+                <% } %>
+                	  })
+                  }) 
            
     </script>
 
-    </script>
     <!-- 댓글 150자이상 금지 -->
 <script>
     $(document).ready(function(){
