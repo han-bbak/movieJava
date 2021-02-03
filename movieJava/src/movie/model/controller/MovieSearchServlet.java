@@ -1,4 +1,4 @@
-package movie.controller;
+package movie.model.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
+import movie.model.service.MovieSearchService;
 import movie.model.service.MovieService;
 import movie.model.vo.MovieVO;
 import movie.model.vo.Search;
@@ -39,7 +39,7 @@ public class MovieSearchServlet extends HttpServlet {
 		String sort = request.getParameter("sort");
 		
 		Search filter = new Search(search, genre, sort);
-		ArrayList<MovieVO> list = new MovieService().selectSearchMovie(filter);
+		ArrayList<MovieVO> list = new MovieSearchService().selectSearchMovie(filter);
 		System.out.println(list);
 		request.setAttribute("list", list);
 		RequestDispatcher view = request.getRequestDispatcher("/views/movie/search/result.jsp");

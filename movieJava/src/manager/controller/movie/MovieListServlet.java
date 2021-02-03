@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import manager.model.service.ManagerService;
 import manager.model.vo.PageInfo;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 
 /**
  * Servlet implementation class MovieListServlet

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import interest.model.service.InterestService;
 import interest.model.vo.Interest;
 import member.model.vo.Member;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import movie.model.service.MovieService;
 import orderList.model.service.OrderListService;
 import orderList.model.vo.OrderList;

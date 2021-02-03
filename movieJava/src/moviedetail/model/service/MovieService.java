@@ -2,7 +2,7 @@ package moviedetail.model.service;
 
 import java.sql.Connection;
 import static common.JDBCTemplate.*;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import moviedetail.model.dao.MovieDao;
 
 public class MovieService {

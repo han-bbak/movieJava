@@ -4,9 +4,11 @@ import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
-import movie.MovieDAO;
-import movie.MovieVO;
+import movie.model.dao.MovieDAO;
+import movie.model.vo.MovieVO;
+import movie.model.vo.Search;
 
 
 public class MovieService {
