@@ -351,7 +351,7 @@
 		   SET 
 		       TAG_STATUS = 'N'
 		 WHERE 
-		       TAG_NAME = ?
+		       TAG_NO = ?
 		   AND TAG_STATUS = 'Y'
 	</entry>
 	<entry key="addTag">

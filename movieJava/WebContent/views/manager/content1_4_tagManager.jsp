@@ -113,7 +113,10 @@
                 <div class="tagList" id="tagList">
                 	<% if(list != null) { %>
                 		<% for(int i = 0; i < list.size(); i++) { %>
-                			<input type="button" class="tag" name="tagName" value="<%= list.get(i).getTagName() %>">
+                			<span class="tagOneSpan">
+                				<input type="hidden" name="tagCode" value="<%= list.get(i).getTagNo() %>">
+                				<input type="button" class="tag" name="tagName" value="<%= list.get(i).getTagName() %>">
+                			</span>
                 		<% } %>
                 	<% } else {%>
                 		<span>사용중인 태그가 없습니다.</span>
@@ -157,19 +160,20 @@
     		
     		$("#removeBtn").click(function(){
     			if(confirm("해당 태그를 삭제하시겠습니까?")) {
-	    			var tagNameInput = $("#removeList").children().toArray();
+	    			var tagIdInput = $("#removeList").children().children().toArray();
 	    			var tagArr = new Array();
-	    			for(var i in tagNameInput) {
-	    				tagArr.push(tagNameInput[i].value);
-	    				tagNameInput[i].style.display = "none";
+	    			for(var i in tagIdInput) {
+	    				if(i % 2 == 0) {
+	    					tagArr.push(tagIdInput[i].value);
+	    				}
+	    				tagIdInput[i].style.display = "none";
 	    			}
-	    			
-	    			var tagName = tagArr.join(",");
+	    			var tagId = tagArr.join(",");
 	    			
 	    			$.ajax({
 	    				url : "<%= request.getContextPath() %>/manager/removeTag",
 	    				type : "post",
-	    				data : {tagName : tagName},
+	    				data : {tagId : tagId},
 	    				success : function(data) {
 	    					if(data != null) {
 	    						alert(data + '개의 태그를 삭제했습니다.');
@@ -195,10 +199,10 @@
 
         for(var i in btn) {
             btn[i].onclick = function() {
-                if(this.parentElement == tagList) {
-                	removeList.append(this);
+                if(this.parentElement.parentElement == tagList) {
+                	removeList.append(this.parentElement);
                 } else {
-                	tagList.append(this);
+                	tagList.append(this.parentElement);
                 }
             }
         }

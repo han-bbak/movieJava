@@ -202,10 +202,10 @@ public class ManagerService {
 	}
 
 	// 태그 삭제
-	public int removeTag(String tagName) {
+	public int removeTag(String tagId) {
 		Connection conn = getConnection();
 		
-		int result = new ManagerDao().removeTag(conn, tagName);
+		int result = new ManagerDao().removeTag(conn, tagId);
 		
 		if(result > 0) {
 			commit(conn);
