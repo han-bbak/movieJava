@@ -468,6 +468,7 @@ $(function() {
 						}
 					
 						$("#replyContent").val("");
+						location.reload();
 			
 					}, 
 					error: function(e) {

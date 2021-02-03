@@ -347,7 +347,7 @@
                     				<td><%= r.getRp_no() %></td>
                     				<td><%= r.getMem_name() %></td>
                     				<td><%= r.getRp_content() %></td>
-                    				<% if(loginUser.getMemNo() == r.getRp_writer() ||  loginUser.getMemId().equals("admin")) { %>
+                    				<% if(loginUser.getMemNo() == r.getRp_writer() || loginUser.getMemId().equals("admin")) { %>
                     					<td><%= r.getRp_date() %></td>
                     					<td>
                     						<button class="button" type="button" id="replyUpdate">수정</button>
@@ -483,6 +483,7 @@
 						}
 					
 						$("#replyContent").val("");
+						location.reload();
 			
 					}, 
 					error: function(e) {

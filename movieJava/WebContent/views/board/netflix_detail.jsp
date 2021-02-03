@@ -476,6 +476,8 @@ $(function() {
 							tr.append(writerTd, contentTd, dateTd);
 						
 							replyTable.append(tr);
+							
+							location.reload();
 						}
 					
 						$("#replyContent").val("");
