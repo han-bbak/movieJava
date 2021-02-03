@@ -150,7 +150,7 @@
                 	<% if(list != null) { %>
                 		<% for(int i = 0; i < list.size(); i++) { %>
                 		<span class="tagOneSpan">
-                			<input type="hidden" name="movieCode" value="<%= list.get(i).getTagNo() %>">
+                			<input type="hidden" name="tagCode" value="<%= list.get(i).getTagNo() %>">
                 			<input type="button" class="tag" name="tagName" value="<%= list.get(i).getTagName() %>">
                 		</span>
                 		<% } %>
@@ -214,7 +214,7 @@
 	    			var tagArr = new Array();
 	    			for(var i in tagIdInput) {
 	    				if(i % 2 == 0) {
-	    				tagArr.push(tagIdInput[i].value);
+	    					tagArr.push(tagIdInput[i].value);
 	    				}
 	    				tagIdInput[i].style.display = "none";
 	    			}

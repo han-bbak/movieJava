@@ -500,17 +500,17 @@ public class ManagerDao {
 	}
 
 	// 태그 삭제
-	public int removeTag(Connection conn, String tagName) {
-		String[] tagNameArr = tagName.split(",");
+	public int removeTag(Connection conn, String tagId) {
+		String[] tagIdArr = tagId.split(",");
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String sql = prop.getProperty("removeTag");
 		
 		try {
-			for(int i = 0; i < tagNameArr.length; i++) {
+			for(int i = 0; i < tagIdArr.length; i++) {
 				pstmt = conn.prepareStatement(sql);
 				
-				pstmt.setString(1, tagNameArr[i]);
+				pstmt.setInt(1, Integer.parseInt(tagIdArr[i]));
 				
 				result += pstmt.executeUpdate();
 			}
