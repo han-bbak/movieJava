@@ -1,6 +1,7 @@
 package manager.controller.movieTag;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,21 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-
 import manager.model.service.ManagerService;
+import movie.MovieVO;
+import tag.model.vo.Tag;
 
 /**
- * Servlet implementation class MovieTagCountServlet
+ * Servlet implementation class MovieTagRegisterServlet
  */
-@WebServlet("/manager/movieTagCount")
-public class MovieTagCountServlet extends HttpServlet {
+@WebServlet("/manager/tagRegister")
+public class MovieTagRegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieTagCountServlet() {
+    public MovieTagRegisterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,17 +32,17 @@ public class MovieTagCountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ManagerService ms = new ManagerService();
-		int countTag = ms.tagCount();
-		int countNotMovieTag = ms.countNotMovieTag();
+		String m_code = request.getParameter("m_code");
 		
-		JSONArray jArr = new JSONArray();
+		MovieVO movie = new ManagerService().selectMovie(m_code);
 		
-		jArr.add(countTag);
-		jArr.add(countNotMovieTag);
+		ArrayList<Tag> list = new ManagerService().selectTagList();
 		
-		response.setContentType("application/json; charset=UTF-8"); 
-		response.getWriter().print(jArr);
+		request.setAttribute("list", list);
+		request.setAttribute("movie", movie);
+		
+		request.getRequestDispatcher("/views/manager/detailsView/movieTagRegister.jsp").forward(request, response);
+	
 	}
 
 	/**

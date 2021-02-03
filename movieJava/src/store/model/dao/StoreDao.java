@@ -12,6 +12,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import payment.model.vo.Payment;
 import store.model.vo.PageInfo;
 import store.model.vo.Search;
 import store.model.vo.Store;
@@ -84,7 +85,8 @@ public class StoreDao {
 						           rset.getString(7),
 						           rset.getString(8),
 						           rset.getString(9),
-						           rset.getInt(10)));
+						           rset.getInt(10),
+						           rset.getInt(11)));
 			}
 			
 		} catch (SQLException e) {
@@ -151,7 +153,8 @@ public class StoreDao {
 				           rset.getString(7),
 				           rset.getString(8),
 				           rset.getString(9),
-				           rset.getInt(10)));
+				           rset.getInt(10),
+				           rset.getInt(11)));
 			}
 			
 		} catch (SQLException e) {
@@ -212,7 +215,8 @@ public class StoreDao {
 						           rset.getString(7),
 						           rset.getString(8),
 						           rset.getString(9),
-						           rset.getInt(10)));
+						           rset.getInt(10),
+						           rset.getInt(11)));
 			}
 			
 		} catch (SQLException e) {
@@ -279,7 +283,8 @@ public class StoreDao {
 				           rset.getString(7),
 				           rset.getString(8),
 				           rset.getString(9),
-				           rset.getInt(10)));
+				           rset.getInt(10),
+				           rset.getInt(11)));
 			}
 			
 		} catch (SQLException e) {
@@ -303,15 +308,16 @@ public class StoreDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				s = new Store(rset.getInt("ST_NO"),
-								rset.getString("ST_CONTENT"),
-								rset.getString("ST_TITLE"),
-								rset.getString("ST_PRICE"),
-								rset.getInt("ST_QUAN"),
-								rset.getString("ST_PATH"),
-								rset.getString("ST_ONAME"),
-								rset.getString("ST_RNAME"),
-								rset.getInt("ST_CATEGORY"));
+				s = new Store(rset.getInt(1),
+								rset.getString(2),
+								rset.getString(3),
+								rset.getString(4),
+								rset.getInt(5),
+								rset.getString(6),
+								rset.getString(7),
+								rset.getString(8),
+								rset.getInt(9),
+								rset.getInt(10));
 			}
 			
 		} catch (SQLException e) {
@@ -322,6 +328,40 @@ public class StoreDao {
 		}
 		
 		return s;
+	}
+
+	public Store storeSelect(Connection conn, String memId) {
+		Store store = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("storeselect");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memId);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				store = new Store(rset.getInt("ST_NO"),
+						rset.getString("ST_CONTENT"),
+						rset.getString("ST_TITLE"),
+						rset.getString("ST_PRICE"),
+						rset.getInt("ST_QUAN"),
+						rset.getString("ST_PATH"),
+						rset.getString("ST_ONAME"),
+						rset.getString("ST_RNAME"),
+						rset.getInt("ST_CATEGORY")
+						);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return store;
 	}
 
 }

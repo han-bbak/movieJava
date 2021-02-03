@@ -10,6 +10,7 @@ public class Store {
 	private String originName;
 	private String rename;
 	private int stCategory;
+	private int selQuan;	// 판매 수량
 	
 	public Store() {}
 
@@ -26,7 +27,22 @@ public class Store {
 		this.rename = rename;
 		this.stCategory = stCategory;
 	}
-	
+
+	public Store(int storeNo, String storeContent, String storeTitle, String storePrice, int storeQuantity,
+			String storePath, String originName, String rename, int stCategory, int selQuan) {
+		super();
+		this.storeNo = storeNo;
+		this.storeContent = storeContent;
+		this.storeTitle = storeTitle;
+		this.storePrice = storePrice;
+		this.storeQuantity = storeQuantity;
+		this.storePath = storePath;
+		this.originName = originName;
+		this.rename = rename;
+		this.stCategory = stCategory;
+		this.selQuan = selQuan;
+	}
+
 	public int getStoreNo() {
 		return storeNo;
 	}
@@ -99,13 +115,23 @@ public class Store {
 		this.stCategory = stCategory;
 	}
 
+	public int getSelQuan() {
+		return selQuan;
+	}
+
+	public void setSelQuan(int selQuan) {
+		this.selQuan = selQuan;
+	}
+
 	@Override
 	public String toString() {
 		return "Store [storeNo=" + storeNo + ", storeContent=" + storeContent + ", storeTitle=" + storeTitle
 				+ ", storePrice=" + storePrice + ", storeQuantity=" + storeQuantity + ", storePath=" + storePath
-				+ ", originName=" + originName + ", rename=" + rename + ", stCategory=" + stCategory + "]";
+				+ ", originName=" + originName + ", rename=" + rename + ", stCategory=" + stCategory + ", selQuan="
+				+ selQuan + "]";
 	}
 
+	
 	
 	
 }

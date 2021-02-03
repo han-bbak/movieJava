@@ -1344,4 +1344,67 @@ public class ManagerDao {
 		return list;
 	}
 
+	// 영화에 태그를 달기 위한 영화 정보
+	public MovieVO selectMovie(Connection conn, String m_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MovieVO movie = null;
+		String sql = prop.getProperty("selectMovie");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m_code);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				movie = new MovieVO(rset.getString(1),
+									rset.getString(2),
+									rset.getString(3),
+									rset.getString(4),
+									rset.getString(5),
+									rset.getString(6),
+									rset.getString(7),
+									rset.getString(8),
+									rset.getString(9),
+									rset.getInt(10),
+									rset.getString(11));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return movie;
+	}
+
+	// 영화에 태그 달기
+	public int addMovieTag(Connection conn, String tagId, String movieCode) {
+		String[] addTagIdArr = tagId.split(",");
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("addMovieTag");
+		
+		try {
+			for(int i = 0; i < addTagIdArr.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, Integer.parseInt(addTagIdArr[i]));
+				pstmt.setString(2, movieCode);
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

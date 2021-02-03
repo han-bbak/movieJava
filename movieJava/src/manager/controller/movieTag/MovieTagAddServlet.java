@@ -1,6 +1,7 @@
 package manager.controller.movieTag;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,21 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-
 import manager.model.service.ManagerService;
 
 /**
- * Servlet implementation class MovieTagCountServlet
+ * Servlet implementation class MovieTagAddServlet
  */
-@WebServlet("/manager/movieTagCount")
-public class MovieTagCountServlet extends HttpServlet {
+@WebServlet("/manager/addMovieTag")
+public class MovieTagAddServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieTagCountServlet() {
+    public MovieTagAddServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,17 +30,18 @@ public class MovieTagCountServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ManagerService ms = new ManagerService();
-		int countTag = ms.tagCount();
-		int countNotMovieTag = ms.countNotMovieTag();
+		String tagId = request.getParameter("tagId");
+		String movieCode = request.getParameter("movieCode");
 		
-		JSONArray jArr = new JSONArray();
+		int result = new ManagerService().addMovieTag(tagId, movieCode);
 		
-		jArr.add(countTag);
-		jArr.add(countNotMovieTag);
+		PrintWriter out = response.getWriter();
 		
-		response.setContentType("application/json; charset=UTF-8"); 
-		response.getWriter().print(jArr);
+		response.setCharacterEncoding("utf-8");
+		
+		if(result > 0) {
+			out.print(result);
+		}
 	}
 
 	/**

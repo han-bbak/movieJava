@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, point.model.vo.Point" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	Point point = (Point)request.getAttribute("point");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -13,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>포인트</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -442,6 +444,9 @@ h3 {
 	.font1{
       	font-family: 'Noto Sans KR', sans-serif;
       }
+      .header3 {
+      overflow : hidden;
+      }
     </style>
     
 </head>
@@ -456,7 +461,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="../../images/logo.png"></a>
+				<a href="home.jsp"><img class="logo" src="<%=request.getContextPath()%>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -540,8 +545,8 @@ h3 {
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
         <div id="content" class="font1">
-            <img class="masthead-avatar mb-5" src="avataaars.svg" alt="" width="300px" height="300px">
-            <h1><%= loginUser.getMemId() %>님의 포인트</h1>
+            <img class="masthead-avatar mb-5" src="<%=request.getContextPath()%>/views/mypage/avataaars.svg" alt="" width="300px" height="300px">
+            <h1><%= loginUser.getMemName() %>님의 포인트</h1>
             
             <p>point<%= loginUser.getPoint() %></p>
             <br><br><br><br><br><br>
@@ -555,7 +560,7 @@ h3 {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
+                    <td><%= point.getPntDate() %></td><td><%= point.getPayCode() %></td><td><%= point.getPntList() %></td><td>4</td><td><%= loginUser.getPoint() %></td>
                   </tr>
                   <tr>
                     <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>

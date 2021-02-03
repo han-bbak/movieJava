@@ -529,4 +529,32 @@ public class ManagerService {
 		return countNotMovieTag;
 	}
 
+	// 영화 태그 등록을 위한 영화 정보
+	public MovieVO selectMovie(String m_code) {
+		Connection conn = getConnection();
+		
+		MovieVO movie = new ManagerDao().selectMovie(conn, m_code);
+		
+		close(conn);
+		
+		return movie;
+	}
+
+	// 영화에 태그 달기
+	public int addMovieTag(String tagId, String movieCode) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().addMovieTag(conn, tagId, movieCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
 }
