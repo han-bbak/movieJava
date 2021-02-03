@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="movie.MovieVO,member.model.vo.Member" %>
+    pageEncoding="UTF-8" import="movie.model.vo.MovieVO,member.model.vo.Member" %>
 <% 
 	MovieVO movie = (MovieVO)request.getAttribute("movie");
 // 별점을 등록할떄 어떤회원이 등록하는지 알아야하기때문에 로그인정보를 가져온다 

@@ -1,29 +1,31 @@
-package manager.controller.movieTag;
+package movie.model.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import manager.model.service.ManagerService;
+
+import movie.model.service.MovieService;
 import movie.model.vo.MovieVO;
-import tag.model.vo.Tag;
+import movie.model.vo.Search;
 
 /**
- * Servlet implementation class MovieTagRegisterServlet
+ * Servlet implementation class MovieSearchServlet
  */
-@WebServlet("/manager/tagRegister")
-public class MovieTagRegisterServlet extends HttpServlet {
+@WebServlet("/movie/search")
+public class MovieSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieTagRegisterServlet() {
+    public MovieSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,18 +34,19 @@ public class MovieTagRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String m_code = request.getParameter("m_code");
+		String search = request.getParameter("search");
+		String genre = request.getParameter("genre");
+		String sort = request.getParameter("sort");
 		
-		MovieVO movie = new ManagerService().selectMovie(m_code);
-		
-		ArrayList<Tag> list = new ManagerService().selectTagList();
-		
+		Search filter = new Search(search, genre, sort);
+		ArrayList<MovieVO> list = new MovieService().selectSearchMovie(filter);
+		System.out.println(list);
 		request.setAttribute("list", list);
-		request.setAttribute("movie", movie);
-		
-		request.getRequestDispatcher("/views/manager/detailsView/movieTagRegister.jsp").forward(request, response);
-	
+		RequestDispatcher view = request.getRequestDispatcher("/views/movie/search/result.jsp");
+		view.forward(request, response);
 	}
+
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

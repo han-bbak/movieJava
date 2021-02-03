@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, movie.model.vo.MovieVO, manager.model.vo.*" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.PageInfo, tag.model.vo.Tag, movieTag.model.vo.MovieTag" %>
 <%
-	ArrayList<MovieVO> list = (ArrayList<MovieVO>)request.getAttribute("list");
+	ArrayList<MovieTag> list = (ArrayList<MovieTag>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	Search s = (Search)request.getAttribute("search");
-	String search = "";
-	
-	if(s != null) {
-		search = s.getSearch();
-	}
-	
+	Tag tag = (Tag)request.getAttribute("tag");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +11,7 @@
 <meta charset="UTF-8">
 	<!-- sideMenu CSS -->
     <link href="<%= request.getContextPath() %>/resources/css/content1_movie.css" rel="stylesheet" type="text/css">
-    <title>컨텐츠 관리 - 영화 전체 조회</title>
+    <title>컨텐츠 관리 - 태그 목록 조회</title>
     <style>
         .contentWrap {
             box-sizing: border-box;
@@ -36,6 +30,25 @@
             font-size : 20px;
             font-weight: bold;
         }
+
+        .tagDiv {
+            margin : 30px;
+        }
+
+        .tagDiv .tag {
+            width: 150px;
+            height: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            background : rgb(255,192,0);
+            border-radius: 8px;
+            border-color: rgb(255,192,0);
+        }
+
+        .tagDiv .tag:hover {
+            cursor: pointer;
+        }
+        
         .tableDiv {
             color: white;
             margin-left: 80px;
@@ -87,32 +100,6 @@
         .tableDiv th:last-child {
             width : 100px;
         }
-
-        .searchDiv {
-            margin: 20px;
-        }
-        .searchDiv input {
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-        .searchDiv img {
-            padding : 2px;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-        .searchDiv input {
-            float: left;
-        }
-        .searchDiv img:hover {
-            cursor: pointer;
-        }
-        .searchImg button {
-        	margin : 0;
-        	padding : 0;
-        	border : none;
-        	background : none;
-        	color : none;
-        }
         
         #movieThumbnail {
         	width : 100px;
@@ -132,6 +119,7 @@
         	outline : none;
         	cursor : pointer;
         }
+
     </style>
 </head>
 <body>
@@ -156,30 +144,32 @@
         </div>
         <div class="contentWrap">
             <div class="titleDiv">
-                <p>영화 조회</p>
+                <p>태그별 목록 조회</p>
+            </div>
+            <div class="tagDiv">
+                <div class="tagList" id="tagList">
+                	<% if(tag != null) { %>
+               			<span class="tagOneSpan">
+               				<input type="hidden" name="tagCode" value="<%= tag.getTagNo() %>">
+               				<input type="button" class="tag" name="tagName" value="<%= tag.getTagName() %>">
+               			</span>
+                	<% } else {%>
+                		<span>선택한 태그가 없습니다.</span>
+                	<% } %>
+                </div>
             </div>
             <hr>
-            <div class="searchDiv">
-            	<form method="get" action="<%= request.getContextPath() %>/manager/movieSearch">
-                    <input type="text" name="search" placeholder="검색할 영화명 입력" size="30" style="height: 30px;" value="<%= search %>">
-                    <div class="searchImg">
-                    	<button type="submit">
-                        	<img src="<%= request.getContextPath() %>/images/search.png" style="width:33px; height:33px;">
-                        </button>
-                    </div>
-                </form>
-            </div>
             <div class="tableDiv">
                 <table>
                     <tr>
                         <th>영화코드</th>
                         <th>썸네일</th>
                         <th>영화명</th>
-                        <th>사용여부</th>
+                        <th>사용태그</th>
                     </tr>
                     <% if(list.isEmpty()) { %>
                     	<tr>
-                    		<td colspan="4">등록 된 영화가 없습니다.</td>
+                    		<td colspan="4">해당 태그가 등록된 영화가 없습니다.</td>
                     	</tr>
                     <% } else { %>
                     	<% for(int i = 0; i < list.size(); i++) { %>
@@ -187,7 +177,7 @@
                     			<td><%= list.get(i).getM_code() %></td>
                     			<td><img id="movieThumbnail" src='<%= list.get(i).getM_image() %>'></td>
                     			<td><%= list.get(i).getM_title() %></td>
-                    			<td><%= list.get(i).getStatus() %></td>
+                    			<td><%= list.get(i).getTagName() %></td>
                     		</tr>
                     	<% } %>
                     <% } %>
@@ -195,46 +185,32 @@
             </div>
             <div class="pagingBtnDiv">
             	<!-- 처음으로 -->
-            	<% if(s == null) { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movie?currentPage=1'"> &lt;&lt; </button>
-            	<% } else { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movieSearch?currentPage=1&search=<%= search %>'"> &lt;&lt; </button>
-            	<% } %>
+           		<button onclick="location.href='<%= request.getContextPath() %>/manager/tagMovieList?currentPage=1&tagNo=<%= tag.getTagNo() %>'"> &lt;&lt; </button>
             	<!-- 이전으로 -->
             	<% if(pi.getCurrentPage() == 1) { %>
             		<button disabled> &lt; </button>
-            	<% } else if(s == null) { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movie?currentPage=<%= pi.getCurrentPage() - 1 %>'"> &lt; </button>
             	<% } else {%>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movieSearch?currentPage=<%= pi.getCurrentPage() - 1 %>&search=<%= search %>'"> &lt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/tagMovieList?currentPage=<%= pi.getCurrentPage() - 1 %>&tagNo=<%= tag.getTagNo() %>'"> &lt; </button>
             	<% } %>
             	
             	<!-- 10개 페이지 목록 -->
             	<% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++) { %>
             		<% if(p == pi.getCurrentPage()) { %>
             			<button style="background:rgb(255,192,0); color:black;" disabled> <%= p %></button>
-            		<% } else if(s == null) { %>
-            			<button onclick="location.href='<%= request.getContextPath() %>/manager/movie?currentPage=<%= p %>'"><%= p %></button>
             		<% } else { %>
-            			<button onclick="location.href='<%= request.getContextPath() %>/manager/movieSearch?currentPage=<%= p %>&search=<%= search %>'"><%= p %></button>
+            			<button onclick="location.href='<%= request.getContextPath() %>/manager/tagMovieList?currentPage=<%= p %>&tagNo=<%= tag.getTagNo() %>'"><%= p %></button>
             		<% } %>
             	<% } %>
             	
             	<!-- 다음으로 -->
             	<% if(pi.getCurrentPage() == pi.getMaxPage()) { %>
             		<button disabled> &gt; </button>
-            	<% } else if(s == null) { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movie?currentPage=<%= pi.getCurrentPage() + 1 %>'"> &gt; </button>
             	<% } else {%>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movieSearch?currentPage=<%= pi.getCurrentPage() + 1 %>&search=<%= search %>'"> &gt; </button>
+            		<button onclick="location.href='<%= request.getContextPath() %>/manager/tagMovieList?currentPage=<%= pi.getCurrentPage() + 1 %>&tagNo=<%= tag.getTagNo() %>'"> &gt; </button>
             	<% } %>
             	
             	<!-- 맨 끝으로 -->
-            	<% if(s == null) { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movie?currentPage=<%= pi.getMaxPage() %>'"> &gt;&gt; </button>
-            	<% } else { %>
-            		<button onclick="location.href='<%= request.getContextPath() %>/manager/movieSearch?currentPage=<%= pi.getMaxPage() %>&search=<%= search %>'"> &gt;&gt; </button>
-            	<% } %>
+           		<button onclick="location.href='<%= request.getContextPath() %>/manager/tagMovieList?currentPage=<%= pi.getMaxPage() %>&tagNo=<%= tag.getTagNo() %>'"> &gt;&gt; </button>
             </div>
         </div>
     </section>

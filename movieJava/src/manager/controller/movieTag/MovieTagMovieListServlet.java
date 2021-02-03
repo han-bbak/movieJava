@@ -10,20 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import manager.model.service.ManagerService;
-import movie.model.vo.MovieVO;
 import tag.model.vo.Tag;
 
 /**
- * Servlet implementation class MovieTagRegisterServlet
+ * Servlet implementation class MovieTagMovieListServlet
  */
-@WebServlet("/manager/tagRegister")
-public class MovieTagRegisterServlet extends HttpServlet {
+@WebServlet("/manager/movieTagList")
+public class MovieTagMovieListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieTagRegisterServlet() {
+    public MovieTagMovieListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,17 +31,11 @@ public class MovieTagRegisterServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String m_code = request.getParameter("m_code");
-		
-		MovieVO movie = new ManagerService().selectMovie(m_code);
-		
 		ArrayList<Tag> list = new ManagerService().selectTagList();
 		
 		request.setAttribute("list", list);
-		request.setAttribute("movie", movie);
 		
-		request.getRequestDispatcher("/views/manager/detailsView/movieTagRegister.jsp").forward(request, response);
-	
+		request.getRequestDispatcher("/views/manager/content1_2_tagInquiry.jsp").forward(request, response);
 	}
 
 	/**

@@ -5,8 +5,8 @@ import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 
-import movie.MovieDAO;
-import movie.MovieVO;
+import movie.model.dao.MovieDAO;
+import movie.model.vo.MovieVO;
 import point.model.dao.PointDao;
 import point.model.vo.Point;
 

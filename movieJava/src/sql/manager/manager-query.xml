@@ -372,6 +372,17 @@
 		     , DEFAULT
 		)
 	</entry>
+	<entry key="selectTag">
+		SELECT
+		       TAG_NO
+		     , TAG_NAME
+		     , REGISTER_DATE
+		     , TAG_STATUS
+		  FROM
+		       TAG
+		 WHERE
+		       TAG_NO = ?
+	</entry>
 	
 <!-- ============================ Board ============================ -->
 	
@@ -847,5 +858,75 @@
 	           ?
 	         , ?
 		)
+	</entry>
+	<entry key="selectInTagMovieList">
+		SELECT 
+		       RNUM
+             , TAG_NAME
+             , M_CODE
+             , M_TITLE
+             , M_GENRE
+             , M_DIRECTOR
+             , M_DATE
+             , M_COUNTRY
+             , M_IMAGE
+             , M_SUMMARY
+             , M_RATING
+             , M_GRADE
+             , STATUS
+		  FROM 
+		  (
+		       SELECT
+		              ROW_NUMBER() OVER(ORDER BY M_CODE DESC) AS RNUM
+		            , TAG_NAME
+		            , M_CODE
+                    , M_TITLE
+                    , M_GENRE
+                    , M_DIRECTOR
+                    , M_DATE
+                    , M_COUNTRY
+                    , M_IMAGE
+                    , M_SUMMARY
+                    , M_RATING
+                    , M_GRADE
+                    , STATUS
+                 FROM
+                      MOVIE
+                      LEFT JOIN MOVIE_TAG USING(M_CODE)
+                      LEFT JOIN TAG USING(TAG_NO)
+                WHERE
+                      TAG_NO = ?
+		  )
+		 WHERE
+		       RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="countInMovieTag">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       MOVIE
+               LEFT JOIN MOVIE_TAG USING(M_CODE)
+               LEFT JOIN TAG USING(TAG_NO)
+         WHERE
+               TAG_NO = ?
+	</entry>
+	<entry key="selectMovieTag">
+		SELECT
+              TAG_NO
+            , TAG_NAME
+            , M_CODE
+         FROM
+              MOVIE_TAG
+              LEFT JOIN TAG USING(TAG_NO)
+        WHERE
+              M_CODE = ?
+          AND TAG_STATUS = 'Y'
+	</entry>
+	<entry key="deleteMovieTag">
+		DELETE
+		  FROM MOVIE_TAG
+		 WHERE
+		       TAG_NO = ?
+		   AND M_CODE = ?
 	</entry>
 </properties>

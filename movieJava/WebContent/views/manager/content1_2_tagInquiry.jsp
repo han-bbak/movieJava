@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.ArrayList, tag.model.vo.Tag" %>
+<%
+	ArrayList<Tag> list = (ArrayList<Tag>)request.getAttribute("list");	
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +46,7 @@
         .tagDiv .tag:hover {
             cursor: pointer;
         }
-
+        
     </style>
 </head>
 <body>
@@ -58,8 +61,8 @@
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="content1_1_inquiry.jsp">전체 목록 조회</a></li>
-                    <li><a href="content1_2_tagInquiry.jsp">태그별 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movie">전체 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movieTagList">태그별 목록 조회</a></li>
                     <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
                 </ul>
 
@@ -71,9 +74,22 @@
                 <p>태그별 목록 조회</p>
             </div>
             <div class="tagDiv">
-                <button class="tag">#<span>신작</span></button>
-                <button class="tag">#<span>종료예정작</span></button>
+                <div class="tagList" id="tagList">
+                	<% if(list != null) { %>
+                		<% for(int i = 0; i < list.size(); i++) { %>
+                			<span class="tagOneSpan">
+                				<input type="hidden" name="tagCode" value="<%= list.get(i).getTagNo() %>">
+                				<input type="button" class="tag" name="tagName" value="<%= list.get(i).getTagName() %>">
+                			</span>
+                		<% } %>
+                	<% } else {%>
+                		<span>사용중인 태그가 없습니다.</span>
+                	<% } %>
+                    <!-- <button class="tag">#<span>신작</span></button>
+                    <button class="tag">#<span>종료예정작</span></button> -->
+                </div>
             </div>
+            <hr>
         </div>
     </section>
     <script>
@@ -91,6 +107,15 @@
 				}
 			});
 		});
+	    
+	    var btn = document.getElementsByClassName("tag");
+
+        for(var i in btn) {
+            btn[i].onclick = function() {
+            	var num = $(this).parent().children().eq(0).val();
+				location.href="<%= request.getContextPath() %>/manager/tagMovieList?tagNo=" + num;
+            }
+        }
     </script>
 </body>
 </html>

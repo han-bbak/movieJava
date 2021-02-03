@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.*, movieTag.model.vo.MovieTag, tag.model.vo.Tag, movie.model.vo.MovieVO" %>
 <%
-	ArrayList<Tag> list = (ArrayList<Tag>)request.getAttribute("list");
+	ArrayList<MovieTag> movieTag = (ArrayList<MovieTag>)request.getAttribute("movieTag");
 	MovieVO movie = (MovieVO)request.getAttribute("movie");
+	ArrayList<Tag> tag = (ArrayList<Tag>)request.getAttribute("tag");
 %>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@
         .tableDiv {
             color: white;
             margin-left: 80px;
-            min-height : 500px;
+            min-height : 450px;
         }
 
         .tableDiv table {
@@ -79,8 +80,8 @@
         }
 		
         #movieThumbnail {
-        	width : 350px;
-        	height : 500px;
+        	width : 250px;
+        	height : 400px;
         }
         
         .tagOneSpan {
@@ -107,7 +108,7 @@
             cursor: pointer;
         }
         
-        #addBtn {
+        #addBtn, #removeBtn {
             width: 80px;
             height: 35px;
             font-size: 12px;
@@ -117,6 +118,12 @@
             border-radius: 8px;
             border-color: #0059A6;
         }
+        
+        #removeBtn {
+        	background: #902000;
+            border-color: #902000;
+            color: white;
+        }
 
     </style>
 </head>
@@ -125,15 +132,16 @@
     <section class="contentSection">
         <div class="contentMenuWrap">
             <div class="subTitle">
-                <p class="subText" id="p-sub1">태그 관리</p>
-                <p class="subText" id="p-sub2">사용중인 태그 수</p>
+                <p class="subText" id="p-sub1">등록 영화 관리</p>
+                <p class="subText" id="p-sub2">등록 된 영화 수</p>
                 <p class="subText" id="p-sub3">
-                    <span id="countTag">000</span>건
+                    <span id="countMovie">000</span>건
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="<%= request.getContextPath() %>/manager/movieTag">태그 미설정 영화</a></li>
-                    <li><a href="<%= request.getContextPath() %>/manager/tagList">태그 추가/삭제</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movie">전체 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movieTagList">태그별 목록 조회</a></li>
+                    <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
                 </ul>
 
                 <!-- <span class="subText" id="span-sub1">등록 영화 관리</span> -->
@@ -141,21 +149,21 @@
         </div>
         <div class="contentWrap">
             <div class="titleDiv">
-                <p>태그 미등록 영화 : <span id="movieNotTagCount">000</span> 건</p>
+                <p>태그 수정</p>
             </div>
             <hr>
             <div class="tagDiv">
-                <p class="subPTag">태그 목록</p>
-                <div class="tagList" id="tagList">
-                	<% if(list != null) { %>
-                		<% for(int i = 0; i < list.size(); i++) { %>
+                <p class="subPTag">등록된 태그 목록</p>
+                <div class="tagList" id="useTagList">
+                	<% if(movieTag != null) { %>
+                		<% for(int i = 0; i < movieTag.size(); i++) { %>
                 		<span class="tagOneSpan">
-                			<input type="hidden" name="tagCode" value="<%= list.get(i).getTagNo() %>">
-                			<input type="button" class="tag" name="tagName" value="<%= list.get(i).getTagName() %>">
+                			<input type="hidden" name="tagCode" value="<%= movieTag.get(i).getTagNo() %>">
+                			<input type="button" class="tag" name="tagName" value="<%= movieTag.get(i).getTagName() %>">
                 		</span>
                 		<% } %>
                 	<% } else {%>
-                		<span>사용중인 태그가 없습니다.</span>
+                		<span>등록된 태그가 없습니다.</span>
                 	<% } %>
                     <!-- <button class="tag">#<span>신작</span></button>
                     <button class="tag">#<span>종료예정작</span></button> -->
@@ -180,28 +188,45 @@
             </div>
             <br>
             <div class="tagDiv">
+            	<p class="subPTag">태그 목록</p>
+            	<div id="tagList">
+	            	<% if(tag.isEmpty()) { %>
+	            		<p class="subPTag">등록 가능한 태그가 없습니다.</p>
+	            	<% } else { %>
+	            		<% for(int i = 0; i < tag.size(); i++) { %>
+	            			<span class="tagOneSpan">
+	                			<input type="hidden" name="tagCode" value="<%= tag.get(i).getTagNo() %>">
+	                			<input type="button" class="tag" name="tagName" value="<%= tag.get(i).getTagName() %>">
+	                		</span>
+	            		<% } %>
+	            	<% } %>
+            	</div>
+            </div>
+            <div class="tagDiv">
             	<p class="subPTag">등록할 태그</p>
 	            <div id="addTagDiv">
 	            	
 	            </div>
+	            <p class="subPTag">삭제할 태그</p>
+	            <div id="removeTagDiv">
+	            
+	            </div>
 	            <br>
 	            <input type="button" id="addBtn" value="등록">
+	            <input type="button" id="removeBtn" value="삭제">
 	            <input type="hidden" id="movieCode" value="<%= movie.getM_code() %>">
             </div>
         </div>
     </section>
     <script>
 	    $(function(){
-	    	var countTag = $("#countTag");
-			var movieNotTagCount = $("#movieNotTagCount");
+			var countMovie = $("#countMovie");
 			
 			$.ajax({
-				url : "<%= request.getContextPath() %>/manager/movieTagCount",
+				url : "<%= request.getContextPath() %>/manager/movieCount",
 				type : "post",
-				dataType : "json",
 				success : function(data){
-					countTag.text(data[0]);
-					movieNotTagCount.text(data[1]);
+					countMovie.text(data);
 				},
 				error : function(e) {
 					console.log(e);
@@ -209,8 +234,58 @@
 			});
 			
 			$("#addBtn").click(function(){
-    			if(confirm("해당 태그를 영화에 등록 하시겠습니까?")) {
+    			if(confirm("해당 태그를 등록 하시겠습니까?")) {
 	    			var tagIdInput = $("#addTagDiv").children().children().toArray();
+	    			var tagArr = new Array();
+ 					var movieTagArr = new Array();
+ 					var useFlag = false;
+	    			for(var i in tagIdInput) {
+	    				if(i % 2 == 0) {
+	    					<% for(int k = 0; k < movieTag.size(); k++) { %>
+	    						movieTagArr.push(<%= movieTag.get(k).getTagNo() %>);
+	    					<% } %>
+	    					for(var k in movieTagArr) {
+	    						if(tagIdInput[i].value == movieTagArr[k]) {
+	    							useFlag = true;
+	    							break;
+	    						}
+	    					}
+	    					if(!useFlag){
+			    				tagArr.push(tagIdInput[i].value);
+	    					}
+	    				}
+	    				tagIdInput[i].style.display = "none";
+	    			}
+	    			if(tagArr.length != 0) {
+		    			var tagId = tagArr.join(",");
+		    			var movieCode = $("#movieCode").val();
+		    			
+		    			$.ajax({
+		    				url : "<%= request.getContextPath() %>/manager/addMovieTag",
+		    				type : "post",
+		    				data : {tagId : tagId, movieCode : movieCode},
+		    				success : function(data) {
+		    					if(data != null) {
+		    						alert(data + '개의 태그를 등록했습니다.');
+		    						location.reload(true);
+		    					} else {
+		    						alert('태그 등록에 실패하였습니다.');
+		    					}
+		    				},
+		    				error : function(e) {
+		    					console.log(e);
+		    				}
+		    			});
+	    			} else {
+	    				alert('모두 등록되어 있는 태그 입니다.');
+	    				location.reload();
+	    			}
+    			}
+    		});
+			
+			$("#removeBtn").click(function(){
+    			if(confirm("해당 태그를 삭제 하시겠습니까?")) {
+	    			var tagIdInput = $("#removeTagDiv").children().children().toArray();
 	    			var tagArr = new Array();
 	    			for(var i in tagIdInput) {
 	    				if(i % 2 == 0) {
@@ -223,15 +298,15 @@
 	    			var movieCode = $("#movieCode").val();
 	    			
 	    			$.ajax({
-	    				url : "<%= request.getContextPath() %>/manager/addMovieTag",
+	    				url : "<%= request.getContextPath() %>/manager/removeMovieTag",
 	    				type : "post",
 	    				data : {tagId : tagId, movieCode : movieCode},
 	    				success : function(data) {
 	    					if(data != null) {
-	    						alert(data + '개의 태그를 등록했습니다.');
-	    						location.href="<%= request.getContextPath() %>/manager/movieTag";
+	    						alert(data + '개의 태그를 삭제했습니다.');
+	    						location.reload(true);
 	    					} else {
-	    						alert('태그 등록에 실패하였습니다.');
+	    						alert('태그 삭제에 실패하였습니다.');
 	    					}
 	    				},
 	    				error : function(e) {
@@ -239,21 +314,26 @@
 	    				}
 	    			});
     			}
-    			
     		});
 		});
 	    
 	    var btn = document.getElementsByClassName("tag");
 
+	    var useTagList = document.getElementById("useTagList");
         var tagList = document.getElementById("tagList");
         var addTagDiv = document.getElementById("addTagDiv");
+        var removeTagDiv = document.getElementById("removeTagDiv");
 
         for(var i in btn) {
         	btn[i].onclick = function() {
-                if(this.parentElement.parentElement == tagList) {
-                	addTagDiv.append(this.parentElement);
-                } else {
+                if(this.parentElement.parentElement == useTagList) {
+                	removeTagDiv.append(this.parentElement);
+                } else if(this.parentElement.parentElement == addTagDiv){
                 	tagList.append(this.parentElement);
+                } else if(this.parentElement.parentElement == removeTagDiv){
+                	useTagList.append(this.parentElement);
+                } else {
+                	addTagDiv.append(this.parentElement);
                 }
             }
         }

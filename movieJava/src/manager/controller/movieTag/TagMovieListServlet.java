@@ -1,4 +1,4 @@
-package manager.controller.movie;
+package manager.controller.movieTag;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,19 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 
 import manager.model.service.ManagerService;
 import manager.model.vo.PageInfo;
-import movie.model.vo.MovieVO;
+import movieTag.model.vo.MovieTag;
+import tag.model.vo.Tag;
 
 /**
- * Servlet implementation class MovieListServlet
+ * Servlet implementation class TagMovieListServlet
  */
-@WebServlet("/manager/movie")
-public class MovieListServlet extends HttpServlet {
+@WebServlet("/manager/tagMovieList")
+public class TagMovieListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieListServlet() {
+    public TagMovieListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,15 +33,19 @@ public class MovieListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int tagNo = Integer.parseInt(request.getParameter("tagNo"));
+		
+		ManagerService ms = new ManagerService();
+		
+		Tag tag = ms.selectTag(tagNo);
+		
 		int currentPage = 1;
 		
 		if(request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		ManagerService ms = new ManagerService();
-		
-		int countMovie = ms.countMovie();
+		int countInMovieTag = ms.countInMovieTag(tagNo);
 		
 		int pageLimit = 10;
 		int listLimit = 5;
@@ -48,7 +53,7 @@ public class MovieListServlet extends HttpServlet {
 		int startPage;
 		int endPage;
 		
-		maxPage = (int)Math.ceil((double)countMovie / listLimit);
+		maxPage = (int)Math.ceil((double)countInMovieTag / listLimit);
 		
 		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
 		
@@ -58,12 +63,15 @@ public class MovieListServlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(currentPage, countMovie, pageLimit, listLimit, maxPage, startPage, endPage);
-		ArrayList<MovieVO> list = ms.selectListMovie(pi);
+		PageInfo pi = new PageInfo(currentPage, countInMovieTag, pageLimit, listLimit, maxPage, startPage, endPage);
 		
-		request.setAttribute("pi", pi);
+		ArrayList<MovieTag> list = ms.selectInTagMovieList(pi, tagNo);
+		
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("/views/manager/content1_1_inquiry.jsp").forward(request, response);
+		request.setAttribute("tag", tag);
+		request.setAttribute("pi", pi);
+		
+		request.getRequestDispatcher("/views/manager/detailsView/MovieTagList.jsp").forward(request, response);
 	}
 
 	/**

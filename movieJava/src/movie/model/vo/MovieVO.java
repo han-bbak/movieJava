@@ -1,8 +1,6 @@
-package movieTag.model.vo;
+package movie.model.vo;
 
-public class MovieTag {
-	private int tagNo;
-	private String tagName;
+public class MovieVO {
 	private String m_code;			// 영화코드
 	private String m_title;			// 영화제목
 	private String m_genre;			// 장르
@@ -12,28 +10,15 @@ public class MovieTag {
 	private String m_image;			// 이미지
 	private String m_summary;		// 설명
 	private String m_rating;		// 관람등급
-	private int m_grade;			// 평점
+	private double m_grade;			// 평점
 	private String status;			// 게시여부
 	
-	public MovieTag() {}
-
-	public MovieTag(int tagNo, String m_code) {
-		super();
-		this.tagNo = tagNo;
-		this.m_code = m_code;
-	}
-	
-	public MovieTag(int tagNo, String tagName, String m_code) {
-		super();
-		this.tagNo = tagNo;
-		this.tagName = tagName;
-		this.m_code = m_code;
+	public MovieVO() {
 	}
 
-	public MovieTag(String tagName, String m_code, String m_title, String m_genre, String m_director, String m_date,
-			String m_country, String m_image, String m_summary, String m_rating, int m_grade, String status) {
+	public MovieVO(String m_code, String m_title, String m_genre, String m_director, String m_date, String m_country,
+			String m_image, String m_summary, String m_rating, double m_grade, String status) {
 		super();
-		this.tagName = tagName;
 		this.m_code = m_code;
 		this.m_title = m_title;
 		this.m_genre = m_genre;
@@ -45,33 +30,6 @@ public class MovieTag {
 		this.m_rating = m_rating;
 		this.m_grade = m_grade;
 		this.status = status;
-	}
-
-	public MovieTag(int tagNo, String tagName, String m_code, String m_title, String m_genre, String m_director,
-			String m_date, String m_country, String m_image, String m_summary, String m_rating, int m_grade,
-			String status) {
-		super();
-		this.tagNo = tagNo;
-		this.tagName = tagName;
-		this.m_code = m_code;
-		this.m_title = m_title;
-		this.m_genre = m_genre;
-		this.m_director = m_director;
-		this.m_date = m_date;
-		this.m_country = m_country;
-		this.m_image = m_image;
-		this.m_summary = m_summary;
-		this.m_rating = m_rating;
-		this.m_grade = m_grade;
-		this.status = status;
-	}
-
-	public int getTagNo() {
-		return tagNo;
-	}
-
-	public void setTagNo(int tagNo) {
-		this.tagNo = tagNo;
 	}
 
 	public String getM_code() {
@@ -80,14 +38,6 @@ public class MovieTag {
 
 	public void setM_code(String m_code) {
 		this.m_code = m_code;
-	}
-
-	public String getTagName() {
-		return tagName;
-	}
-
-	public void setTagName(String tagName) {
-		this.tagName = tagName;
 	}
 
 	public String getM_title() {
@@ -154,11 +104,11 @@ public class MovieTag {
 		this.m_rating = m_rating;
 	}
 
-	public int getM_grade() {
+	public double getM_grade() {
 		return m_grade;
 	}
 
-	public void setM_grade(int m_grade) {
+	public void setM_grade(double m_grade) {
 		this.m_grade = m_grade;
 	}
 
@@ -172,10 +122,12 @@ public class MovieTag {
 
 	@Override
 	public String toString() {
-		return "MovieTag [tagNo=" + tagNo + ", tagName=" + tagName + ", m_code=" + m_code + ", m_title=" + m_title
-				+ ", m_genre=" + m_genre + ", m_director=" + m_director + ", m_date=" + m_date + ", m_country="
-				+ m_country + ", m_image=" + m_image + ", m_summary=" + m_summary + ", m_rating=" + m_rating
-				+ ", m_grade=" + m_grade + ", status=" + status + "]";
+		return "MovieVO [m_code=" + m_code + ", m_title=" + m_title + ", m_genre=" + m_genre + ", m_director="
+				+ m_director + ", m_date=" + m_date + ", m_country=" + m_country + ", m_image=" + m_image
+				+ ", m_summary=" + m_summary + ", m_rating=" + m_rating + ", m_grade=" + m_grade + ", status=" + status
+				+ "]";
 	}
+	
+	
 
 }
