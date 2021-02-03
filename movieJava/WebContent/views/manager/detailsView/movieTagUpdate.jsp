@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.*, movieTag.model.vo.MovieTag, tag.model.vo.Tag, movie.MovieVO" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, manager.model.vo.*, movieTag.model.vo.MovieTag, tag.model.vo.Tag, movie.model.vo.MovieVO" %>
 <%
 	ArrayList<MovieTag> movieTag = (ArrayList<MovieTag>)request.getAttribute("movieTag");
 	MovieVO movie = (MovieVO)request.getAttribute("movie");

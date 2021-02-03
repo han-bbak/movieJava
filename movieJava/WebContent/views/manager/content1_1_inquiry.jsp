@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, movie.MovieVO, manager.model.vo.*" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, movie.model.vo.MovieVO, manager.model.vo.*" %>
 <%
 	ArrayList<MovieVO> list = (ArrayList<MovieVO>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
