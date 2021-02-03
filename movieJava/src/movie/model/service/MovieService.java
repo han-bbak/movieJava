@@ -12,7 +12,7 @@ import movie.model.vo.Search;
 
 
 public class MovieService {
-
+	
 	public MovieVO movieSelect(String memId) {
 		Connection conn = getConnection();
 		
@@ -23,6 +23,17 @@ public class MovieService {
 		
 	return movie;
 		
+	}
+	// 영화검색 
+	public ArrayList<MovieVO> selectSearchMovie(Search filter) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<MovieVO> list = new MovieDAO().selectSearchMovie(conn, filter);
+
+		close(conn);
+		
+		return list;
 	}
 
 }
