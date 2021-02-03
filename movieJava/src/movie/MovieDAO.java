@@ -67,7 +67,7 @@ public class MovieDAO {
                 bean.setM_image(rs.getString("m_image"));
                 bean.setM_summary(rs.getString("m_summary"));
                 bean.setM_rating(rs.getString("m_rating"));
-                bean.setM_grade(rs.getInt("m_grade"));
+                bean.setM_grade(rs.getDouble("m_grade"));
                 bean.setStatus(rs.getString("status"));
                 // 벡터에 빈 클래스를 저장
                 list.add(bean);

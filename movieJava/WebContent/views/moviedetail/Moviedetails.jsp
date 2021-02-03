@@ -413,9 +413,9 @@ html.open {
         <br>
         <h2><%= movie.getM_title() %></h2> 
         <h3><%= movie.getM_date() %>/<%= movie.getM_country() %>/<%= movie.getM_genre() %></h3>
-        <h4><%= movie.getM_director() %></h4> 
+        <h4>감독:<%= movie.getM_director() %></h4> 
         <div id="Average">
-            <h3>평균:</h3> </div>
+            <h3>평균★:<%= movie.getM_grade() %></h3> </div>
 
         
     </div>

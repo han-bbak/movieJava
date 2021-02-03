@@ -11,7 +11,7 @@ public class Bean {
 	private String m_image;			// 이미지
 	private String m_summary;		// 설명
 	private String m_rating;		// 관람등급
-	private int m_grade;			// 평점
+	private double m_grade;			// 평점
 	private String status;			// 게시여부
 	public String getM_code() {
 		return m_code;
@@ -67,10 +67,10 @@ public class Bean {
 	public void setM_rating(String m_rating) {
 		this.m_rating = m_rating;
 	}
-	public int getM_grade() {
+	public double getM_grade() {
 		return m_grade;
 	}
-	public void setM_grade(int m_grade) {
+	public void setM_grade(double m_grade) {
 		this.m_grade = m_grade;
 	}
 	public String getStatus() {

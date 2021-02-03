@@ -10,14 +10,14 @@ public class MovieVO {
 	private String m_image;			// 이미지
 	private String m_summary;		// 설명
 	private String m_rating;		// 관람등급
-	private int m_grade;			// 평점
+	private double m_grade;			// 평점
 	private String status;			// 게시여부
 	
 	public MovieVO() {
 	}
 
 	public MovieVO(String m_code, String m_title, String m_genre, String m_director, String m_date, String m_country,
-			String m_image, String m_summary, String m_rating, int m_grade, String status) {
+			String m_image, String m_summary, String m_rating, double m_grade, String status) {
 		super();
 		this.m_code = m_code;
 		this.m_title = m_title;
@@ -104,11 +104,11 @@ public class MovieVO {
 		this.m_rating = m_rating;
 	}
 
-	public int getM_grade() {
+	public double getM_grade() {
 		return m_grade;
 	}
 
-	public void setM_grade(int m_grade) {
+	public void setM_grade(double m_grade) {
 		this.m_grade = m_grade;
 	}
 
