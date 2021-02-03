@@ -164,5 +164,24 @@
 			AND ST_CATEGORY = 1
 		ORDER BY ST_NO
 	</entry>
+	<entry key="paymentGoods">
+		SELECT
+			ST_NO,
+			ST_CONTENT,
+			ST_TITLE,
+			ST_PRICE,
+			ST_QUAN,
+			ST_PATH,
+			ST_ONAME,
+			ST_RNAME,
+			ST_CATEGORY,
+			ST_SELQUAN
+		FROM
+			STORE
+		WHERE
+			ST_NO = ?
+			AND ST_CATEGORY = 1
+		ORDER BY ST_NO
+	</entry>
 	
 </properties>

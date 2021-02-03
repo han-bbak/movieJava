@@ -105,5 +105,15 @@ public class StoreService {
 		return s;
 	}
 
+	public Store paymentGoods(int storeNo, int selQuan, String total) {
+		Connection conn = getConnection();
+		
+		Store s = new StoreDao().paymentGoods(conn, storeNo, selQuan, total);
+		
+		close(conn);
+		
+		return s;
+	}
+
 
 }
