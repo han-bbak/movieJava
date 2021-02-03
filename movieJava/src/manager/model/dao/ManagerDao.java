@@ -1407,4 +1407,161 @@ public class ManagerDao {
 		return result;
 	}
 
+	// 태그 1개 선택
+	public Tag selectTag(Connection conn, int tagNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTag");
+		Tag tag = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, tagNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				tag = new Tag(rset.getInt(1),
+						      rset.getString(2),
+						      rset.getDate(3),
+						      rset.getString(4));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return tag;
+	}
+
+	// tagNo 태그가 달린 영화 목록 리스트
+	public ArrayList<MovieTag> selectInTagMovieList(Connection conn, PageInfo pi, int tagNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MovieTag> list = new ArrayList<>();
+		String sql = prop.getProperty("selectInTagMovieList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, tagNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new MovieTag(rset.getString(2),
+									  rset.getString(3),
+									  rset.getString(4),
+									  rset.getString(5),
+									  rset.getString(6),
+									  rset.getString(7),
+									  rset.getString(8),
+									  rset.getString(9),
+									  rset.getString(10),
+									  rset.getString(11),
+									  rset.getInt(12),
+									  rset.getString(13)));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	// tagNo 태그가 달린 영화 갯수
+	public int countInMovieTag(Connection conn, int tagNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int countInMovieTag = 0;
+		String sql = prop.getProperty("countInMovieTag");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, tagNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				countInMovieTag = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return countInMovieTag;
+	}
+
+	// m_code와 tagNo을 가지는 영화 정보
+	public ArrayList<MovieTag> selectMovieTag(Connection conn, String m_code) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MovieTag> movieTag = new ArrayList<>();
+		String sql = prop.getProperty("selectMovieTag");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m_code);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				movieTag.add(new MovieTag(rset.getInt(1),
+									      rset.getString(2),
+									      rset.getString(3)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return movieTag;
+	}
+
+	// 영화에 달린 태그 삭제
+	public int deleteMovieTag(Connection conn, String tagId, String movieCode) {
+		String[] deleteTagIdArr = tagId.split(",");
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteMovieTag");
+		
+		try {
+			for(int i = 0; i < deleteTagIdArr.length; i++) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, Integer.parseInt(deleteTagIdArr[i]));
+				pstmt.setString(2, movieCode);
+				
+				result += pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+
+	}
+
 }
