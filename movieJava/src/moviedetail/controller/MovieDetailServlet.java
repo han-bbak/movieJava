@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import moviedetail.model.service.MovieService;
 
 /**

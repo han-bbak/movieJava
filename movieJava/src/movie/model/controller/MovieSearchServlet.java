@@ -1,27 +1,31 @@
-package moviedetail.controller;
+package movie.model.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import member.model.vo.Member;
-import moviedetail.model.service.MovieService;
+import movie.model.service.MovieSearchService;
+import movie.model.service.MovieService;
+import movie.model.vo.MovieVO;
+import movie.model.vo.Search;
 
 /**
- * Servlet implementation class Starmain
+ * Servlet implementation class MovieSearchServlet
  */
-@WebServlet("/Star")
-public class Starmain extends HttpServlet {
+@WebServlet("/movie/search")
+public class MovieSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Starmain() {
+    public MovieSearchServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,20 +33,20 @@ public class Starmain extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	@SuppressWarnings("unused")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		   int stargrade =Integer.parseInt(request.getParameter("stargrade"));
-	  	   //회원번호 영화코드 별점이 필요 테이블에 인서트하기위해   
-		  String Movievo = request.getParameter("MovieVo"); 
-//		  int memberno =  Integer.parseInt( request.getParameter("memberno"));
-		  HttpSession session = request.getSession();
-		  Member member = (Member)session.getAttribute("loginUser");
-		  int memberno=member.getMemNo();
-		   int result=new MovieService().insertStarGrade(stargrade,Movievo,memberno);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	      
-	
+		String search = request.getParameter("search");
+		String genre = request.getParameter("genre");
+		String sort = request.getParameter("sort");
+		
+		Search filter = new Search(search, genre, sort);
+		ArrayList<MovieVO> list = new MovieSearchService().selectSearchMovie(filter);
+		System.out.println(list);
+		request.setAttribute("list", list);
+		RequestDispatcher view = request.getRequestDispatcher("/views/movie/search/result.jsp");
+		view.forward(request, response);
 	}
+
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

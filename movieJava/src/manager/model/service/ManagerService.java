@@ -10,7 +10,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import movieTag.model.vo.MovieTag;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;

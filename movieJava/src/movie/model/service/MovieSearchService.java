@@ -10,19 +10,17 @@ import movie.model.dao.MovieDAO;
 import movie.model.vo.MovieVO;
 import movie.model.vo.Search;
 
+public class MovieSearchService {
 
-public class MovieService {
-
-	public MovieVO movieSelect(String memId) {
+	public ArrayList<MovieVO> selectSearchMovie(Search filter) {
+		
 		Connection conn = getConnection();
 		
-		MovieVO movie = new MovieDAO().selectMovie(conn, memId);
-		
+		ArrayList<MovieVO> list = new MovieDAO().selectSearchMovie(conn, filter);
+
 		close(conn);
 		
-		
-	return movie;
-		
+		return list;
 	}
 
 }

@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import static common.JDBCTemplate.close;
 import board.model.dao.BoardDao;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 
 public class MovieDao {
 	private Properties prop = new Properties();
