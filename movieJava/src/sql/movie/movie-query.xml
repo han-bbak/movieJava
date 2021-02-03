@@ -18,6 +18,25 @@
 		       movie
 		 where
 		       m_code = ?
-		   and status = 'Y'
+		
 	</entry>
+	<entry key="insertStarGrade">
+       INSERT 
+       INTO MOVIESTAR 
+       (STAR_NO
+       ,MEMBER_CODE
+       ,MOVIE_CODE
+       ,STAR_GRADE
+       )
+      VALUES 
+        (SEQ_STAR_NO.NEXTVAL
+        ,? 
+        ,? 
+        ,?
+        )
+
+	</entry> 
+
+	
+	
 </properties>

@@ -17,5 +17,6 @@ public class oracletest {
       } catch (SQLException e) {
          System.out.println("오라클 연결 실패");
       }
+      
    }
 }
