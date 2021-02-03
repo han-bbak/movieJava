@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member, payment.model.vo.Payment" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, payment.model.vo.Payment, orderList.model.vo.*, store.model.vo.*"  %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
@@ -7,10 +7,29 @@
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	//Payment pay = (Payment)session.getAttribute("loginUser");
 	Payment pay = (Payment)request.getAttribute("payment");
-	String paycard = "";
+	
+	OrderList orderList = (OrderList)request.getAttribute("orderList");
+	
+	Store store = (Store)request.getAttribute("store");
+	int paycardNo = 0;
 	if(pay != null) {
-		paycard = pay.getPayCard();
+		paycardNo = pay.getPayCardNo();
 	}
+	
+	int quantity = 0;
+	if(orderList != null){
+		quantity = orderList.getOrdQuantity();
+	}
+	String pic = "";
+	String storeTitle = "";
+	String price = "";
+	if(store != null){
+		pic = store.getStoreContent();
+		storeTitle = store.getStoreTitle();
+		price = store.getStorePrice();
+	}
+	
+	
 	
 %>
 <!DOCTYPE html>
@@ -20,7 +39,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
@@ -555,11 +574,11 @@ h3 {
                                         
                                         <tbody>
                                             <tr>
-                                               <th>사진</th>
-                                                <th>상품명</th>
-                                                <th>수량</th>
+                                               <th><%= pic %></th>
+                                                <th><%= storeTitle %></th>
+                                                <th><%= quantity %></th>
                                                 <th>적립</th>
-                                                 <th>금액</th>
+                                                 <th><%=price %></th>
                                             </tr>
                                             
                                            
@@ -594,7 +613,7 @@ h3 {
                                                
                                                
                                                
-                                                <th><%= paycard %></th>
+                                                <th><%= paycardNo %></th>
                                                 
                                             </tr>
                                             

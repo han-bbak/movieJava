@@ -15,6 +15,20 @@ public class Store {
 	public Store() {}
 
 	public Store(int storeNo, String storeContent, String storeTitle, String storePrice, int storeQuantity,
+			String storePath, String originName, String rename, int stCategory) {
+		super();
+		this.storeNo = storeNo;
+		this.storeContent = storeContent;
+		this.storeTitle = storeTitle;
+		this.storePrice = storePrice;
+		this.storeQuantity = storeQuantity;
+		this.storePath = storePath;
+		this.originName = originName;
+		this.rename = rename;
+		this.stCategory = stCategory;
+	}
+
+	public Store(int storeNo, String storeContent, String storeTitle, String storePrice, int storeQuantity,
 			String storePath, String originName, String rename, int stCategory, int selQuan) {
 		super();
 		this.storeNo = storeNo;

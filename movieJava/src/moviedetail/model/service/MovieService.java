@@ -2,7 +2,7 @@ package moviedetail.model.service;
 
 import java.sql.Connection;
 import static common.JDBCTemplate.*;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import moviedetail.model.dao.MovieDao;
 
 public class MovieService {
@@ -16,5 +16,20 @@ public class MovieService {
 		
 		return movie;
 	}
+      //  Stargrade에 불러올 테이블들을 (int stargrade, String movievo, int memberno)가져온다 
+	public int insertStarGrade(int stargrade, String movievo, int memberno) {
+		Connection conn= getConnection(); 
+		 int stargraded= new MovieDao().insertStarGrade(conn,stargrade,movievo,memberno);
+               if(stargraded>0) {
+            	  commit(conn);
+               }else {
+            	   rollback(conn);
+               }
+		 
+		 close(conn);
+		
+		
+		return stargraded;
+	}
 
-}
+}     

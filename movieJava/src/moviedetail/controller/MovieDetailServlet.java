@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import moviedetail.model.service.MovieService;
 
 /**
@@ -31,8 +31,8 @@ public class MovieDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String mCode = request.getParameter("mCode");
-		
 		MovieVO movie = new MovieService().selectMovie(mCode);
+		System.out.println(movie);
 		
 		if(movie != null) {
 			request.setAttribute("movie", movie);

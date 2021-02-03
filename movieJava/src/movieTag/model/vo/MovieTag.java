@@ -23,6 +23,13 @@ public class MovieTag {
 		this.m_code = m_code;
 	}
 	
+	public MovieTag(int tagNo, String tagName, String m_code) {
+		super();
+		this.tagNo = tagNo;
+		this.tagName = tagName;
+		this.m_code = m_code;
+	}
+
 	public MovieTag(String tagName, String m_code, String m_title, String m_genre, String m_director, String m_date,
 			String m_country, String m_image, String m_summary, String m_rating, int m_grade, String status) {
 		super();

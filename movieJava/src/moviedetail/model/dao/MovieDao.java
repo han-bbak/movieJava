@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import static common.JDBCTemplate.close;
 import board.model.dao.BoardDao;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 
 public class MovieDao {
 	private Properties prop = new Properties();
@@ -68,6 +68,29 @@ STATUS	VARCHAR2(20 BYTE)*/
 			close(pstmt);
 		}
 		return movie;
+	}
+
+	public int insertStarGrade(Connection conn, int stargrade, String movievo, int memberno) {
+		 int result=0; 
+		 PreparedStatement pstmt = null; 
+		 String sql= prop.getProperty("insertStarGrade");
+		 
+		 try {
+			 pstmt=conn.prepareStatement(sql);
+			 
+			 pstmt.setInt(1,memberno);
+			 pstmt.setString(2,movievo);
+			 pstmt.setInt(3,stargrade);
+			 result=pstmt.executeUpdate(); 
+		 }catch 
+		 (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			return result;
+		 
+		
 	}
 
 }

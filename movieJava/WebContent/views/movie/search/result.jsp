@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="member.model.vo.Member, java.util.ArrayList, java.net.URLEncoder"%>
+	import="member.model.vo.Member, java.util.ArrayList, java.net.URLEncoder, movie.model.dao.MovieDAO, movie.model.vo.MovieVO"%>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
 	Member loginUser = (Member)session.getAttribute("loginUser");
-%>
+
+	ArrayList<MovieVO> list = (ArrayList<MovieVO>)request.getAttribute("list");
+	%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -440,7 +443,7 @@ h3 {
 			<div class="header" id="header2">
 
 				<!----- 영화 검색 ----->
-				<form id="search-form" action="/movieJava/index.jsp" method="get">
+				<form id="search-form" action="<%=request.getContextPath()%>/movie/search" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -452,7 +455,8 @@ h3 {
 					</section>
 					<section id="search-text-area">
 						<input type="text" id="search-input" name="search"
-							placeholder="보고싶은 영화를 검색해보세요.">
+							placeholder="보고싶은 영화를 검색해보세요."> 
+							<%-- <%=request.getParameter("search")%> --%>
 					</section>
 				</form>
 				<!-- ------------- -->
@@ -596,26 +600,27 @@ option {
 #wwrapper{
     width: 1200px;
 } */
-.posts div {
-	font: 16px/250px Arial;
+.posts tr>td {
+	/* font: 16px/250px Arial; */
 	width: 245px;
 	height: 250px;
 	float: left;
 	margin: 10px;
 	display: block;
 	text-align: center;
-	background: black;
+	/* background: black; */
 	color: #fff;
 }
 </style>
 </head>
 <body>
 	<script>
-    $(function() {			
+
+  <%--   $(function() {			
 		$('#search-input').add('#filter').add('#filter2').on('keyup change', function() {
-			$('.item').hide();
+			$('.posts').hide(500);
 		
-			var search = $('#search-input').val();
+			var search = <%=request.getParameter("search") %>;
 			/*  console.log('#search-input.val()'); */
 			var select = $('#filter').val();
 		    var select2 = $('#filter2').val();
@@ -626,22 +631,26 @@ option {
 			search = search == "" ? "item" : search;
 				$('.item').each(function() {
 				var $this = $(this)
-				if ($this.is('[class*=' + search + ']') && $this.is('[class*=' + select + ']') && $this.is('[class*=' + select2 + ']')) {
+				if ($this.is('[class*=' + <%=%> + ']') && $this.is('[class*=' + select + ']') && $this.is('[class*=' + select2 + ']') {
 					$this.show(500);
 				}}
 				)}
-				)});
+				)}); --%>
 
 </script>
 </body>
 <div id="content">
 	<div class="content" id="content1">
 		<h1 class="sub">
-			<br>"
-			<!--@코드@-->
-			" 영화 검색 결과입니다.
+			<br>"<%=request.getParameter("search")%>" 영화 검색 결과입니다.
 		</h1>
+		
+		
+		<body>
+		</body>
 		<div class="toggles">
+		<form id="filtering" action="<%=request.getContextPath()%>/movie/search">
+		<input type="hidden" name="search" value= "<%=request.getParameter("search")%>">
 			<select id="filter" name="genre">
 				<option value="all">장르선택</option>
 				<option value="드라마">드라마</option>
@@ -659,38 +668,60 @@ option {
 				<option value="애니메이션">애니메이션</option>
 				<option value="모험">모험</option>
 				<option value="뮤지컬">뮤지컬</option>
-			</select> <select id="filter2">
-				<option value="all">정렬</option>
-				<option value="one" disabled>추천순</option>
-				<option value="two" disabled>인기순</option>
-				<option value="three" disabled>최신개봉순</option>
 			</select>
+			 <select id="filter2" name="sort">
+				<option value="all">정렬</option>
+				<option value="평점">평점순</option>
+				<option value="최신">최신개봉순</option>
+			</select>
+			</form>
 		</div>
-
+		<script>
+		$(function(){
+			$("#filter").change(function(){
+				$("#filtering").submit();
+			});
+			$("#filter2").change(function(){
+				$("#filtering").submit();
+			})
+		})
+		
+		</script>
 
 		<div class="posts">
-			<br> <br>
-			<div class="드라마 item">드라마영화</div>
-			<div class="액션 item">액션영화</div>
-			<div class="멜로 item">멜로영화</div>
-			<div class="로맨스 item">로맨스영화</div>
-			<div class="코미디 item">코미디영화</div>
-			<div class="스릴러 item">스릴러영화</div>
-			<div class="범죄 item">범죄영화</div>
-			<div class="전쟁 item">전쟁영화</div>
-			<div class="판타지 item">판타지영화</div>
-			<div class="어드벤처 item">어드벤처영화</div>
-			<div class="미스터리 item">미스터리영화</div>
-			<div class="SF item">SF영화</div>
-			<div class="애니메이션 item">애니메이션영화</div>
-			<div class="모험 item">모험영화</div>
-			<div class="뮤지컬 item">뮤지컬영화</div>
+			<table width="1200">
+				<!--전체 영화  -->
+				<%
+					//4개씩 보여주고 다시 실행할 수 있도록 하는 변수 선언
+					int j = 0;
+					for (int i = 0; i < list.size(); i++) {
+						MovieVO Movie = list.get(i);
+						//4번마다 0이 돌아온다는 뜻. 즉 4번에 한번 실행하는 구문
+						if (j % 4 == 0) {}
+				%>
+					<td width="333" align="center">
+						<a
+						href="home.jsp?Moviedetails.jsp?no=<%= Movie.getM_code() %>"> <img
+							alt="" src="<%= Movie.getM_image()%>" width="150" height="200">
+						</a>
+							<p>
+							<font size="3" color="white"><b><%=Movie.getM_title()%></b>
+							</font>
+					</td>
+
+					<%
+						j = j + 1; //j값을 증가하여 하나의 행에 총 4개의 영화 불러오기
+						}
+					%>
+				
+			</table>
+
 		</div>
 	</div>
 </div>
 </div>
 
-
+</div>
 
 <div id="footer">
 	<p>

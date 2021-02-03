@@ -1,11 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="movie.MovieVO" %>
-<%
+    pageEncoding="UTF-8" import="movie.model.vo.MovieVO,member.model.vo.Member" %>
+<% 
 	MovieVO movie = (MovieVO)request.getAttribute("movie");
+// 별점을 등록할떄 어떤회원이 등록하는지 알아야하기때문에 로그인정보를 가져온다 
+    Member loginUser = (Member)session.getAttribute("loginUser");
 %>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title>moviedetail</title>
 <style>
@@ -280,14 +284,15 @@ html.open {
     margin-left:5px;
     color:#ccc;
     text-decoration:none;
+    cursor : pointer;
 }
 .star_rating a:first-child {margin-left:0;}
 .star_rating a.on {color:yellow;}
 /*==============   상세페이지 전체=======================*/
 #Information{
-    
 
 }
+
 #Average{
    
 
@@ -324,7 +329,6 @@ html.open {
 }
    #comments{ margin-top: 10px;
     } 
-
 
   
    </style>
@@ -398,15 +402,18 @@ html.open {
         <!-- 이미지-->
         <div class="moviemain">
             <div id="movieimg" class="inline">
-               <!-- <img class="m_image" style width="400px" height="500px"> --> <img class="m_image" style width="400px" height="500px">
+           <img src="<%= movie.getM_image() %>"
+            style="width:400px; 
+            height:500px;">
+               
             </div>
 
  </div>   <div id="summary" class="inline">
     <div id="Information">
         <br>
-        <h2><%= movie.getM_TITLE() %></h2> 
-        <h3><%= movie.getM_DATE() %>/<%= movie.getM_COUNTRY() %>/<%= movie.getM_GENRE() %></h3>
-        <h4><%= movie.getM_DIRECTOR() %></h4> 
+        <h2><%= movie.getM_title() %></h2> 
+        <h3><%= movie.getM_date() %>/<%= movie.getM_country() %>/<%= movie.getM_genre() %></h3>
+        <h4><%= movie.getM_director() %></h4> 
         <div id="Average">
             <h3>평균:</h3> </div>
 
@@ -416,20 +423,38 @@ html.open {
     <div id=" story">
     <h2>기본정보</h2> 
     <br>
-   <%= movie.getM_SUMMARY() %>
-</div>
-           <!--  별점 -->
-           <div class="star_rating" >
-            <a href="#" class="on">★</a>
-            <a href="#" class="on">★</a>
-            <a href="#" class="on">★</a>
-            <a href="#">★</a>
-            <a href="#">★</a>
-        </div>
+   <%= movie.getM_summary() %>
+</div>   
+           <!--  별점      
+             로그인이 안되면  로그인페이지로  (if문)
+       그러면 로그인이 된지 안된지를 어떻게 확인하지?  
+      만약에 로그인상태에서 별점을 등록하면  강제 f5 로 평균 넘어오기 
+      db에서 입력하고 그값을 다시 불러올 쿼리문도 필요  
+      별점html 라디오버튼으로 (여기서 submit 전송이필요한가?) 한다음에 클릭버튼을 ★이걸로 대체한다 
+      이벤트 효과로 별점등록 완료 창까지 뜨게 만든다 
+      마우스로 클릭하면 css에서는 검은색별에서 클릭한수만큼 노란색으로 변경 
+   html로 라디오버튼을 만든다음 라디오 버튼클릭버튼을 ★로 바꾼다음  div를 하나로 묶어서
+      form태그안에 input type = radio 로 만들어서 id= star 
+      id=star1 value=1    
+                         
+              --> 
+             <div id="stargrade">               
+           <div class="star_rating">
+            <a class="on">★</a>
+            <a class="on">★</a>
+            <a class="on">★</a>
+            <a>★</a>
+            <a>★</a>
+            
+            
+ 
+        </div> 
+         <button id="starto">별점넣기</button>
+         </div>  
 
         <!--    버튼-->      
         <div class="Attention">
-            <smbmit class="submit">관심목록</button>
+            <button class="button">관심목록</button>
         </div>
     <details id="detail">
         <summary><h3>더보기</h3></summary>
@@ -550,9 +575,41 @@ html.open {
             $(this).addClass("on").prevAll("a").addClass("on");
             return false;
         });
-
-
+          
+                //페이지가 열렸을때 해당코드를 실행할수있게  $(function(){
+                 // 서블렛을 생성하고 url 만들기 
+                  $(function(){
+                	  $("#starto").click(function(){
+                		  var star= document.getElementsByClassName("on");
+                          // stargrade 에 별점 길이가들어간다 
+                   		var stargrade= star.length;
+                	  
+                  <% if(loginUser != null) {%>
+                	 $.ajax({
+                		  url: "<%= request.getContextPath()%>/Star",
+                		  data : {stargrade:stargrade,
+                			    MovieVo:<%=movie.getM_code()%>
+                			  },
+                		  type :"post", 
+                		  success: function(result){
+                			  var Average = 
+                				  // 
+                				  "<h3>평균: </h3>" +result; 
+                			  $("#Average").html(Average);
+                		  },
+                		  error : function(e){
+                			  console.log(e);
+                		  }
+                			  
+                	  })
+                <% } else { %>
+                alert("로그인후 이용가능한 서비스입니다.");
+                <% } %>
+                	  })
+                  }) 
+           
     </script>
+
     <!-- 댓글 150자이상 금지 -->
 <script>
     $(document).ready(function(){

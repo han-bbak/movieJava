@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.ArrayList, movie.MovieVO, manager.model.vo.*" %>
+    pageEncoding="UTF-8" import="java.util.ArrayList, movie.model.vo.MovieVO, manager.model.vo.*" %>
 <%
 	ArrayList<MovieVO> list = (ArrayList<MovieVO>)request.getAttribute("list");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
@@ -146,8 +146,8 @@
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="content1_1_inquiry.jsp">전체 목록 조회</a></li>
-                    <li><a href="content1_2_tagInquiry.jsp">태그별 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movie">전체 목록 조회</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/movieTagList">태그별 목록 조회</a></li>
                     <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
                 </ul>
 
@@ -161,7 +161,7 @@
             <hr>
             <div class="searchDiv">
             	<form method="get" action="<%= request.getContextPath() %>/manager/movieSearch">
-                    <input type="text" name="search" placeholder="검색할  상품명 키워드 입력" size="30" style="height: 30px;" value="<%= search %>">
+                    <input type="text" name="search" placeholder="검색할 영화명 입력" size="30" style="height: 30px;" value="<%= search %>">
                     <div class="searchImg">
                     	<button type="submit">
                         	<img src="<%= request.getContextPath() %>/images/search.png" style="width:33px; height:33px;">
@@ -251,6 +251,17 @@
 				error : function(e) {
 					console.log(e);
 				}
+			});
+			
+			$(".tableDiv table td").mouseenter(function(){
+				$(this).parent().css({"background":"#FFDD71", "cursor":"pointer", "color":"rgb(64,64,64)"});
+			}).mouseout(function(){
+				$(".tableDiv tr:nth-child(odd)").css({"background":"lightgray", "color":"rgb(64,64,64)"});
+				$(".tableDiv tr:nth-child(even)").css({"background":"none" , "color":"white"});
+				$(".tableDiv tr:first-child").css({"background":"#fff" , "color":"black"});
+			}).click(function() {
+				var num = $(this).parent().children().eq(0).text();
+				location.href="<%= request.getContextPath() %>/manager/movieTagUpdate?m_code=" + num;
 			});
 		});
     </script>

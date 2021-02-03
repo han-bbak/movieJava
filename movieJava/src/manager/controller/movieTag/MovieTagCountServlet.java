@@ -32,12 +32,12 @@ public class MovieTagCountServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ManagerService ms = new ManagerService();
-		int countMovie = ms.countMovie();
+		int countTag = ms.tagCount();
 		int countNotMovieTag = ms.countNotMovieTag();
 		
 		JSONArray jArr = new JSONArray();
 		
-		jArr.add(countMovie);
+		jArr.add(countTag);
 		jArr.add(countNotMovieTag);
 		
 		response.setContentType("application/json; charset=UTF-8"); 

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import manager.model.service.ManagerService;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 
 /**
  * Servlet implementation class MovieSearchListServlet

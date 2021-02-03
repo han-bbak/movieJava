@@ -10,7 +10,7 @@ import manager.model.dao.ManagerDao;
 import manager.model.vo.PageInfo;
 import manager.model.vo.Search;
 import member.model.vo.Member;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import movieTag.model.vo.MovieTag;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
@@ -202,10 +202,10 @@ public class ManagerService {
 	}
 
 	// 태그 삭제
-	public int removeTag(String tagName) {
+	public int removeTag(String tagId) {
 		Connection conn = getConnection();
 		
-		int result = new ManagerDao().removeTag(conn, tagName);
+		int result = new ManagerDao().removeTag(conn, tagId);
 		
 		if(result > 0) {
 			commit(conn);
@@ -527,6 +527,95 @@ public class ManagerService {
 		close(conn);
 		
 		return countNotMovieTag;
+	}
+
+	// 영화 태그 등록을 위한 영화 정보
+	public MovieVO selectMovie(String m_code) {
+		Connection conn = getConnection();
+		
+		MovieVO movie = new ManagerDao().selectMovie(conn, m_code);
+		
+		close(conn);
+		
+		return movie;
+	}
+
+	// 영화에 태그 달기
+	public int addMovieTag(String tagId, String movieCode) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().addMovieTag(conn, tagId, movieCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+
+	// 태그 1개 선택
+	public Tag selectTag(int tagNo) {
+		Connection conn = getConnection();
+		
+		Tag tag = new ManagerDao().selectTag(conn, tagNo);
+		
+		close(conn);
+		
+		return tag;
+	}
+
+	// tagNo 태그가 달린 영화 목록 리스트
+	public ArrayList<MovieTag> selectInTagMovieList(PageInfo pi, int tagNo) {
+		Connection conn = getConnection();
+		
+		ArrayList<MovieTag> list = new ManagerDao().selectInTagMovieList(conn, pi, tagNo);
+		
+		close(conn);
+		
+		return list;
+	}
+
+	// tagNo 태그가 달린 영화 갯수
+	public int countInMovieTag(int tagNo) {
+		Connection conn = getConnection();
+		
+		int countInMovieTag = new ManagerDao().countInMovieTag(conn, tagNo);
+		
+		close(conn);
+		
+		return countInMovieTag;
+	}
+
+	// m_code가 가지고 있는 태그 목록
+	public ArrayList<MovieTag> selectMovieTag(String m_code) {
+		Connection conn = getConnection();
+		
+		ArrayList<MovieTag> movieTag = new ManagerDao().selectMovieTag(conn, m_code);
+		
+		close(conn);
+		
+		return movieTag;
+	}
+
+	// 영화에 등록 된 태그 삭제
+	public int deleteMovieTag(String tagId, String movieCode) {
+		Connection conn = getConnection();
+		
+		int result = new ManagerDao().deleteMovieTag(conn, tagId, movieCode);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 
 }

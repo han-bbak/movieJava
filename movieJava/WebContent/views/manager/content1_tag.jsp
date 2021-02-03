@@ -106,16 +106,15 @@
     <section class="contentSection">
         <div class="contentMenuWrap">
             <div class="subTitle">
-                <p class="subText" id="p-sub1">등록 영화 관리</p>
-                <p class="subText" id="p-sub2">등록 된 영화 수</p>
+                <p class="subText" id="p-sub1">태그 관리</p>
+                <p class="subText" id="p-sub2">사용중인 태그 수</p>
                 <p class="subText" id="p-sub3">
-                    <span id="countMovie">000</span>건
+                    <span id="countTag">000</span>건
                 </p>
                 <hr>
                 <ul>
-                    <li><a href="content1_1_inquiry.jsp">전체 목록 조회</a></li>
-                    <li><a href="content1_2_tagInquiry.jsp">태그별 목록 조회</a></li>
-                    <!-- <li><a href="content1_3_movieInquiry.jsp">영화 검색</a></li> -->
+                    <li><a href="<%= request.getContextPath() %>/manager/movieTag">태그 미설정 영화</a></li>
+                    <li><a href="<%= request.getContextPath() %>/manager/tagList">태그 추가/삭제</a></li>
                 </ul>
 
                 <!-- <span class="subText" id="span-sub1">등록 영화 관리</span> -->
@@ -184,7 +183,7 @@
     </section>
     <script>
 	    $(function(){
-			var countMovie = $("#countMovie");
+			var countTag = $("#countTag");
 			var movieNotTagCount = $("#movieNotTagCount");
 			
 			$.ajax({
@@ -192,12 +191,23 @@
 				type : "post",
 				dataType : "json",
 				success : function(data){
-					countMovie.text(data[0]);
+					countTag.text(data[0]);
 					movieNotTagCount.text(data[1]);
 				},
 				error : function(e) {
 					console.log(e);
 				}
+			});
+			
+			$(".tableDiv table td").mouseenter(function(){
+				$(this).parent().css({"background":"#FFDD71", "cursor":"pointer", "color":"rgb(64,64,64)"});
+			}).mouseout(function(){
+				$(".tableDiv tr:nth-child(odd)").css({"background":"lightgray", "color":"rgb(64,64,64)"});
+				$(".tableDiv tr:nth-child(even)").css({"background":"none" , "color":"white"});
+				$(".tableDiv tr:first-child").css({"background":"#fff" , "color":"black"});
+			}).click(function() {
+				var num = $(this).parent().children().eq(0).text();
+				location.href="<%= request.getContextPath() %>/manager/tagRegister?m_code=" + num;
 			});
 		});
     </script>

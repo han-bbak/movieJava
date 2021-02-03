@@ -30,9 +30,9 @@ public class TagRemoveServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tagName = request.getParameter("tagName");
+		String tagId = request.getParameter("tagId");
 		
-		int result = new ManagerService().removeTag(tagName);
+		int result = new ManagerService().removeTag(tagId);
 		
 		PrintWriter out = response.getWriter();
 		
