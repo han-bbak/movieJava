@@ -437,7 +437,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo"
+				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo"
 					src="/movieJava/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
