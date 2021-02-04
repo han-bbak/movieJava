@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member, movie.*, interest.model.vo.*" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, movie.model.vo.*, interest.model.vo.*" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");

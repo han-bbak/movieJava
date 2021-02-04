@@ -621,7 +621,7 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a id="netflix">공유 계정</a><br>
 			<!--  <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>-->
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
+            <a href="<%= request.getContextPath() %>/views/board/qa.jsp">Q&A</a>
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
         <div id="content">
