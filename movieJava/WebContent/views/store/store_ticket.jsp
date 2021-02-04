@@ -338,6 +338,14 @@ ticket.addEventListener('click', function(){
 
 </script>
 <script>
+		$(function(){
+			$(".store_list").click(function(){
+				var storeNo = $(this).children().eq(0).val();
+				location.href='<%= request.getContextPath() %>/ticket/detail?storeNo='+ storeNo;
+			});
+		});
+	</script>
+<script>
     $(".menuBtn").click(function () { 
         $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 

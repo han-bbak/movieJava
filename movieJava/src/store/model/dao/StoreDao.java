@@ -399,4 +399,40 @@ public class StoreDao {
 		return store;
 	}
 
+	public Store selectTicket(Connection conn, int storeNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Store s = null;
+		String sql = prop.getProperty("selectTicket");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, storeNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				s = new Store(rset.getInt(1),
+								rset.getString(2),
+								rset.getString(3),
+								rset.getString(4),
+								rset.getInt(5),
+								rset.getString(6),
+								rset.getString(7),
+								rset.getString(8),
+								rset.getInt(9),
+								rset.getInt(10));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(conn);
+		}
+		
+		return s;
+	}
+
 }
