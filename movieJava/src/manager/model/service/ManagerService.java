@@ -12,6 +12,7 @@ import manager.model.vo.Search;
 import member.model.vo.Member;
 import movie.model.vo.MovieVO;
 import movieTag.model.vo.MovieTag;
+import payment.model.vo.Payment;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
@@ -616,6 +617,61 @@ public class ManagerService {
 		close(conn);
 		
 		return result;
+	}
+
+	// 결제 건 수
+	public int countPayment() {
+		Connection conn = getConnection();
+		
+		int countPayment = new ManagerDao().countPayment(conn);
+		
+		close(conn);
+		
+		return countPayment;
+	}
+
+	// 결제 총 금액
+	public int countSumPayment() {
+		Connection conn = getConnection();
+		
+		int sumPayment = new ManagerDao().countSumPayment(conn);
+		
+		close(conn);
+		
+		return sumPayment;
+	}
+
+	// 기간별 검색 
+	public int countSearchPayment(Search s) {
+		Connection conn = getConnection();
+		
+		int countSearchPayment = new ManagerDao().countSearchPayment(conn, s);
+		
+		close(conn);
+		
+		return countSearchPayment;
+	}
+
+	// 기간별 조회 검색 갯수
+	public int countPeriodSearchPayment(Search s) {
+		Connection conn = getConnection();
+		
+		int countPeriodSearchPayment = new ManagerDao().countPeriodSearchPayment(conn, s);
+		
+		close(conn);
+		
+		return countPeriodSearchPayment;
+	}
+
+	// 기간별 조회 결제내역 목록 리스트
+	public ArrayList<Payment> selectSearchPayment(PageInfo pi, Search s) {
+		Connection conn = getConnection();
+		
+		ArrayList<Payment> list = new ManagerDao().selectSearchPayment(conn, pi, s);
+		
+		close(conn);
+		
+		return list;
 	}
 
 }
