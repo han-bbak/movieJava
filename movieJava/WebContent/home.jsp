@@ -455,7 +455,7 @@ h3 {
 			<div class="header" id="header2">
 			
 			<!----- 영화 검색 ----->
-				<form id="search-form" action="./views/movie/search/result.jsp"" method="get">
+				<form id="search-form" action="<%= request.getContextPath() %>/movie/search" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

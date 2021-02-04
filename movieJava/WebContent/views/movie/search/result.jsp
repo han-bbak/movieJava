@@ -541,7 +541,7 @@ h3 {
 <br>
 <br>
 <br>
-<a href="<%= request.getContextPath() %>home.jsp">HOME</a>
+<a href="<%= request.getContextPath() %>/home.jsp">HOME</a>
 <br>
 <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
 <br>
