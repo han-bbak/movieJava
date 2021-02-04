@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import manager.model.service.ManagerService;
-import movie.MovieVO;
+import movie.model.vo.MovieVO;
 import movieTag.model.vo.MovieTag;
 import tag.model.vo.Tag;
 

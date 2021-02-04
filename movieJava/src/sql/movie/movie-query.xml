@@ -37,6 +37,12 @@
 
 	</entry> 
     
-	
+	<entry key="updateMoiveGrade">
+		update movie
+set m_grade = (select avg(star_grade)
+               from moviestar
+               where movie_code = ?)
+where m_code = ?
+	</entry>
 	
 </properties>
