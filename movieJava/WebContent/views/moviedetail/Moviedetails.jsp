@@ -559,7 +559,7 @@ html.open {
                 var submenu = $(this).next("ul");
 
                 // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
-                if (submenu.is(":visible")) {
+                if (submenu.is(":visible")) {/
                     submenu.slideUp();
                 } else {
                     submenu.slideDown();
@@ -585,7 +585,9 @@ html.open {
                    		var stargrade= star.length;
                 	  
                   <% if(loginUser != null) {%>
-                	 $.ajax({
+                  location.href="<%= request.getContextPath() %>/Star?stargrade="
+                  			+ stargrade + '&MovieVo=' + <%=movie.getM_code()%>;
+                	 <%-- $.ajax({
                 		  url: "<%= request.getContextPath()%>/Star",
                 		  data : {stargrade:stargrade,
                 			    MovieVo:<%=movie.getM_code()%>
@@ -601,7 +603,7 @@ html.open {
                 			  console.log(e);
                 		  }
                 			  
-                	  })
+                	  }) --%>
                 <% } else { %>
                 alert("로그인후 이용가능한 서비스입니다.");
                 <% } %>
