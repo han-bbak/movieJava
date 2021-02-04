@@ -228,16 +228,16 @@ select {
 						<td colspan="2">
 							<span>우편번호:</span> &nbsp; 
 							<span class="input_area" id="short"> 
-								<input type="text" name="address" id="short" class="postcodify_postcode5" readonly required>
+								<input type="text" name="address" id="short" class="postcodify_postcode5" readonly>
 							</span> &nbsp;
 							<button type="button" class="btn" id="postcodify_search_button">검색</button>&nbsp;&nbsp; 
 							<span>도로명 주소: </span> &nbsp; 
 							<span class="input_area"> 
-								<input type="text" name="address" class="postcodify_address" readonly>
+								<input type="text" name="address" id="long" class="postcodify_address" readonly>
 							</span> &nbsp;&nbsp; 
 							<span>상세 주소: </span> &nbsp; 
 							<span class="input_area">
-								<input type="text" name="address" class="postcodify_details" placeholder="상세 주소를 입력해 주세요.">
+								<input type="text" name="address" id="detail" class="postcodify_details" placeholder="상세 주소를 입력해 주세요." required>
 							</span>
 						</td>
 					</tr>
@@ -262,6 +262,19 @@ select {
 		</div>
 	</div>
 </body>
+<script>
+	const pay = document.getElementById('pay');
+	pay.addEventListener('click', function(){
+		var address1 = document.getElementById('short');
+		var address2 = document.getElementById('long');
+		var address3 = document.getElementById('detail');
+		
+		if(address1 != null || address2 == null || address3 == null) {
+			alert('주소를 입력해 주세요.');		
+		}
+	});
+	
+</script>
 <script>
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
@@ -319,9 +332,5 @@ pay.addEventListener('click', function(){
             } 
         };
     </script>
-    <script> 
-    	$(function() { 
-    		$("#postcodify_search_button").postcodifyPopUp(); 
-		}); 
-    </script>
+
 </html>
