@@ -30,7 +30,7 @@ public class MovieDAO {
 	private Properties prop = new Properties();
 
 	public MovieDAO() {
-		String fileName = MemberDao.class.getResource("/sql/main/movie-query.xml").getPath();
+		String fileName = MovieDAO.class.getResource("/sql/main/movie-query.xml").getPath();
 
 		try {
 			prop.loadFromXML(new FileInputStream(fileName));
@@ -135,10 +135,9 @@ public class MovieDAO {
 		return list;
 	}
 
+
 	
-	
-	// 영화 상세페이지
-	public MovieVO selectMovie(Connection conn, String memId) {
+		public MovieVO selectMovie(Connection conn, String memId) {
 		MovieVO movie = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

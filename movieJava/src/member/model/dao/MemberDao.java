@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import member.model.vo.Member;
+import movie.model.vo.MovieVO;
 import payment.model.vo.Payment;
 
 public class MemberDao {
@@ -321,7 +322,7 @@ public class MemberDao {
 
 		return mem;
 	}
-
+	
 	
 
 }

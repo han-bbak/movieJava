@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member"%>
+	pageEncoding="UTF-8" import="member.model.vo.Member, store.model.vo.*"%>
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
+	String storeTitle = (String)request.getAttribute("storeTitle");
+	int storeNo = (int)request.getAttribute("storeNo");
+	int selQuan = (int)request.getAttribute("selQuan");
+	int total = (int)request.getAttribute("total");
+	int rtotal = (int)request.getAttribute("rtotal");
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +19,12 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 
+<!-- 아임포트 -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+	var IMP = window.IMP;
+	IMP.init('imp20648252');
+</script>
 <style>
 #board_top {
 	width: 100%;
@@ -108,6 +119,14 @@ select {
 	height: 40px;
 }
 </style>
+<% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -139,6 +158,21 @@ select {
 				</form>
 			</div>
 			<div class="header" id="header3">
+				<% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
+			<% } else { %>
 				<div id="userInfoArea">
 					<div id="userInfo">
 						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
@@ -162,6 +196,7 @@ select {
 						location.href='<%= request.getContextPath() %>/member/logout';
 					});
 				</script>
+			<% } %>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
@@ -176,9 +211,9 @@ select {
 			<a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
 		</div>
 
 		<div id="content">
@@ -190,48 +225,44 @@ select {
 			<div class="paymentArea">
 				<table id="payTable">
 					<tr>
-						<td colspan="2"><span>주문자명:</span> &nbsp; <span
-							class="input_area"> <input type="text" name="userName"
-								id="short" maxlength="5">
-						</span> &nbsp;&nbsp; <span>핸드폰 번호:</span> &nbsp; <span class="input_area">
-								<input type="tel" name="userPhone" maxlength="11">
-						</span></td>
+						<td colspan="2">
+							<span>주문자명: </span> &nbsp; 
+							<span style="color:lightblue; font-size:25px;"><%= loginUser.getMemName() %></span>&nbsp; &nbsp; / &nbsp; &nbsp; 
+							<span>핸드폰 번호:</span> &nbsp; 
+							<span style="color:lightblue; font-size:25px;"><%= loginUser.getPhone() %></span>&nbsp; &nbsp; 
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-						<span>우편번호:</span> &nbsp; 
-						<span class="input_area" id="short"> 
-							<input type="text" name="address" id="short" class="postcodify_postcode5" readonly>
-						</span> &nbsp;
-							<button type="button" class="btn" id="postcodify_search_button">검색</button>
-							&nbsp;&nbsp; <span>도로명 주소: </span> &nbsp; 
-							<span class="input_area"> <input type="text" name="address" class="postcodify_address" readonly></span> 
-							&nbsp;&nbsp; <span>상세 주소: </span> &nbsp; <span class="input_area">
-							<input type="text" name="address" class="postcodify_details" placeholder="상세 주소를 입력해 주세요.">
-						</span>
+							<span>우편번호:</span> &nbsp; 
+							<span class="input_area"> 
+								<input type="text" name="address" id="short" class="postcodify_postcode5" readonly>
+							</span> &nbsp;
+							<button type="button" class="btn" id="postcodify_search_button">검색</button>&nbsp;&nbsp; 
+							<span>도로명 주소: </span> &nbsp; 
+							<span class="input_area"> 
+								<input type="text" name="address" id="long" class="postcodify_address" readonly>
+							</span> &nbsp;&nbsp; 
+							<span>상세 주소: </span> &nbsp; 
+							<span class="input_area">
+								<input type="text" name="address" id="detail" class="postcodify_details" placeholder="상세 주소를 입력해 주세요." required>
+							</span>
 						</td>
-						
-						
 					</tr>
+					
 					<tr>
-						<td colspan="2"><span>카드사: </span> &nbsp; <select>
-								<option value="sinhan" selected>신한은행</option>
-								<option value="hana">하나은행</option>
-								<option value="kb">국민은행</option>
-								<option value="woori">우리은행</option>
-								<option value="kakao">카카오뱅크</option>
-						</select> &nbsp;&nbsp; <span>카드 번호</span> &nbsp; <span class="input_area">
-								<input type="text" name="card_number">
-						</span></td>
-					</tr>
-					<tr>
-						<td><span>총 상품 금액 120,000원</span> <br> <span>배송비
-								2,500원</span></td>
-						<td><span>총 결제 금액</span> <span id="total">122,500원</span></td>
+						<td>
+							<span>총 상품 금액&nbsp; <%= total %>원</span> <br> 
+							<span>배송비 3,000원</span>
+						</td>
+						<td>
+							<span>총 결제 금액</span>
+							<span id="realtotal" style="color:blue;"><%= rtotal %></span>원
+						</td>
 					</tr>
 				</table>
 				<div class="btnArea">
-					<button type="button" class="btn">결제</button>
+					<button type="button" class="btn" id="pay">결제</button>
 					<button type="button" class="btn" onclick="history.back();">취소</button>
 				</div>
 			</div>
@@ -239,7 +270,67 @@ select {
 		</div>
 	</div>
 </body>
+
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/netflix/list';
+});
+
+//Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/qa/list';
+});
+
+//STORE 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/store/list';
+});
+
+</script>
 <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+<script>
+const pay = document.getElementById('pay');
+pay.addEventListener('click', function(){
+		var address1 = document.getElementById('short').value;
+		var address2 = document.getElementById('long').value;
+		var address3 = document.getElementById('detail').value;
+		
+		console.log(address1);
+		console.log(address2);
+		console.log(address3);
+		
+		if(address1 == '' || address2 == '' || address3 == '') {
+			alert('주소를 입력해 주세요.');
+		} else {
+			IMP.request_pay({
+		    	pg : 'inicis',
+		   	 	pay_method : 'card',
+		    	merchant_uid : 'merchant_' + new Date().getTime(),
+		    	name : '주문명:<%= storeTitle %>',
+		    	amount : <%= rtotal %>,
+		    	buyer_email : '<%= loginUser.getEmail() %>',
+		    	buyer_name : '<%= loginUser.getMemName() %>',
+		    	buyer_tel : <%= loginUser.getPhone() %>
+		    
+			},	function(rsp) {
+		    	    if(rsp.success ) {
+		    	        var msg = '결제가 완료되었습니다.';
+		    	        location.href="<%= request.getContextPath() %>/home.jsp";
+		    	    } else {
+		    	    	var msg = '결제가 취소되었습니다.';
+		    	    }
+		    	    
+		    	    alert(msg);
+			});
+		}
+			
+		
+});
+</script>
 <script>
        $(".menuBtn").click(function () { 
            $("#menu,.page_cover,html").addClass("open"); 
@@ -252,9 +343,5 @@ select {
             } 
         };
     </script>
-    <script> 
-    	$(function() { 
-    		$("#postcodify_search_button").postcodifyPopUp(); 
-		}); 
-    </script>
+
 </html>

@@ -1,16 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="member.model.vo.Member, store.model.vo.*, java.util.ArrayList"%>
+<%
+	Member loginUser = (Member)session.getAttribute("loginUser");
+	Store s = (Store)request.getAttribute("store");
+%>
 <!DOCTYPE html>
 <html>
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <link href="../../resources/css/form.css" rel="stylesheet" type="text/css">
+    <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         #board_top {
@@ -117,6 +119,14 @@
         }
 
     </style>
+<% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -129,7 +139,7 @@
                 </div>
             </div>
             <div class="header" id="header1">
-            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="../../images/logo.png"></a>
+            	<a href="<%= request.getContextPath() %>/home.jsp"><img id="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
             </div> 
             <div class="header" id="header2">
                 <form id="search-form">
@@ -145,15 +155,45 @@
                 </form>
             </div>
             <div class="header" id="header3">
-
-                <form id="logform">
-                    <section id="loginform">
-                        <a href="<%= request.getContextPath() %>/views/member/loginView.jsp">로그인</a>
-                    </section>
-                    <section id="joinform">
-                        <a href="<%= request.getContextPath() %>/views/member/joinMember.jsp">회원가입</a>
-                    </section>
-                </form>
+                <% if(loginUser == null) { %>
+				<div id="loginArea">
+					<div id="loginform">
+						<button type="button" class="loginJoin" id="loginBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/loginView.jsp'">로그인</button>
+					</div>
+					<div id="joinform">
+						<button type="button" class="loginJoin" id="joinBtn" onclick="location.href='<%=request.getContextPath()%>/views/member/joinMember.jsp'">회원가입</button>
+					</div>
+					<br clear="both">
+					<div id="searchDiv">
+						<a href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디 찾기</span></a>
+						<a href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호 찾기</span></a>
+					</div>
+				</div>
+			<% } else { %>
+				<div id="userInfoArea">
+					<div id="userInfo">
+						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+					</div>
+					<div id="userInfoBtn">
+						<button id="logout">로그아웃</button>
+						<% if(loginUser.getGrade().equals("admin")) { %>
+							<button id="managerPage">관리자 메뉴</button>
+							<script>
+								var managerPage = document.getElementById("managerPage");
+								managerPage.addEventListener('click', function(){
+									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+								});
+							</script>
+						<% } %>
+					</div>
+				</div>
+				<script>
+					var logout = document.getElementById("logout");
+					logout.addEventListener('click', function(){
+						location.href='<%= request.getContextPath() %>/member/logout';
+					});
+				</script>
+			<% } %>
             </div>
         </div>
         <div onclick="history.back();" class="page_cover"></div>
@@ -168,69 +208,166 @@
             <a href="메인페이지.html">Home</a>
             <a href="마이페이지.html">마이페이지</a><br>
             <a href="관심영화.html">관심 영화</a><br>
-            <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="netflix">공유 계정</a><br>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
         </div>
-
+			
         <div id="content">
-            <div id="board_top">
+			<div id="board_top">
                 <div id="board_top_title">
-                    <h1 id="board_name">
-                        <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp"><span id="goods">Goods</span></a>
-                        /
-                        <a href="<%= request.getContextPath() %>/views/store/store_ticket.jsp"><span id="ticket">Ticket</span></a>
-                        <br>
-                    </h1>
+                   <h1 id="board_name">Ticket</h1>
                 </div>
             </div>
-            <div class="paymentArea">
-                <table id="payTable">
-                    <colgroup>
-                        <col width="50%" />
-                    </colgroup>
-                    <tr>
-                        <td rowspan="4">
-                            <image class="img" src="" width="400px" height="400px" ></image>
-                        </td>
-                        <td height="35%">
-                            <p id="stTitle">상품 이름1</p>
-                            <p id="stPrice"> 30,000원</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="30%">
-                            <input type='button' value='-' onClick='fncAdd("num1",-1);'>
-                            <input type='text' id='num1' name='num1' value='0' minval='0' size='1'  readonly>
-                            <input type='button' value='+' onClick='fncAdd("num1",1);'>
-                            <br>
-                            <br>
-                            택배 배송 2,500원
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="20%">
-                            총 상품 금액
-                            <span id="total">30,000원</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td height="15%">
-                            <button type="button" class="btn">구매하기</button>
-                            <button type="button" class="btn">장바구니</button>
-                        </td>
-                    </tr>
-                </table>
-                
-            </div>
-            <div class="btnArea">
+			<div class="paymentArea">
+				<table id="payTable">
+					<colgroup>
+						<col width="50%" />
+					</colgroup>
+					<tr>
+						<td rowspan="4">
+							<img class="img" src="<%= request.getContextPath() %><%= s.getStorePath() %><%= s.getRename() %>" width="400px" height="400px">
+						</td>
+						<td height="35%">
+							<p id="stTitle"><%= s.getStoreTitle() %></p>
+							<span id="stPrice"><%= s.getStorePrice() %></span>원
+						</td>
+					</tr>
+					<tr>
+						<td height="30%">
+							수량 
+							<button type="button" class="minus" style="height:30px; width:30px;"><span class="blind">-</span></button>
+							 <input type="number" id="no" value="1" step="1" style="padding: 0px; border:0; width: 30px; height:30px; text-align:center;" readonly>
+							 <button type="button" class="plus" style="height:30px; width:30px;"><span class="blind">+</span></button>
+							<br> <br> 
+							택배 배송 3,000원
+						</td>
+					</tr>
+					<tr>
+						<td height="20%">
+							총 상품 금액 
+							<input type="hidden" id="storeNo" value="<%= s.getStoreNo() %>">
+							<span id="total"><%= s.getStorePrice() %></span>원
+						</td>
+					</tr>
+					<tr>
+						<td height="15%">
+							<button type="button" class="btn" id="buy">구매하기</button>
+							<button type="button" class="btn" id="bascket">장바구니</button>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+			<div class="btnArea">
                 <button type="button" class="btn" id="goList" onclick="history.back();">목록으로</button>
             </div>
         </div>
     </div>
 </body>
-<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
-<script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
+
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/netflix/list';
+});
+
+//Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/qa/list';
+});
+
+//STORE 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%=request.getContextPath()%>/store/list';
+});
+
+
+//구매하기 버튼
+$(function(){
+$("#buy").click(function(){
+	var storeNo = $(this).parent().parent().parent().children().eq(2).children().children().eq(0).val();
+	var selQuan = $(this).parent().parent().parent().children().eq(1).children().children().eq(1).val();
+	var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+	var price = $price.text();
+	var storeTitle = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(0).text();
+
+		<% if(loginUser != null) { %>
+			location.href = '<%= request.getContextPath() %>/ticket/payment?storeTitle=' + storeTitle + '&storeNo=' + storeNo + '&selQuan=' + selQuan + '&price=' + price;
+		<% } else { %>
+			alert('로그인 후 결제가 가능합니다.');
+		<% } %>
+	});
+});
+
+//장바구니 버튼
+const bascket = document.getElementById('bascket');
+bascket.addEventListener('click', function() {
+	
+	<% if(loginUser != null) { %>
+		location.href = '<%= request.getContextPath() %>/goods/bascket';
+	<% } else { %>
+		alert('로그인 후 장바구니에 담기가 가능합니다.');
+	<% } %>
+});
+</script>
+
+<script>
+	$(".minus").click(function() {
+		var $no = $(this).parent().children().eq(1);
+		var n = $no.val();
+		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+		var p = $price.text();
+		var $orip = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(1);
+		var o = $orip.text(); 
+		
+		if(!n) {
+			n = 0;
+			p = 0;
+			o = 0;
+		} else {
+			n *= 1;
+			p *= 1;
+			o *= 1;
+		}
+		
+		if(n < 2) {
+			alert("1개 이상부터 구매하실 수 있습니다.");
+			$price.text(p);
+		} else {
+			$no.val(n - 1);
+
+			p = $price.text(p - o); 
+		}
+	});
+	
+	$(".plus").click(function() {
+		var $no = $(this).parent().children().eq(1);
+		var n = $no.val();
+		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+		var p = $price.text();
+		var $orip = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(1);
+		var o = $orip.text(); 
+		
+		if(!n) {
+			n = 0;
+			p = 0;
+			o = 0;
+		} else {
+			n *= 1;
+			p *= 1;
+			o *= 1;
+		}
+		
+		n = $no.val(n + 1);
+		
+		p = $price.text(p + o); 
+		
+	});
+</script>
 <script>
        $(".menuBtn").click(function () { 
            $("#menu,.page_cover,html").addClass("open"); 

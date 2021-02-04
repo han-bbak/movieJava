@@ -3,7 +3,6 @@
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	Store s = (Store)request.getAttribute("store");
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -118,7 +117,7 @@
         #goList {
             margin-top: 20px;
         }
-
+        
     </style>
 <% if(session.getAttribute("msg") != null) { %>
 	<script>
@@ -217,7 +216,7 @@
         <div id="content">
             <div id="board_top">
                 <div id="board_top_title">
-                   <div id="board_top_title"><h1 id="board_name">Goods</h1></div>
+                   <h1 id="board_name">Goods</h1>
                 </div>
             </div>
 			<div class="paymentArea">
@@ -231,26 +230,30 @@
 						</td>
 						<td height="35%">
 							<p id="stTitle"><%= s.getStoreTitle() %></p>
-							<p id="stPrice"><%= s.getStorePrice() %>원</p>
+							<span id="stPrice"><%= s.getStorePrice() %></span>원
 						</td>
 					</tr>
 					<tr>
 						<td height="30%">
-							<input type='button' value='-' onClick='fncAdd("num1",-1);'> 
-							<input type='text' id='num1' name='num1' value='0' minval='0' size='1' readonly>
-							<input type='button' value='+' onClick='fncAdd("num1",1);'>
+							수량 
+							<button type="button" class="minus" style="height:30px; width:30px;"><span class="blind">-</span></button>
+							 <input type="number" id="no" value="1" step="1" style="padding: 0px; border:0; width: 30px; height:30px; text-align:center;" readonly>
+							 <button type="button" class="plus" style="height:30px; width:30px;"><span class="blind">+</span></button>
 							<br> <br> 
-							택배 배송 2,500원
+							택배 배송 3,000원
 						</td>
 					</tr>
 					<tr>
-						<td height="20%">총 상품 금액 <span id="total">30,000원</span>
+						<td height="20%">
+							총 상품 금액 
+							<input type="hidden" id="storeNo" value="<%= s.getStoreNo() %>">
+							<span id="total"><%= s.getStorePrice() %></span>원
 						</td>
 					</tr>
 					<tr>
 						<td height="15%">
-							<button type="button" class="btn">구매하기</button>
-							<button type="button" class="btn">장바구니</button>
+							<button type="button" class="btn" id="buy">구매하기</button>
+							<button type="button" class="btn" id="bascket">장바구니</button>
 						</td>
 					</tr>
 				</table>
@@ -262,6 +265,7 @@
         </div>
     </div>
 </body>
+                                                                                        
 
 <script>
 //넷플릭스 버튼
@@ -282,12 +286,88 @@ store.addEventListener('click', function(){
 	location.href='<%=request.getContextPath()%>/store/list';
 });
 
-//goods 버튼
-const goods = document.getElementById('goods');
-goods.addEventListener('click', function() {
-	location.href = '<%= request.getContextPath() %>/store/list';
+
+//구매하기 버튼
+$(function(){
+$("#buy").click(function(){
+		var storeNo = $(this).parent().parent().parent().children().eq(2).children().children().eq(0).val();
+		var selQuan = $(this).parent().parent().parent().children().eq(1).children().children().eq(1).val();
+		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+		var price = $price.text();
+		var storeTitle = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(0).text();
+		
+		<% if(loginUser != null) { %>
+			location.href = '<%= request.getContextPath() %>/goods/payment?storeTitle=' + storeTitle + '&storeNo=' + storeNo + '&selQuan=' + selQuan + '&price=' + price;
+		<% } else { %>
+			alert('로그인 후 결제가 가능합니다.');
+		<% } %>
+	});
 });
 
+//장바구니 버튼
+const bascket = document.getElementById('bascket');
+bascket.addEventListener('click', function() {
+	
+	<% if(loginUser != null) { %>
+		location.href = '<%= request.getContextPath() %>/goods/bascket';
+	<% } else { %>
+		alert('로그인 후 장바구니에 담기가 가능합니다.');
+	<% } %>
+});
+</script>
+
+<script>
+	$(".minus").click(function() {
+		var $no = $(this).parent().children().eq(1);
+		var n = $no.val();
+		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+		var p = $price.text();
+		var $orip = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(1);
+		var o = $orip.text(); 
+		
+		if(!n) {
+			n = 0;
+			p = 0;
+			o = 0;
+		} else {
+			n *= 1;
+			p *= 1;
+			o *= 1;
+		}
+		
+		if(n < 2) {
+			alert("1개 이상부터 구매하실 수 있습니다.");
+			$price.text(p);
+		} else {
+			$no.val(n - 1);
+
+			p = $price.text(p - o); 
+		}
+	});
+	
+	$(".plus").click(function() {
+		var $no = $(this).parent().children().eq(1);
+		var n = $no.val();
+		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
+		var p = $price.text();
+		var $orip = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(1);
+		var o = $orip.text(); 
+		
+		if(!n) {
+			n = 0;
+			p = 0;
+			o = 0;
+		} else {
+			n *= 1;
+			p *= 1;
+			o *= 1;
+		}
+		
+		n = $no.val(n + 1);
+		
+		p = $price.text(p + o); 
+		
+	});
 </script>
 <script>
        $(".menuBtn").click(function () { 

@@ -455,7 +455,7 @@ h3 {
 			<div class="header" id="header2">
 			
 			<!----- 영화 검색 ----->
-				<form id="search-form" action="./views/movie/search/result.jsp"" method="get">
+				<form id="search-form" action="<%= request.getContextPath() %>/movie/search" method="get">
 					<section id="search-btn-area">
 						<button type="submit" id="search-btn">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -535,7 +535,7 @@ h3 {
 <br>
 <br>
 <br>
-<a href="<%= request.getContextPath() %>home.jsp">HOME</a>
+<a href="<%= request.getContextPath() %>/home.jsp">HOME</a>
 <br>
 <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
 <br>
@@ -793,68 +793,80 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 		</header>
 		<section id="slider-div1" class="center slider">
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1001"> <img
-					src="views/movie/image/released/released1.jpg">
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1001"> 
+				<img src="views/movie/image/released/released1.jpg">
 				</a> <span class=center><p class=caption>오늘, 우리2</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1002"> <img src="views/movie/image/released/released2.jpg">
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1002"> 
+				<img src="views/movie/image/released/released2.jpg">
 				</a><span class=center><p class=caption>소울</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1003"> <img src="views/movie/image/released/released3.jpg">
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1003"> 
+				<img src="views/movie/image/released/released3.jpg">
 				</a><span class=center><p class=caption>커넥트</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1004"> <img src="views/movie/image/released/released4.jpg"></a>
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1004"> 
+				<img src="views/movie/image/released/released4.jpg"></a>
 				<span class=center><p class=caption>아이엠히어</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1005"><img src="views/movie/image/released/released5.jpg">
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1005">
+				<img src="views/movie/image/released/released5.jpg">
 				</a><span class=center><p class=caption>차인표</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1006"> <img src="views/movie/image/released/released6.jpg">
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1006"> 
+				<img src="views/movie/image/released/released6.jpg">
 				</a><span class=center><p class=caption>빛의아버지</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1007"><img src="views/movie/image/released/released7.jpg"></a>
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1007">
+				<img src="views/movie/image/released/released7.jpg"></a>
 				<span class=center><p class=caption>마이 미씽 발렌타인</p></span>
 			</div>
 			<div>
-				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1008"> <img src="views/movie/image/released/released8.jpg"></a>
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1008"> 
+				<img src="views/movie/image/released/released8.jpg"></a>
 				<span class=center><p class=caption>크루아상</p></span>
 			</div>
 			<div>
-				<a href=""<%= request.getContextPath() %>/movie/detail?mCode=1009"> <img src="views/movie/image/released/released9.jpg"></a>
+				<a href="<%= request.getContextPath() %>/movie/detail?mCode=1009"> 
+				<img src="views/movie/image/released/released9.jpg"></a>
 				<span class=center><p class=caption>438일</p></span>
 			</div>
 		</section>
-			<p><br><br>#개봉예정</p>
+			<p>#개봉예정</p>
 		<section id="slider-div2" class="center slider">
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2OO1"><img src="views/movie/image/scheduled/scheduled1.jpg"> <span class=center><p
-					class=caption>킹스맨: 퍼스트 에이전트</p></span>
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2OO1">
+			<img src="views/movie/image/scheduled/scheduled1.jpg"> 
+			<!-- <span class=center> -->
+			<p class=caption>킹스맨: 퍼스트 에이전트</p></a>
 		</div>
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2002"><img src="views/movie/image/scheduled/scheduled2.jpg"> <span class=center><p
-					class=caption>모비우스</p></span>
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2002">
+			<img src="views/movie/image/scheduled/scheduled2.jpg">
+			<p class=caption>모비우스</p></a>
 		</div>
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2003"><img src="views/movie/image/scheduled/scheduled3.jpg"> <span class=center><p
-					class=caption>이 안에 외계인이 있다</p></span>
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2003">
+			<img src="views/movie/image/scheduled/scheduled3.jpg">
+			<p class=caption>이 안에 외계인이 있다</p></a>
 		</div>
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2004"><img src="views/movie/image/scheduled/scheduled4.jpg"> <span class=center><p
-					class=caption>내겐 너무 어려운 연애</p></span>
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2004">
+			<img src="views/movie/image/scheduled/scheduled4.jpg"> 
+			<p class=caption>내겐 너무 어려운 연애</p></a>
 		</div>
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2005"><img src="views/movie/image/scheduled/scheduled5.jpg"> <span class=center><p
-					class=caption>좀비타운</p></span>
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2005">
+			<img src="views/movie/image/scheduled/scheduled5.jpg">
+			<p class=caption>좀비타운</p></a>
 		</div>
 		</section>
-		  
-
 		 <script language="javascript" type="text/javascript" src="views/movie/js/released.js"></script> 
 		  <script language="javascript" type="text/javascript" src="views/movie/js/scheduled.js"></script> 
 		</class>

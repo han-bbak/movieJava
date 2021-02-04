@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member, point.model.vo.Point" %>
+	pageEncoding="UTF-8" import="java.util.ArrayList, member.model.vo.Member, point.model.vo.Point" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
 	
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	Point point = (Point)request.getAttribute("point");
+	
+	ArrayList<Point> list = (ArrayList<Point>)request.getAttribute("list");
 	
 %>
 <!DOCTYPE html>
@@ -563,8 +565,23 @@ h3 {
                     <td><%= point.getPntDate() %></td><td><%= point.getPayCode() %></td><td><%= point.getPntList() %></td><td>4</td><td><%= loginUser.getPoint() %></td>
                   </tr>
                   <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                  </tr>
+                    <% if(list.isEmpty()) { %>
+                    	<tr>
+                    		<td colspan="5">내역 없음</td>
+                    	</tr>
+                    <% } else { %>
+                    	<% for(Point p : list) { %>
+                    	<tr>
+                    		
+                    		<td><%= p.getPntDate() %></td>
+                    		<td><%= p.getPayCode() %></td>
+                    		<td><%= p.getPntList() %></td>
+                    		<td></td>
+                    		<td><%= loginUser.getPoint() %></td>
+						</tr>
+                    	<% } %>
+                    <% } %>
+                  
                   <tr>
                     <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
                   </tr>
