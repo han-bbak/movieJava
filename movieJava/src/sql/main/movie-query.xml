@@ -57,4 +57,13 @@ WHERE M_TITLE LIKE '%' || ? || '%'
 AND M_GENRE LIKE '%' || ? || '%'
 ORDER BY M_GRADE DESC
 </entry>
+
+<entry key="movieselect">	
+		SELECT *	
+		FROM MEMBER A, INTEREST B, MOVIE C	
+		WHERE	
+		A.MEM_NO = B.MEM_NO	
+		AND B.M_CODE = C.M_CODE	
+		AND A.MEM_ID = ?	
+	</entry>
 </properties>
