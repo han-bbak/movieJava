@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import interest.model.service.InterestService;
 import interest.model.vo.Interest;
 import member.model.vo.Member;
-import movie.model.vo.MovieVO;
 import movie.model.service.MovieService;
+import movie.model.vo.MovieVO;
+
 
 /**
  * Servlet implementation class MovieMemberServlet

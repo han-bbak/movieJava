@@ -16,7 +16,7 @@ public class MovieService {
 	public MovieVO movieSelect(String memId) {
 		Connection conn = getConnection();
 		
-		MovieVO movie = new MovieDAO().selectMovie(conn, memId);
+		MovieVO movie = new MovieDAO().selectMovie2(conn, memId);
 		
 		close(conn);
 		
