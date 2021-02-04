@@ -965,7 +965,7 @@
 		       JOIN STORE USING(ST_NO)
 		       JOIN MEMBER USING(MEM_NO)
 		 WHERE
-		       MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3
+		       <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3]]>
 	</entry>
 	<entry key="countSixMonth">
 		SELECT 
@@ -976,7 +976,7 @@
 		       JOIN STORE USING(ST_NO)
 		       JOIN MEMBER USING(MEM_NO)
 		 WHERE
-		       MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6
+		       <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6]]>
 	</entry>
 	<entry key="countPeriodPayment">
 		SELECT 
@@ -987,12 +987,13 @@
 		       JOIN STORE USING(ST_NO)
 		       JOIN MEMBER USING(MEM_NO)
 		 WHERE
-		       PAY_DATE <= TO_DATE(?, 'YYMMDD')
-		   AND PAY_DATE >= TO_DATE(?, 'YYMMDD')
+		       <![CDATA[PAY_DATE >= TO_DATE(?, 'YYYY-MM-DD')]]>
+		   AND <![CDATA[PAY_DATE <= TO_DATE(?, 'YYYY-MM-DD')]]>
 	</entry>
 	<entry key="selectOneMonth">
 		SELECT
 		       RNUM
+		     , ORD_NO
 		     , ST_TITLE
 		     , ORD_QUANTITY
 		     , PRICE
@@ -1004,6 +1005,7 @@
 		     (
 		       SELECT
 		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
 		            , ST_TITLE
 		            , ORD_QUANTITY
 		            , (ST_PRICE * ORD_QUANTITY) PRICE
@@ -1025,6 +1027,7 @@
 	<entry key="selectThreeMonth">
 		SELECT
 		       RNUM
+		     , ORD_NO
 		     , ST_TITLE
 		     , ORD_QUANTITY
 		     , PRICE
@@ -1036,6 +1039,7 @@
 		     (
 		       SELECT
 		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
 		            , ST_TITLE
 		            , ORD_QUANTITY
 		            , (ST_PRICE * ORD_QUANTITY) PRICE
@@ -1049,7 +1053,7 @@
 		              JOIN STORE USING(ST_NO)
 		              JOIN MEMBER USING(MEM_NO)
 		        WHERE
-		              MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3
+		              <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3]]>
 		     )
 		 WHERE
 		        RNUM BETWEEN ? AND ?
@@ -1057,6 +1061,7 @@
 	<entry key="selectSixMonth">
 		SELECT
 		       RNUM
+		     , ORD_NO
 		     , ST_TITLE
 		     , ORD_QUANTITY
 		     , PRICE
@@ -1068,6 +1073,7 @@
 		     (
 		       SELECT
 		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
 		            , ST_TITLE
 		            , ORD_QUANTITY
 		            , (ST_PRICE * ORD_QUANTITY) PRICE
@@ -1081,7 +1087,7 @@
 		              JOIN STORE USING(ST_NO)
 		              JOIN MEMBER USING(MEM_NO)
 		        WHERE
-		              MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6
+		              <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6]]>
 		     )
 		 WHERE
 		        RNUM BETWEEN ? AND ?
@@ -1089,6 +1095,7 @@
 	<entry key="selectPeriodPayment">
 		SELECT
 		       RNUM
+		     , ORD_NO
 		     , ST_TITLE
 		     , ORD_QUANTITY
 		     , PRICE
@@ -1100,6 +1107,7 @@
 		     (
 		       SELECT
 		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
 		            , ST_TITLE
 		            , ORD_QUANTITY
 		            , (ST_PRICE * ORD_QUANTITY) PRICE
@@ -1113,8 +1121,8 @@
 		              JOIN STORE USING(ST_NO)
 		              JOIN MEMBER USING(MEM_NO)
 		        WHERE
-		              PAY_DATE <= TO_DATE(?, 'YYMMDD')
-		          AND PAY_DATE >= TO_DATE(?, 'YYMMDD')
+		              <![CDATA[PAY_DATE >= TO_DATE(?, 'YYYY-MM-DD')]]>
+		          AND <![CDATA[PAY_DATE <= TO_DATE(?, 'YYYY-MM-DD')]]>
 		     )
 		 WHERE
 		        RNUM BETWEEN ? AND ?

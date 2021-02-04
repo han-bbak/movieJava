@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Payment {
 
+	private int ord_no;
 	private int payCode;
 	private String payCard;
 	private int payCardNo;
@@ -27,9 +28,10 @@ public class Payment {
 	}
 	
 
-	public Payment(String payCard, Date payDate, String st_title, int ord_quantity, int price, String mem_id,
+	public Payment(int ord_no, String payCard, Date payDate, String st_title, int ord_quantity, int price, String mem_id,
 			String mem_name) {
 		super();
+		this.ord_no = ord_no;
 		this.payCard = payCard;
 		this.payDate = payDate;
 		this.st_title = st_title;
@@ -37,6 +39,14 @@ public class Payment {
 		this.price = price;
 		this.mem_id = mem_id;
 		this.mem_name = mem_name;
+	}
+	
+	public int getOrd_no() {
+		return ord_no;
+	}
+
+	public void setOrd_no(int ord_no) {
+		this.ord_no = ord_no;
 	}
 
 	public int getPayCode() {

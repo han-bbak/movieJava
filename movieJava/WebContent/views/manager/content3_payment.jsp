@@ -32,7 +32,7 @@
             color : white;
             font-weight: 100;
         }
-        .radioDiv input[type=submit] {
+        #submitBtn {
             width: 60px;
             height: 30px;
             font-weight: bold;
@@ -86,18 +86,18 @@
         </div>
         <div class="contentWrap">
             <div class="radioDiv">
-                <form method="POST" action="<%= request.getContextPath() %>/manager/paymentList">
+                <form method="POST" id="searchForm" action="<%= request.getContextPath() %>/manager/paymentList">
                     <input type="radio" name="period" value="one" id="one" checked>
                     <label for="one" class="radioLabel">이번 달</label>&nbsp;&nbsp;
                     <input type="radio" name="period" value="three" id="three">
                     <label for="three" class="radioLabel">3개월</label>&nbsp;&nbsp;
                     <input type="radio" name="period" value="six" id="six">
                     <label for="six" class="radioLabel">6개월</label>&nbsp;&nbsp;
-                    <input type="radio" name="period" value="selection">
-                    <input type="date" name="period-start">&nbsp;
+                    <input type="radio" name="period" value="selection" id="selection">
+                    <input type="date" id="period-start" name="period-start">&nbsp;
                     <label style="color:white"> ~</label>&nbsp;
-                    <input type="date" name="period-end">&nbsp;&nbsp;
-                    <input type="submit" value="조회">
+                    <input type="date" id="period-end" name="period-end">&nbsp;&nbsp;
+                    <button type="button" id="submitBtn" onclick="onSubmit();">조회</button>
                 </form>
             </div>
             <hr>
@@ -112,25 +112,43 @@
         </div>
     </section>
     <script>
-    $(function(){
-		var countPay1 = $("#countPay1");
-		var countPay2 = $("#countPay2");
-		
-		$.ajax({
-			url : "<%= request.getContextPath() %>/manager/payCount",
-			type : "post",
-			dataType : "json",
-			success : function(data){
-				console.log(data);
-				countPay1.text(data[0]);
-				countPay2.text(data[1]);
-				
-			},
-			error : function(e) {
-				console.log(e);
-			}
+	    $(function(){
+			var countPay1 = $("#countPay1");
+			var countPay2 = $("#countPay2");
+			
+			$.ajax({
+				url : "<%= request.getContextPath() %>/manager/payCount",
+				type : "post",
+				dataType : "json",
+				success : function(data){
+					console.log(data);
+					countPay1.text(data[0]);
+					countPay2.text(data[1]);
+					
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
 		});
-	});
+	    function onSubmit() {
+	    	console.log($("#selection").prop('checked'));
+	    	console.log($("#period-start").val());
+	    	console.log($("#period-end").val());
+	    	if($("#selection").prop('checked')) {
+	    		if($("#period-start").val() == "") {
+	    			alert('시작 기간을 설정해주세요');
+	    			return;
+	    		}
+	    		
+	    		if($("#period-end").val() == "") {
+	    			alert('끝 기간을 설정해주세요');
+	    			return;
+	    		}
+	    	}
+	    	
+	    	$("#searchForm").submit();
+	    }
     </script>
 
 </body>

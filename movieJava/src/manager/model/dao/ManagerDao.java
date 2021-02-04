@@ -1739,13 +1739,14 @@ public class ManagerDao {
 			}
 			
 			while(rset.next()) {
-				list.add(new Payment(rset.getString(7),
-						             rset.getDate(8),
-						             rset.getString(2),
-						             rset.getInt(3),
+				list.add(new Payment(rset.getInt(2),
+						             rset.getString(8),
+						             rset.getDate(9),
+						             rset.getString(3),
 						             rset.getInt(4),
-						             rset.getString(5),
-						             rset.getString(6)));
+						             rset.getInt(5),
+						             rset.getString(6),
+						             rset.getString(7)));
 			}
 		
 		} catch (SQLException e) {
