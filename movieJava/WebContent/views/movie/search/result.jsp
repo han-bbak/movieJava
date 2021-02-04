@@ -701,7 +701,7 @@ option {
 				%>
 					<td width="333" align="center">
 						<a
-						href="home.jsp?Moviedetails.jsp?no=<%= Movie.getM_code() %>"> <img
+						href="detail?mCode=<%= Movie.getM_code() %>"> <img
 							alt="" src="<%= Movie.getM_image()%>" width="150" height="200">
 						</a>
 							<p>
