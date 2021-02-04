@@ -22,4 +22,11 @@ public class PointService {
 		return point;
 	}
 
+	
+
+	public Point pointListSelect(String memId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

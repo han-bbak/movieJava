@@ -127,4 +127,14 @@ public class StoreService {
 		return store;
 	}
 
+	public Store selectTicket(int storeNo) {
+		Connection conn = getConnection();
+
+		Store s = new StoreDao().selectTicket(conn, storeNo);
+
+		close(conn);
+
+		return s;
+	}
+
 }

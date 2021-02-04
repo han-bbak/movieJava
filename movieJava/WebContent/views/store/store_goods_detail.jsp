@@ -3,7 +3,6 @@
 <%
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	Store s = (Store)request.getAttribute("store");
-	
 %>
 <!DOCTYPE html>
 <html>
@@ -217,7 +216,7 @@
         <div id="content">
             <div id="board_top">
                 <div id="board_top_title">
-                   <div id="board_top_title"><h1 id="board_name">Goods</h1></div>
+                   <h1 id="board_name">Goods</h1>
                 </div>
             </div>
 			<div class="paymentArea">
@@ -296,8 +295,6 @@ $("#buy").click(function(){
 		var $price = $(this).parent().parent().parent().children().eq(2).children().children().eq(1);
 		var price = $price.text();
 		var storeTitle = $(this).parent().parent().parent().children().eq(0).children().eq(1).children().eq(0).text();
-		
-		console.log(storeTitle);
 		
 		<% if(loginUser != null) { %>
 			location.href = '<%= request.getContextPath() %>/goods/payment?storeTitle=' + storeTitle + '&storeNo=' + storeNo + '&selQuan=' + selQuan + '&price=' + price;

@@ -119,6 +119,14 @@ select {
 	height: 40px;
 }
 </style>
+<% if(session.getAttribute("msg") != null) { %>
+	<script>
+		alert('<%= session.getAttribute("msg") %>');
+	</script>
+	<%
+		session.removeAttribute("msg");
+		}
+	%>
 </head>
 
 <body>
@@ -227,17 +235,17 @@ select {
 					<tr>
 						<td colspan="2">
 							<span>우편번호:</span> &nbsp; 
-							<span class="input_area" id="short"> 
-								<input type="text" name="address" id="short" class="postcodify_postcode5" readonly required>
+							<span class="input_area"> 
+								<input type="text" name="address" id="short" class="postcodify_postcode5" readonly>
 							</span> &nbsp;
 							<button type="button" class="btn" id="postcodify_search_button">검색</button>&nbsp;&nbsp; 
 							<span>도로명 주소: </span> &nbsp; 
 							<span class="input_area"> 
-								<input type="text" name="address" class="postcodify_address" readonly>
+								<input type="text" name="address" id="long" class="postcodify_address" readonly>
 							</span> &nbsp;&nbsp; 
 							<span>상세 주소: </span> &nbsp; 
 							<span class="input_area">
-								<input type="text" name="address" class="postcodify_details" placeholder="상세 주소를 입력해 주세요.">
+								<input type="text" name="address" id="detail" class="postcodify_details" placeholder="상세 주소를 입력해 주세요." required>
 							</span>
 						</td>
 					</tr>
@@ -262,6 +270,7 @@ select {
 		</div>
 	</div>
 </body>
+
 <script>
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
@@ -286,25 +295,40 @@ store.addEventListener('click', function(){
 <script>
 const pay = document.getElementById('pay');
 pay.addEventListener('click', function(){
-	IMP.request_pay({
-    	pg : 'inicis',
-   	 	pay_method : 'card',
-    	merchant_uid : 'merchant_' + new Date().getTime(),
-    	name : '주문명:<%= storeTitle %>',
-    	amount : <%= rtotal %>,
-    	buyer_email : '<%= loginUser.getEmail() %>',
-    	buyer_name : '<%= loginUser.getMemName() %>',
-    	buyer_tel : <%= loginUser.getPhone() %>
-    
-	},	function(rsp) {
-    	    if ( rsp.success ) {
-    	        var msg = '결제가 완료되었습니다.';
-    	        location.href="<%= request.getContextPath() %>/home.jsp";
-    	    } else {
-    	    	var msg = '결제가 취소되었습니다.';
-    	    }
-    	    alert(msg);
-	});
+		var address1 = document.getElementById('short').value;
+		var address2 = document.getElementById('long').value;
+		var address3 = document.getElementById('detail').value;
+		
+		console.log(address1);
+		console.log(address2);
+		console.log(address3);
+		
+		if(address1 == '' || address2 == '' || address3 == '') {
+			alert('주소를 입력해 주세요.');
+		} else {
+			IMP.request_pay({
+		    	pg : 'inicis',
+		   	 	pay_method : 'card',
+		    	merchant_uid : 'merchant_' + new Date().getTime(),
+		    	name : '주문명:<%= storeTitle %>',
+		    	amount : <%= rtotal %>,
+		    	buyer_email : '<%= loginUser.getEmail() %>',
+		    	buyer_name : '<%= loginUser.getMemName() %>',
+		    	buyer_tel : <%= loginUser.getPhone() %>
+		    
+			},	function(rsp) {
+		    	    if(rsp.success ) {
+		    	        var msg = '결제가 완료되었습니다.';
+		    	        location.href="<%= request.getContextPath() %>/home.jsp";
+		    	    } else {
+		    	    	var msg = '결제가 취소되었습니다.';
+		    	    }
+		    	    
+		    	    alert(msg);
+			});
+		}
+			
+		
 });
 </script>
 <script>
@@ -319,9 +343,5 @@ pay.addEventListener('click', function(){
             } 
         };
     </script>
-    <script> 
-    	$(function() { 
-    		$("#postcodify_search_button").postcodifyPopUp(); 
-		}); 
-    </script>
+
 </html>
