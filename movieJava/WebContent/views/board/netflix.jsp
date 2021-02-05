@@ -170,6 +170,10 @@
             border: gray;
         }
         
+        #searchDiv a {
+        	text-decoration: none;
+        }
+        
     </style>
     <% if(session.getAttribute("msg") != null) { %>
 	<script>

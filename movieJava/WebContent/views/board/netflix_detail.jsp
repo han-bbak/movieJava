@@ -194,6 +194,8 @@
         	width: 40px;
         	height:30px;
         }
+        
+       
     </style>
     <% if(session.getAttribute("msg") != null) { %>
 	<script>

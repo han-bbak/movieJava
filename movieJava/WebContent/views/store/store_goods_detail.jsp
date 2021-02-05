@@ -118,6 +118,10 @@
             margin-top: 20px;
         }
         
+         #searchDiv a {
+        	text-decoration: none;
+        }
+        
     </style>
 <% if(session.getAttribute("msg") != null) { %>
 	<script>
@@ -307,9 +311,13 @@ $("#buy").click(function(){
 //장바구니 버튼
 const bascket = document.getElementById('bascket');
 bascket.addEventListener('click', function() {
-	
 	<% if(loginUser != null) { %>
-		location.href = '<%= request.getContextPath() %>/goods/bascket';
+		var msg = confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
+		if(msg){
+			location.href = '<%= request.getContextPath() %>/store/bascket';
+		} else {
+			location.reload();
+		}
 	<% } else { %>
 		alert('로그인 후 장바구니에 담기가 가능합니다.');
 	<% } %>

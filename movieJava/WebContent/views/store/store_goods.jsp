@@ -143,6 +143,10 @@
         #search {
         	padding: 5px;
         }
+        
+         #searchDiv a {
+        	text-decoration: none;
+        }
     </style>
 </head>
 
