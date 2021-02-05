@@ -541,7 +541,7 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="../../images/logo.png"></a>
+				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -616,7 +616,7 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
 
 			</div>
 			<br> <br> <br> <br> 
-			<a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a id="netflix">공유 계정</a><br>
