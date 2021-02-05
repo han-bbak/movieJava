@@ -298,11 +298,7 @@ pay.addEventListener('click', function(){
 		var address1 = document.getElementById('short').value;
 		var address2 = document.getElementById('long').value;
 		var address3 = document.getElementById('detail').value;
-		
-		console.log(address1);
-		console.log(address2);
-		console.log(address3);
-		
+
 		if(address1 == '' || address2 == '' || address3 == '') {
 			alert('주소를 입력해 주세요.');
 		} else {

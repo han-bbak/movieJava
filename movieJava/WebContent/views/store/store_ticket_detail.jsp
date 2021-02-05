@@ -117,6 +117,10 @@
         #goList {
             margin-top: 20px;
         }
+        
+         #searchDiv a {
+        	text-decoration: none;
+        }
 
     </style>
 <% if(session.getAttribute("msg") != null) { %>
@@ -285,7 +289,7 @@ store.addEventListener('click', function(){
 	location.href='<%=request.getContextPath()%>/store/list';
 });
 
-
+									
 //구매하기 버튼
 $(function(){
 $("#buy").click(function(){
@@ -308,6 +312,7 @@ const bascket = document.getElementById('bascket');
 bascket.addEventListener('click', function() {
 	
 	<% if(loginUser != null) { %>
+		
 		location.href = '<%= request.getContextPath() %>/goods/bascket';
 	<% } else { %>
 		alert('로그인 후 장바구니에 담기가 가능합니다.');
