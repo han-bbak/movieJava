@@ -214,4 +214,16 @@
 		WHERE A.MEM_NO = B.MEM_NO
 		AND A.MEM_ID = ?
 	</entry>
+	<entry key="selectPointList">
+	
+	SELECT *
+		FROM
+    		MEMBER M, POINT P
+    		
+		WHERE M.MEM_NO = P.MEM_NO
+
+    		AND M.MEM_ID = ?
+		ORDER BY
+    		PNT_CODE ASC
+	</entry>
 </properties>

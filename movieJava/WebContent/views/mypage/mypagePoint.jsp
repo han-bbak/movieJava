@@ -7,7 +7,7 @@
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	Point point = (Point)request.getAttribute("point");
 	
-	ArrayList<Point> list = (ArrayList<Point>)request.getAttribute("list");
+	ArrayList<Point> pList = (ArrayList<Point>)request.getAttribute("pList");
 	
 %>
 <!DOCTYPE html>
@@ -552,7 +552,7 @@ h3 {
             
             <p>point<%= loginUser.getPoint() %></p>
             <br><br><br><br><br><br>
-            <div id="area1">포인트 적립/사용 내역</div>
+            <div id="area1">포인트 적립/사용 내역</div><br><hr><br>
             
             <table>
                 <thead>
@@ -561,16 +561,14 @@ h3 {
                   </tr>
                 </thead>
                 <tbody>
+                  
                   <tr>
-                    <td><%= point.getPntDate() %></td><td><%= point.getPayCode() %></td><td><%= point.getPntList() %></td><td>4</td><td><%= loginUser.getPoint() %></td>
-                  </tr>
-                  <tr>
-                    <% if(list.isEmpty()) { %>
+                    <% if( pList != null && pList.isEmpty()) { %>
                     	<tr>
                     		<td colspan="5">내역 없음</td>
                     	</tr>
                     <% } else { %>
-                    	<% for(Point p : list) { %>
+                    	<% for(Point p : pList) { %>
                     	<tr>
                     		
                     		<td><%= p.getPntDate() %></td>
@@ -582,18 +580,7 @@ h3 {
                     	<% } %>
                     <% } %>
                   
-                  <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                  </tr>
-                  <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                  </tr>
-                  <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                  </tr>
-                  <tr>
-                    <td>1</td><td>2</td><td>3</td><td>4</td><td>5</td>
-                  </tr>
+                  
                 </tbody>
               </table>
         </div>

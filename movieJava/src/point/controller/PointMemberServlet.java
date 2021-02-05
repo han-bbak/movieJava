@@ -1,6 +1,8 @@
 package point.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,9 +41,20 @@ public class PointMemberServlet extends HttpServlet {
 		Member loginUser = (Member) request.getSession().getAttribute("loginUser");
 
 		Point point = new PointService().interestSelect(loginUser.getMemId());
-		
+		PointService ps = new PointService();
+
+
+		ArrayList<Point> pList = ps.selectPointList(loginUser.getMemId());
+
 		if( point != null ) {
 			request.setAttribute("point", point);
+		}
+		if (pList != null) {
+
+			request.setAttribute("pList", pList);
+			//request.getRequestDispatcher("/views/mypage/mypagePoint.jsp").forward(request, response);
+		} else {
+			request.setAttribute("msg", "실패");
 		}
 		
 		

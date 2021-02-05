@@ -24,12 +24,14 @@ import member.model.dao.MemberDao;
 import member.model.vo.Member;
 import movie.model.vo.MovieVO;
 import movie.model.vo.Search;
+import point.model.vo.Point;
 
 public class MovieDAO {
 
 	private Properties prop = new Properties();
 
 	public MovieDAO() {
+
 		String fileName = MovieDAO.class.getResource("/sql/main/movie-query.xml").getPath();
 
 		try {
@@ -166,4 +168,35 @@ public class MovieDAO {
 
 	}
 
-}
+		public ArrayList<MovieVO> selectMovieList(Connection conn, String memId) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<MovieVO> mList = new ArrayList<MovieVO>();
+			String sql = prop.getProperty("selectMovieList");
+			
+			try {
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, memId);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					mList.add(new MovieVO(rset.getString("M_CODE"), rset.getString("M_TITLE"), rset.getString("M_GENRE"),
+							rset.getString("M_DIRECTOR"), rset.getString("M_DATE"), rset.getString("M_COUNTRY"),
+							rset.getString("M_IMAGE"), rset.getString("M_SUMMARY"), rset.getString("M_RATING"),
+							rset.getInt("M_GRADE"), rset.getString("STATUS")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return mList;
+		}
+		}
+
+

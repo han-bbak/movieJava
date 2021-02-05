@@ -4,7 +4,10 @@ import static common.JDBCTemplate.close;
 import static common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import board.model.dao.BoardDao;
+import board.model.vo.Reply;
 import movie.model.dao.MovieDAO;
 import movie.model.vo.MovieVO;
 import point.model.dao.PointDao;
@@ -22,11 +25,19 @@ public class PointService {
 		return point;
 	}
 
+	public ArrayList<Point> selectPointList(String memId) {
+		Connection conn = getConnection();
+		ArrayList<Point> pList = new PointDao().selectReplyList(conn, memId);
+		
+		close(conn);
+		
+		return pList;
+	}
+
+
+
 	
 
-	public Point pointListSelect(String memId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }
