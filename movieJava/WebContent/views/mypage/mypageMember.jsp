@@ -601,7 +601,7 @@ h1 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="../../images/logo.png"></a>
+				<a href="home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -715,24 +715,31 @@ h1 {
 
 					<div>
 						<h3 class="join_title">
-							<label for="pswd1">현재 비밀번호</label>
+							<label for="pswd">현재 비밀번호</label>
 						</h3>
-						<span class="box int_pass"> <input type="password"
-							name="userPwd" id="userPwd" class="int" maxlength="20"> <span
-							id="alertTxt">사용불가</span> <img src="" id="pswd1_img1"
+						<span class="box int_pass"> 
+						<input type="password"
+							name="userPwd" id="userPwd" class="int" maxlength="16">
+							 
+							 <img src="<%= request.getContextPath() %>/views/mypage/m_icon_pass.png" id="pswd_img"
 							class="pswdImg">
-						</span> <span class="error_next_box"></span>
+						</span>
+						 <span class="error_next_box"></span>
 					</div>
 					<!-- PW1 -->
 					<div>
 						<h3 class="join_title">
 							<label for="pswd1">변경 할 비밀번호</label>
 						</h3>
-						<span class="box int_pass"> <input type="password"
-							name="newPwd" id="newPwd" class="int" maxlength="20"
-							placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."> <span
-							id="alertTxt">사용불가</span> <img src="" id="pswd1_img1"
-							class="pswdImg" visible>
+						<span class="box int_pass">
+						 <input type="password"
+							name="newPwd" id="newPwd" class="int" maxlength="16"
+							placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."> 
+							
+							<span
+							id="alertTxt">사용불가</span>
+							 <img src="<%= request.getContextPath() %>/views/mypage/m_icon_pass.png" id="pswd1_img1"
+							class="pswdImg">
 						</span> <span class="error_next_box"></span>
 					</div>
 
@@ -743,7 +750,7 @@ h1 {
 						</h3>
 						<span class="box int_pass_check"> <input type="password"
 							name="newPwd2" id="newPwd2" class="int" maxlength="20"> <img
-							src="" id="pswd2_img1" class="pswdImg">
+							src="<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
 						</span> <span class="error_next_box"></span>
 					</div>
 
@@ -758,10 +765,10 @@ h1 {
 
 				</form>
 			</div>
-			<!-- content-->
+			
 
 		</div>
-		<!-- wrapper -->
+		
 </body>
 <script>
 	$(".btn").click(function() {
@@ -793,7 +800,7 @@ h1 {
 		}
 
 		if (newPwd.value != newPwd2.value) {
-			alert("비밀번호가 다릅니다.");
+			alert("변경 할 비밀번호가 다릅니다.");
 			newPwd2.select();
 			return false;
 		}
@@ -801,5 +808,89 @@ h1 {
 		return true;
 	}
 </script>
-<script src="main.js"></script>
+<script>
+
+var userPwd = document.querySelector('#userPwd');
+var pwImg = document.querySelector('#pswd_img');
+
+var newPwd = document.querySelector('#newPwd');
+var pwMsg = document.querySelector('#alertTxt');
+var pwImg1 = document.querySelector('#pswd1_img1');
+
+var newPwd2 = document.querySelector('#newPwd2');
+var pwImg2 = document.querySelector('#pswd2_img1');
+var pwMsgArea = document.querySelector('.int_pass');
+
+var error = document.querySelectorAll('.error_next_box');
+
+
+
+/*이벤트 핸들러 연결*/
+
+
+userPwd.addEventListener("focusout", check);
+newPwd.addEventListener("focusout", checkPw);
+newPwd2.addEventListener("focusout", comparePw);
+
+
+
+
+/*콜백 함수*/
+function check() {
+    if(userPwd.value == <%= loginUser.getMemPwd() %>) {
+        pwImg.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_enable.png";
+        error[0].innerHTML = "현재 비밀번호와 일치합니다.";
+        error[0].style.display = "none";
+    } else if(userPwd.value != <%= loginUser.getMemPwd() %>) {
+        pwImg.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png";
+        error[0].innerHTML = "현재 비밀번호와 일치하지 않습니다.";
+        error[0].style.display = "block";
+    } 
+
+   
+}
+
+function checkPw() {
+    var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
+    if(newPwd.value == "") {
+        error[1].innerHTML = "필수 정보입니다.";
+        error[1].style.display = "block";
+    } else if(!pwPattern.test(newPwd.value)) {
+        error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+        pwMsgArea.style.paddingRight = "93px";
+        error[1].style.display = "block";
+        
+        pwMsg.style.display = "block";
+        pwImg1.src = "<%= request.getContextPath() %>/views/mypage/m_icon_not_use.png";
+    } else {
+        error[1].style.display = "none";
+
+        pwMsg.style.display = "block";
+        pwMsg.style.color = "#03c75a";
+        pwImg1.src = "<%= request.getContextPath() %>/views/mypage/m_icon_safe.png";
+    }
+}
+
+function comparePw() {
+    if(newPwd2.value == newPwd.value && newPwd2.value != "") {
+        pwImg2.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_enable.png";
+        error[2].innerHTML = "변경 할 비밀번호와 일치합니다.";
+        error[2].style.display = "none";
+    } else if(newPwd2.value !== newPwd.value) {
+        pwImg2.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png";
+        error[2].innerHTML = "변경 할 비밀번호가 일치하지 않습니다.";
+        error[2].style.display = "block";
+    } 
+
+    if(newPwd2.value == "") {
+        error[2].innerHTML = "필수 정보입니다.";
+        error[2].style.display = "block";
+    }
+}
+
+
+
+
+
+</script>
 </html>

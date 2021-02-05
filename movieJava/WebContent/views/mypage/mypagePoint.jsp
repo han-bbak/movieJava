@@ -445,6 +445,7 @@ h3 {
 
 	.font1{
       	font-family: 'Noto Sans KR', sans-serif;
+      	color : white;
       }
       .header3 {
       overflow : hidden;
@@ -550,7 +551,7 @@ h3 {
             <img class="masthead-avatar mb-5" src="<%=request.getContextPath()%>/views/mypage/avataaars.svg" alt="" width="300px" height="300px">
             <h1><%= loginUser.getMemName() %>님의 포인트</h1>
             
-            <p>point<%= loginUser.getPoint() %></p>
+            <p><%= loginUser.getPoint() %> 포인트</p>
             <br><br><br><br><br><br>
             <div id="area1">포인트 적립/사용 내역</div><br><hr><br>
             
