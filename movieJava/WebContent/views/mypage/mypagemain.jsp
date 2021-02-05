@@ -620,9 +620,8 @@ box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px r
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a id="netflix">공유 계정</a><br>
-			<!--  <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>-->
-            <a href="<%= request.getContextPath() %>/views/board/qa.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
 		</div>
         <div id="content">
             <div id="menudiv"></div>
@@ -647,6 +646,24 @@ $(".btn").click(function () {
          $("#menu,.page_cover,html").removeClass("open");  
      } 
  };
+ 
+//넷플릭스 버튼
+ const netflix = document.getElementById('netflix');
+ netflix.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/netflix/list';
+ });
+ 
+ // Q&A 버튼
+ const qa = document.getElementById('qa');
+ qa.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/qa/list';
+ });
+ 
+ //Store 버튼
+ const store = document.getElementById('store');
+ store.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/store/list';
+ });
     </script>
     
 </html>
