@@ -674,4 +674,15 @@ public class ManagerService {
 		return list;
 	}
 
+	// 결제 정보 세부 내용
+	public Payment selectPayment(int ord_no) {
+		Connection conn = getConnection();
+		
+		Payment payment = new ManagerDao().selectPayment(conn, ord_no);
+		
+		close(conn);
+		
+		return payment;
+	}
+
 }

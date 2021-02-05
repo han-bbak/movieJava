@@ -1127,4 +1127,22 @@
 		 WHERE
 		        RNUM BETWEEN ? AND ?
 	</entry>
+	<entry key="selectPayment">
+       SELECT
+              ORD_NO
+            , ST_TITLE
+            , ORD_QUANTITY
+            , (ST_PRICE * ORD_QUANTITY) AS PRICE
+            , MEM_ID
+            , MEM_NAME
+            , PAY_CARD
+            , PAY_DATE
+         FROM
+              ORDER_LIST
+              JOIN PAYMENT USING(PAY_CODE)
+              JOIN STORE USING(ST_NO)
+              JOIN MEMBER USING(MEM_NO)
+        WHERE
+              ORD_NO = ?
+	</entry>
 </properties>

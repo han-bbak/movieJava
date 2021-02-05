@@ -1755,4 +1755,38 @@ public class ManagerDao {
 		return list;
 	}
 
+	// 결제 세부 정보
+	public Payment selectPayment(Connection conn, int ord_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Payment payment = null;
+		String sql = prop.getProperty("selectPayment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, ord_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				payment = new Payment(rset.getInt(1),
+						              rset.getString(7),
+						              rset.getDate(8),
+						              rset.getString(2),
+						              rset.getInt(3),
+						              rset.getInt(4),
+						              rset.getString(5),
+						              rset.getString(6));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return payment;
+	}
+
 }
