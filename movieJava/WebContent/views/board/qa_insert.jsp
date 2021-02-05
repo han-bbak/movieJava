@@ -235,7 +235,7 @@ store.addEventListener('click', function(){
 });
 </script>
 <script>
-       $(".btn").click(function () { 
+       $(".menuBtn").click(function () { 
            $("#menu,.page_cover,html").addClass("open"); 
             window.location.hash = "#open"; 
         }); 
