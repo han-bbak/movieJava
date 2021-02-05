@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="member.model.vo.Member, movie.model.vo.*, interest.model.vo.*" %>
+	pageEncoding="UTF-8" import="member.model.vo.Member, movie.model.vo.*, interest.model.vo.*, java.util.ArrayList" %>
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
@@ -7,6 +7,8 @@
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	MovieVO movie = (MovieVO)request.getAttribute("movie");
 	Interest interest = (Interest)request.getAttribute("interest");
+	
+	ArrayList<MovieVO> mList = (ArrayList<MovieVO>)request.getAttribute("mList");
 	String title = "";
 	String title2 = "";
 	
@@ -53,6 +55,7 @@
 }
 
 #image-container{
+	padding : 5px;
   width: 350px;
   height: 250px;
 }
@@ -571,9 +574,12 @@ h3 {
             <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
 		</div>
         <div id="content">
+        
+        <!--  
+      
             <div class="card" padding="50px">
                 <div class="top-section">
-                  <!-- <img id="image-container" src="1.png" alt=""> -->
+                  <!-- <img id="image-container" src="1.png" alt=""> 
                   
                   
                 </div>
@@ -588,18 +594,38 @@ h3 {
 
               <div class="card">
                 <div class="top-section">
-                 <!--   <img id="image-container" src="1.png" alt=""> -->
+                 <!--   <img id="image-container" src="1.png" alt=""> 
+                 
                   
         
                 </div>
+                -->
+                
+                
+                
+                
               
-                <div class="product-info">
-                  <div class="name"><%= mcode %></div>
-                  <div class="dis">영화 설명</div>
-                  <a class="btn1" href="#">보러 가기</a>
+                <% if( mList != null && mList.isEmpty()) { %>
+                    	z
+                    <% } else { %>
+                    	<% for(MovieVO m : mList) { %>
+                    	<div class="card" padding="50px">
+                    	<img id="image-container" src="<%= m.getM_image() %>" alt="">
+                <div class="top-section">
                 </div>
+                    	<div class="product-info">
+                    		
+                    		<div class="name"><%= m.getM_title() %></div>
+                    		 <div class="dis"><%= m.getM_genre() %></div>
+
+                    		<a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">보러 가기</a>
+						</div>
+						</div>
+                    	<% } %>
+                    	
+                    <% } %>
               
-              </div>
+            
 
               
                 <script type="text/javascript">

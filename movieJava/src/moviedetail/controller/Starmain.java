@@ -39,7 +39,7 @@ public class Starmain extends HttpServlet {
 		  Member member = (Member)session.getAttribute("loginUser");
 		  int memberno=member.getMemNo();
 		   int result=new MovieService().insertStarGrade(stargrade,Movievo,memberno);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.sendRedirect(request.getContextPath() + "/movie/detail?mCode=" + Movievo);
 	      
 	
 	}

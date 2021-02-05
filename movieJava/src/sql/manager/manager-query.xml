@@ -929,4 +929,220 @@
 		       TAG_NO = ?
 		   AND M_CODE = ?
 	</entry>
+	<entry key="countPayment">
+		SELECT 
+		       COUNT(*)
+		  FROM 
+		       ORDER_LIST
+			   JOIN PAYMENT USING(PAY_CODE)
+			   JOIN STORE USING(ST_NO)
+	</entry>
+	<entry key="countSumPayment">
+		SELECT
+		       SUM(ORD_QUANTITY * ST_PRICE)
+		  FROM
+		       ORDER_LIST
+		       JOIN PAYMENT USING (PAY_CODE)
+		       JOIN STORE USING (ST_NO)
+	</entry>
+	<entry key="countOneMonth">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       ORDER_LIST
+		       JOIN PAYMENT USING(PAY_CODE)
+		       JOIN STORE USING(ST_NO)
+		       JOIN MEMBER USING(MEM_NO)
+		 WHERE
+		       EXTRACT(MONTH FROM PAY_DATE) = EXTRACT(MONTH FROM SYSDATE)
+	</entry>
+	<entry key="countThreeMonth">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       ORDER_LIST
+		       JOIN PAYMENT USING(PAY_CODE)
+		       JOIN STORE USING(ST_NO)
+		       JOIN MEMBER USING(MEM_NO)
+		 WHERE
+		       <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3]]>
+	</entry>
+	<entry key="countSixMonth">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       ORDER_LIST
+		       JOIN PAYMENT USING(PAY_CODE)
+		       JOIN STORE USING(ST_NO)
+		       JOIN MEMBER USING(MEM_NO)
+		 WHERE
+		       <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6]]>
+	</entry>
+	<entry key="countPeriodPayment">
+		SELECT 
+		       COUNT(*)
+		  FROM
+		       ORDER_LIST
+		       JOIN PAYMENT USING(PAY_CODE)
+		       JOIN STORE USING(ST_NO)
+		       JOIN MEMBER USING(MEM_NO)
+		 WHERE
+		       <![CDATA[PAY_DATE >= TO_DATE(?, 'YYYY-MM-DD')]]>
+		   AND <![CDATA[PAY_DATE <= TO_DATE(?, 'YYYY-MM-DD')]]>
+	</entry>
+	<entry key="selectOneMonth">
+		SELECT
+		       RNUM
+		     , ORD_NO
+		     , ST_TITLE
+		     , ORD_QUANTITY
+		     , PRICE
+		     , MEM_ID
+		     , MEM_NAME
+		     , PAY_CARD
+		     , PAY_DATE
+		  FROM
+		     (
+		       SELECT
+		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
+		            , ST_TITLE
+		            , ORD_QUANTITY
+		            , (ST_PRICE * ORD_QUANTITY) PRICE
+		            , MEM_ID
+		            , MEM_NAME
+		            , PAY_CARD
+		            , PAY_DATE
+		         FROM
+		              ORDER_LIST
+		              JOIN PAYMENT USING(PAY_CODE)
+		              JOIN STORE USING(ST_NO)
+		              JOIN MEMBER USING(MEM_NO)
+		        WHERE
+		              EXTRACT(MONTH FROM PAY_DATE) = EXTRACT(MONTH FROM SYSDATE)
+		     )
+		 WHERE
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectThreeMonth">
+		SELECT
+		       RNUM
+		     , ORD_NO
+		     , ST_TITLE
+		     , ORD_QUANTITY
+		     , PRICE
+		     , MEM_ID
+		     , MEM_NAME
+		     , PAY_CARD
+		     , PAY_DATE
+		  FROM
+		     (
+		       SELECT
+		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
+		            , ST_TITLE
+		            , ORD_QUANTITY
+		            , (ST_PRICE * ORD_QUANTITY) PRICE
+		            , MEM_ID
+		            , MEM_NAME
+		            , PAY_CARD
+		            , PAY_DATE
+		         FROM
+		              ORDER_LIST
+		              JOIN PAYMENT USING(PAY_CODE)
+		              JOIN STORE USING(ST_NO)
+		              JOIN MEMBER USING(MEM_NO)
+		        WHERE
+		              <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 3]]>
+		     )
+		 WHERE
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectSixMonth">
+		SELECT
+		       RNUM
+		     , ORD_NO
+		     , ST_TITLE
+		     , ORD_QUANTITY
+		     , PRICE
+		     , MEM_ID
+		     , MEM_NAME
+		     , PAY_CARD
+		     , PAY_DATE
+		  FROM
+		     (
+		       SELECT
+		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
+		            , ST_TITLE
+		            , ORD_QUANTITY
+		            , (ST_PRICE * ORD_QUANTITY) PRICE
+		            , MEM_ID
+		            , MEM_NAME
+		            , PAY_CARD
+		            , PAY_DATE
+		         FROM
+		              ORDER_LIST
+		              JOIN PAYMENT USING(PAY_CODE)
+		              JOIN STORE USING(ST_NO)
+		              JOIN MEMBER USING(MEM_NO)
+		        WHERE
+		              <![CDATA[MONTHS_BETWEEN(SYSDATE, PAY_DATE) <= 6]]>
+		     )
+		 WHERE
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectPeriodPayment">
+		SELECT
+		       RNUM
+		     , ORD_NO
+		     , ST_TITLE
+		     , ORD_QUANTITY
+		     , PRICE
+		     , MEM_ID
+		     , MEM_NAME
+		     , PAY_CARD
+		     , PAY_DATE
+		  FROM
+		     (
+		       SELECT
+		              ROW_NUMBER() OVER(ORDER BY ORD_NO DESC) AS RNUM
+		            , ORD_NO
+		            , ST_TITLE
+		            , ORD_QUANTITY
+		            , (ST_PRICE * ORD_QUANTITY) PRICE
+		            , MEM_ID
+		            , MEM_NAME
+		            , PAY_CARD
+		            , PAY_DATE
+		         FROM
+		              ORDER_LIST
+		              JOIN PAYMENT USING(PAY_CODE)
+		              JOIN STORE USING(ST_NO)
+		              JOIN MEMBER USING(MEM_NO)
+		        WHERE
+		              <![CDATA[PAY_DATE >= TO_DATE(?, 'YYYY-MM-DD')]]>
+		          AND <![CDATA[PAY_DATE <= TO_DATE(?, 'YYYY-MM-DD')]]>
+		     )
+		 WHERE
+		        RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectPayment">
+       SELECT
+              ORD_NO
+            , ST_TITLE
+            , ORD_QUANTITY
+            , (ST_PRICE * ORD_QUANTITY) AS PRICE
+            , MEM_ID
+            , MEM_NAME
+            , PAY_CARD
+            , PAY_DATE
+         FROM
+              ORDER_LIST
+              JOIN PAYMENT USING(PAY_CODE)
+              JOIN STORE USING(ST_NO)
+              JOIN MEMBER USING(MEM_NO)
+        WHERE
+              ORD_NO = ?
+	</entry>
 </properties>

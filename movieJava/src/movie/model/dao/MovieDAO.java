@@ -24,13 +24,15 @@ import member.model.dao.MemberDao;
 import member.model.vo.Member;
 import movie.model.vo.MovieVO;
 import movie.model.vo.Search;
+import point.model.vo.Point;
 
 public class MovieDAO {
 
 	private Properties prop = new Properties();
 
 	public MovieDAO() {
-		String fileName = MemberDao.class.getResource("/sql/movie/movie-query.xml").getPath();
+
+		String fileName = MovieDAO.class.getResource("/sql/main/movie-query.xml").getPath();
 
 		try {
 			prop.loadFromXML(new FileInputStream(fileName));
@@ -135,10 +137,9 @@ public class MovieDAO {
 		return list;
 	}
 
+
 	
-	
-	// 영화 상세페이지
-	public MovieVO selectMovie(Connection conn, String memId) {
+		public MovieVO selectMovie(Connection conn, String memId) {
 		MovieVO movie = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -166,34 +167,36 @@ public class MovieDAO {
 		return movie;
 
 	}
-	
-	
-	public MovieVO selectMovie2(Connection conn, String memId) {
-		MovieVO movie = null;
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
 
-		String sql = prop.getProperty("movieselect");
+		public ArrayList<MovieVO> selectMovieList(Connection conn, String memId) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<MovieVO> mList = new ArrayList<MovieVO>();
+			String sql = prop.getProperty("selectMovieList");
+			
+			try {
 
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memId);
-
-			rset = pstmt.executeQuery();
-
-			if (rset.next()) {
-				movie = new MovieVO(rset.getString("M_CODE"), rset.getString("M_TITLE"), rset.getString("M_GENRE"),
-						rset.getString("M_DIRECTOR"), rset.getString("M_DATE"), rset.getString("M_COUNTRY"),
-						rset.getString("M_IMAGE"), rset.getString("M_SUMMARY"), rset.getString("M_RATING"),
-						rset.getInt("M_GRADE"), rset.getString("STATUS"));
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, memId);
+				
+				rset = pstmt.executeQuery();
+				
+				while(rset.next()) {
+					mList.add(new MovieVO(rset.getString("M_CODE"), rset.getString("M_TITLE"), rset.getString("M_GENRE"),
+							rset.getString("M_DIRECTOR"), rset.getString("M_DATE"), rset.getString("M_COUNTRY"),
+							rset.getString("M_IMAGE"), rset.getString("M_SUMMARY"), rset.getString("M_RATING"),
+							rset.getInt("M_GRADE"), rset.getString("STATUS")));
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
+			
+			return mList;
 		}
-		return movie;
+		}
 
-	}
-}
+

@@ -20,7 +20,8 @@ public class MovieService {
 	public int insertStarGrade(int stargrade, String movievo, int memberno) {
 		Connection conn= getConnection(); 
 		 int stargraded= new MovieDao().insertStarGrade(conn,stargrade,movievo,memberno);
-               if(stargraded>0) {
+		 int updateGrade = new MovieDao().updateMovieGrade(conn, movievo);
+               if(stargraded>0 && updateGrade > 0) {
             	  commit(conn);
                }else {
             	   rollback(conn);

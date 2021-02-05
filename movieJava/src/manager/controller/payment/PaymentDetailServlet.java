@@ -1,7 +1,6 @@
-package manager.controller.movieTag;
+package manager.controller.payment;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,21 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import manager.model.service.ManagerService;
-import movie.model.vo.MovieVO;
-import movieTag.model.vo.MovieTag;
-import tag.model.vo.Tag;
+import payment.model.vo.Payment;
 
 /**
- * Servlet implementation class MovieTagUpdateServlet
+ * Servlet implementation class PaymentDetailServlet
  */
-@WebServlet("/manager/movieTagUpdate")
-public class MovieTagUpdateServlet extends HttpServlet {
+@WebServlet("/manager/paymentDetail")
+public class PaymentDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MovieTagUpdateServlet() {
+    public PaymentDetailServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,17 +30,15 @@ public class MovieTagUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String m_code = request.getParameter("m_code");
+		int ord_no = Integer.parseInt(request.getParameter("ord_no"));
 		
-		ArrayList<MovieTag> movieTag = new ManagerService().selectMovieTag(m_code);
-		MovieVO movie = new ManagerService().selectMovie(m_code);
-		ArrayList<Tag> tag = new ManagerService().selectTagList();
-		
-		request.setAttribute("tag", tag);
-		request.setAttribute("movieTag", movieTag);
-		request.setAttribute("movie", movie);
-		request.getRequestDispatcher("/views/manager/detailsView/movieTagUpdate.jsp").forward(request, response);
-	
+		Payment payment = new ManagerService().selectPayment(ord_no);
+		if(payment != null) {
+			request.setAttribute("payment", payment);
+		} else {
+			request.setAttribute("msg", "결제 세부정보 조회에 실패하였습니다.");
+		}
+		request.getRequestDispatcher("/views/manager/detailsView/paymentDetail.jsp").forward(request, response);
 	}
 
 	/**

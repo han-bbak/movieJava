@@ -437,7 +437,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo"
+				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo"
 					src="/movieJava/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
@@ -541,7 +541,7 @@ h3 {
 <br>
 <br>
 <br>
-<a href="<%= request.getContextPath() %>home.jsp">HOME</a>
+<a href="<%= request.getContextPath() %>/home.jsp">HOME</a>
 <br>
 <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
 <br>
@@ -701,7 +701,7 @@ option {
 				%>
 					<td width="333" align="center">
 						<a
-						href="home.jsp?Moviedetails.jsp?no=<%= Movie.getM_code() %>"> <img
+						href="detail?mCode=<%= Movie.getM_code() %>"> <img
 							alt="" src="<%= Movie.getM_image()%>" width="150" height="200">
 						</a>
 							<p>

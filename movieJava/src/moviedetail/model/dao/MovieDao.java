@@ -92,5 +92,24 @@ STATUS	VARCHAR2(20 BYTE)*/
 		 
 		
 	}
+	
+	// 리뷰가 등록 된 영화의 평점 컬럼 수정용 메소드
+	public int updateMovieGrade(Connection conn, String movievo) {
+		 int result=0; 
+		 PreparedStatement pstmt = null; 
+		 String sql= prop.getProperty("updateMoiveGrade");
+		 
+		 try {
+			pstmt=conn.prepareStatement(sql);
+			 pstmt.setString(1,movievo);
+			 pstmt.setString(2,movievo);
+			 result=pstmt.executeUpdate(); 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}  finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }

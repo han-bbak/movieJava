@@ -19,6 +19,7 @@ import member.model.dao.MemberDao;
 import member.model.vo.Member;
 import movie.model.vo.MovieVO;
 import movieTag.model.vo.MovieTag;
+import payment.model.vo.Payment;
 import qaAnswer.model.vo.QAAnswer;
 import store.model.vo.Store;
 import tag.model.vo.Tag;
@@ -1562,6 +1563,230 @@ public class ManagerDao {
 		
 		return result;
 
+	}
+
+	// 결제 건 수
+	public int countPayment(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int countPayment = 0;
+		String sql = prop.getProperty("countPayment");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				countPayment = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return countPayment;
+	}
+
+	// 결제 총 금액
+	public int countSumPayment(Connection conn) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int sumPayment = 0;
+		String sql = prop.getProperty("countSumPayment");
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				sumPayment = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return sumPayment;
+	}
+
+	// 1,3,6개월 검색 결제 내역 갯수
+	public int countSearchPayment(Connection conn, Search s) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int countSearchPayment = 0;
+		String sql = "";
+		
+		if(s.getSearchCondition().equals("one")) {
+			sql = prop.getProperty("countOneMonth");
+		} else if(s.getSearchCondition().equals("three")) {
+			sql = prop.getProperty("countThreeMonth");
+		} else if(s.getSearchCondition().equals("six")) {
+			sql = prop.getProperty("countSixMonth");
+		}
+		
+		try {
+			stmt = conn.createStatement();
+			
+			rset = stmt.executeQuery(sql);
+			
+			if(rset.next()) {
+				countSearchPayment = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		return countSearchPayment;
+	}
+
+	// 기간별 검색 결제 내역 갯수
+	public int countPeriodSearchPayment(Connection conn, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String[] search = s.getSearch().split(",");
+		String sql = prop.getProperty("countPeriodPayment");
+		int countPeriodSearchPayment = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search[0]);
+			pstmt.setString(2, search[1]);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				countPeriodSearchPayment = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return countPeriodSearchPayment;
+	}
+
+	// 기간별 결제 내역 조회 목록 리스트
+	public ArrayList<Payment> selectSearchPayment(Connection conn, PageInfo pi, Search s) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = "";
+		ArrayList<Payment> list = new ArrayList<>();
+		
+		try {
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			if(s.getSearchCondition().equals("one")) {
+				sql = prop.getProperty("selectOneMonth");
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+			} else if(s.getSearchCondition().equals("three")) {
+				sql = prop.getProperty("selectThreeMonth");
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+			} else if(s.getSearchCondition().equals("six")) {
+				sql = prop.getProperty("selectSixMonth");
+
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+			} else {
+				sql = prop.getProperty("selectPeriodPayment");
+				String[] search = s.getSearch().split(",");
+				
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, search[0]);
+				pstmt.setString(2, search[1]);
+				pstmt.setInt(3, startRow);
+				pstmt.setInt(4, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+			}
+			
+			while(rset.next()) {
+				list.add(new Payment(rset.getInt(2),
+						             rset.getString(8),
+						             rset.getDate(9),
+						             rset.getString(3),
+						             rset.getInt(4),
+						             rset.getInt(5),
+						             rset.getString(6),
+						             rset.getString(7)));
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	// 결제 세부 정보
+	public Payment selectPayment(Connection conn, int ord_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Payment payment = null;
+		String sql = prop.getProperty("selectPayment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, ord_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				payment = new Payment(rset.getInt(1),
+						              rset.getString(7),
+						              rset.getDate(8),
+						              rset.getString(2),
+						              rset.getInt(3),
+						              rset.getInt(4),
+						              rset.getString(5),
+						              rset.getString(6));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return payment;
 	}
 
 }
