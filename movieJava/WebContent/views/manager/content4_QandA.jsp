@@ -157,7 +157,7 @@
 	                    		<td><%= b.getBrd_title() %></td>
 	                    		<td><%= b.getBrd_writer() %></td>
 	                    		<td><%= b.getBrd_date() %></td>
-	                    		<td><%= b.getBrd_qa_wait() %></td>
+	                    		<td class="waitCondition"><%= b.getBrd_qa_wait() %></td>
                     		</tr>
                     	<% } %>
                     <% } %>
@@ -215,6 +215,9 @@
 					console.log(e);
 				}
 			});
+			
+			$('.waitCondition:contains("대기")').css('color', '#CE2E00').css('font-weight', 'bold');
+			$('.waitCondition:contains("완료")').css('color', '#0059A6').css('font-weight', 'bold');
 		});
 	    
 	    $(".tableDiv table td").mouseenter(function(){
