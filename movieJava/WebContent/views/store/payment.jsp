@@ -208,9 +208,9 @@ select {
                   </svg>
             </div>
 			<br><br><br><br>
-			<a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
+			<a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+            <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+         	<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
             <a id="store">STORE</a>
