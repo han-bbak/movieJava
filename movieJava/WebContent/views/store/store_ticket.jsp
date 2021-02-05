@@ -23,6 +23,11 @@
      <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+    #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
         #store_top {
             width: 100%;
             height: 4%;

@@ -20,6 +20,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     
     <style>
+    #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
         #board_top {
             width: 100%;
             height: 4%;
@@ -207,7 +212,7 @@
                     <span class="input_area">
                         <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
-                    
+                    <br><br>
                     <h4 class="board_title">내용</h4>
                     <textarea class="input_area" rows="5" id="summernote" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     

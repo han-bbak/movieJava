@@ -20,6 +20,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	
     <style>
+    #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
         #board_top {
             width: 100%;
             height: 4%;

@@ -146,7 +146,10 @@
         }
         
         .replyListArea{
-        	position: relative;
+        	left: 0;
+            right: 0;
+            margin: auto;
+            position: absolute;
         }
         
         .replyTable {
@@ -194,6 +197,12 @@
         	width: 40px;
         	height:30px;
         }
+        
+        #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
         
        
     </style>
@@ -330,7 +339,8 @@
                     </span>
                     <button class="button" type="button" id="replyBtn">등록하기</button>
            		</div>
-                 <div class="replyListArea">
+           		<div >
+                 <div class="replyListArea" style="width: 830px; height: 300px; overflow: auto">
                  	<table class="replyTable">
                  	<colgroup>
                         <col width="5%" />
@@ -373,6 +383,7 @@
                         </tr>
                     <% } %>
                     </table>
+                 </div>
                  </div>
             </div>
         </div>
