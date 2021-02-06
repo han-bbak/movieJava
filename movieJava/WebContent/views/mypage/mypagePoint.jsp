@@ -557,7 +557,7 @@ h3 {
             <table>
                 <thead>
                   <tr>
-                    <th>날짜</th><th>방식</th><th>적립/사용</th><th>적립/사용 포인트</th><th>보유 포인트</th>
+                    <th>날짜</th><th>결제 코드</th><th>적립/사용</th><th></th><th>보유 포인트</th>
                   </tr>
                 </thead>
                 <tbody>
