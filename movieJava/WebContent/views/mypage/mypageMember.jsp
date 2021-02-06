@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="member.model.vo.Member"%>
 <%
-	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
-	String result = request.getParameter("result");
-	
-	Member loginUser = (Member)session.getAttribute("loginUser");
-	
+request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
+String result = request.getParameter("result");
+
+Member loginUser = (Member) session.getAttribute("loginUser");
 %>
 
 <!DOCTYPE html>
@@ -15,28 +14,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>개인정보수정</title>
 <%
-	if(request.getAttribute("result") != null){
-		if(request.getAttribute("result").equals("success")) {
+if (request.getAttribute("result") != null) {
+	if (request.getAttribute("result").equals("success")) {
 %>
 <script>
 	alert("성공적으로 비밀번호를 변경하였습니다.");
 	window.close();
 </script>
-<%      } else { %>
+<%
+} else {
+%>
 <script>
 	alert("비밀번호 변경에 실패하였습니다.");
 </script>
-<%		}
-	}%>
-	
+<%
+}
+}
+%>
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	crossorigin="anonymous"></script>
-<link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet"
-	type="text/css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+<link href="<%=request.getContextPath()%>/resources/css/form.css"
+	rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap')
+	;
 </style>
 <style>
 #menu-icon {
@@ -582,9 +588,13 @@ h1 {
 	width: 460px;
 }
 
-.font1{
-      	font-family: 'Noto Sans KR', sans-serif;
-      }
+.font1 {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+.font2 {
+	color: white;
+}
 </style>
 
 </head>
@@ -601,7 +611,8 @@ h1 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+				<a href="<%=request.getContextPath()%>/home.jsp"><img
+					class="logo" src="<%=request.getContextPath()%>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -622,7 +633,9 @@ h1 {
 				</form>
 			</div>
 			<div class="header" id="header3">
-				<% if(loginUser == null) { %>
+				<%
+				if (loginUser == null) {
+				%>
 				<div id="loginArea">
 					<div id="loginform">
 						<button type="button" class="loginJoin" id="loginBtn"
@@ -635,37 +648,45 @@ h1 {
 					<br clear="both">
 					<div id="searchDiv">
 						<a
-							href="<%= request.getContextPath() %>/views/member/idSearch.jsp"><span>아이디
+							href="<%=request.getContextPath()%>/views/member/idSearch.jsp"><span>아이디
 								찾기</span></a> <a
-							href="<%= request.getContextPath() %>/views/member/pwdSearch.jsp"><span>비밀번호
+							href="<%=request.getContextPath()%>/views/member/pwdSearch.jsp"><span>비밀번호
 								찾기</span></a>
 					</div>
 				</div>
-				<% } else { %>
+				<%
+				} else {
+				%>
 				<div id="userInfoArea">
 					<div id="userInfo">
-						<span><b><%= loginUser.getMemName() %></b>님 환영합니다!</span>
+						<span><b><%=loginUser.getMemName()%></b>님 환영합니다!</span>
 					</div>
 					<div id="userInfoBtn">
 						<button id="logout">로그아웃</button>
-						<% if(loginUser.getGrade().equals("admin")) { %>
+						<%
+						if (loginUser.getGrade().equals("admin")) {
+						%>
 						<button id="managerPage">관리자 메뉴</button>
 						<script>
 								var managerPage = document.getElementById("managerPage");
 								managerPage.addEventListener('click', function(){
-									location.href='<%= request.getContextPath() %>/views/common/manager_main.jsp';
+									location.href='<%=request.getContextPath()%>/views/common/manager_main.jsp';
 								});
 							</script>
-						<% } %>
+						<%
+						}
+						%>
 					</div>
 				</div>
 				<script>
 					var logout = document.getElementById("logout");
 					logout.addEventListener('click', function(){
-						location.href='<%= request.getContextPath() %>/member/logout';
+						location.href='<%=request.getContextPath()%>/member/logout';
 					});
 				</script>
-				<% } %>
+				<%
+				}
+				%>
 			</div>
 		</div>
 		<div onclick="history.back();" class="page_cover"></div>
@@ -681,13 +702,12 @@ h1 {
 
 			</div>
 			<br> <br> <br> <br> <a
-				href="<%= request.getContextPath() %>/home.jsp">HOME</a><br> <a
-				href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br>
+				href="<%=request.getContextPath()%>/home.jsp">HOME</a><br> <a
+				href="<%=request.getContextPath()%>/views/mypage/mypagemain.jsp">마이페이지</a><br>
 			<a
-				href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심
-				영화</a><br> <a id="netflix">공유 계정</a><br>
-            <a id="qa">Q&A</a><br>
-            <a id="store">STORE</a>
+				href="<%=request.getContextPath()%>/views/mypage/mypageInterest.jsp">관심
+				영화</a><br> <a id="netflix">공유 계정</a><br> <a id="qa">Q&A</a><br>
+			<a id="store">STORE</a>
 		</div>
 
 
@@ -701,7 +721,7 @@ h1 {
 					<!-- ID -->
 					<div>
 						<h3 class="join_title">
-							<label for="id">아이디</label>
+							<label for="id" class="font2">아이디</label>
 						</h3>
 						<span class="box int_id"> <input type="text" id="id"
 							class="int" maxlength="12"
@@ -714,42 +734,37 @@ h1 {
 
 					<div>
 						<h3 class="join_title">
-							<label for="pswd">현재 비밀번호</label>
+							<label for="pswd" class="font2">현재 비밀번호</label>
 						</h3>
-						<span class="box int_pass"> 
-						<input type="password"
-							name="userPwd" id="userPwd" class="int" maxlength="16">
-							 
-							 <img src="<%= request.getContextPath() %>/views/mypage/m_icon_pass.png" id="pswd_img"
-							class="pswdImg">
-						</span>
-						 <span class="error_next_box"></span>
+						<span class="box int_pass"> <input type="password"
+							name="userPwd" id="userPwd" class="int" maxlength="16"> <img
+							src="<%=request.getContextPath()%>/views/mypage/m_icon_pass.png"
+							id="pswd_img" class="pswdImg">
+						</span> <span class="error_next_box"></span>
 					</div>
 					<!-- PW1 -->
 					<div>
 						<h3 class="join_title">
-							<label for="pswd1">변경 할 비밀번호</label>
+							<label for="pswd1" class="font2">변경 할 비밀번호</label>
 						</h3>
-						<span class="box int_pass">
-						 <input type="password"
+						<span class="box int_pass"> <input type="password"
 							name="newPwd" id="newPwd" class="int" maxlength="16"
-							placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."> 
-							
-							<span
-							id="alertTxt">사용불가</span>
-							 <img src="<%= request.getContextPath() %>/views/mypage/m_icon_pass.png" id="pswd1_img1"
-							class="pswdImg">
+							placeholder="8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요."> <span
+							id="alertTxt">사용불가</span> <img
+							src="<%=request.getContextPath()%>/views/mypage/m_icon_pass.png"
+							id="pswd1_img1" class="pswdImg">
 						</span> <span class="error_next_box"></span>
 					</div>
 
 					<!-- PW2 -->
 					<div>
 						<h3 class="join_title">
-							<label for="pswd2">변경 할 비밀번호 재확인</label>
+							<label for="pswd2" class="font2">변경 할 비밀번호 재확인</label>
 						</h3>
 						<span class="box int_pass_check"> <input type="password"
 							name="newPwd2" id="newPwd2" class="int" maxlength="20"> <img
-							src="<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png" id="pswd2_img1" class="pswdImg">
+							src="<%=request.getContextPath()%>/views/mypage/m_icon_check_disable.png"
+							id="pswd2_img1" class="pswdImg">
 						</span> <span class="error_next_box"></span>
 					</div>
 
@@ -764,10 +779,9 @@ h1 {
 
 				</form>
 			</div>
-			
+
 
 		</div>
-		
 </body>
 <script>
 	$(".btn").click(function() {
@@ -836,12 +850,12 @@ newPwd2.addEventListener("focusout", comparePw);
 
 /*콜백 함수*/
 function check() {
-    if(userPwd.value == <%= loginUser.getMemPwd() %>) {
-        pwImg.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_enable.png";
+    if(userPwd.value == <%=loginUser.getMemPwd()%>) {
+        pwImg.src = "<%=request.getContextPath()%>/views/mypage/m_icon_check_enable.png";
         error[0].innerHTML = "현재 비밀번호와 일치합니다.";
         error[0].style.display = "none";
-    } else if(userPwd.value != <%= loginUser.getMemPwd() %>) {
-        pwImg.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png";
+    } else if(userPwd.value != <%=loginUser.getMemPwd()%>) {
+        pwImg.src = "<%=request.getContextPath()%>/views/mypage/m_icon_check_disable.png";
         error[0].innerHTML = "현재 비밀번호와 일치하지 않습니다.";
         error[0].style.display = "block";
     } 
@@ -860,23 +874,23 @@ function checkPw() {
         error[1].style.display = "block";
         
         pwMsg.style.display = "block";
-        pwImg1.src = "<%= request.getContextPath() %>/views/mypage/m_icon_not_use.png";
+        pwImg1.src = "<%=request.getContextPath()%>/views/mypage/m_icon_not_use.png";
     } else {
         error[1].style.display = "none";
 
         pwMsg.style.display = "block";
         pwMsg.style.color = "#03c75a";
-        pwImg1.src = "<%= request.getContextPath() %>/views/mypage/m_icon_safe.png";
+        pwImg1.src = "<%=request.getContextPath()%>/views/mypage/m_icon_safe.png";
     }
 }
 
 function comparePw() {
     if(newPwd2.value == newPwd.value && newPwd2.value != "") {
-        pwImg2.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_enable.png";
+        pwImg2.src = "<%=request.getContextPath()%>/views/mypage/m_icon_check_enable.png";
         error[2].innerHTML = "변경 할 비밀번호와 일치합니다.";
         error[2].style.display = "none";
     } else if(newPwd2.value !== newPwd.value) {
-        pwImg2.src = "<%= request.getContextPath() %>/views/mypage/m_icon_check_disable.png";
+        pwImg2.src = "<%=request.getContextPath()%>/views/mypage/m_icon_check_disable.png";
         error[2].innerHTML = "변경 할 비밀번호가 일치하지 않습니다.";
         error[2].style.display = "block";
     } 
@@ -890,22 +904,20 @@ function comparePw() {
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
-   location.href='<%= request.getContextPath() %>/netflix/list';
+   location.href='<%=request.getContextPath()%>/netflix/list';
 });
 
 // Q&A 버튼
 const qa = document.getElementById('qa');
 qa.addEventListener('click', function(){
-   location.href='<%= request.getContextPath() %>/qa/list';
+   location.href='<%=request.getContextPath()%>/qa/list';
 });
 
 //Store 버튼
 const store = document.getElementById('store');
 store.addEventListener('click', function(){
-   location.href='<%= request.getContextPath() %>/store/list';
-});
-
-
-
+   location.href='<%=request.getContextPath()%>
+	/store/list';
+	});
 </script>
 </html>
