@@ -24,6 +24,8 @@
 	
 	
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,8 +37,15 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+
 </style>
-    
+    <% 
+	if(loginUser == null) {%>
+	<script>
+	location.href="<%= request.getContextPath() %>/views/member/loginView.jsp";
+
+	</script>
+	<% } %>
     
     
     <style> 
