@@ -73,11 +73,12 @@ a:-webkit-any-link {
 }
 
 #footer {
-	margin-top: 70px;
-	padding: 20px;
-	background-color: rgb(24, 24, 24);
-	width: 100%;
-	height: 150px;
+    float: left;
+    margin-top: 300px;
+    padding: 20px;
+    background-color: rgb(24, 24, 24);
+    width: 100%;
+    height: 150px;
 }
 
 .header {
@@ -396,6 +397,7 @@ h3 {
 	opacity: 0;
 }
 
+
 /* 바로가기 버튼 */
 .linkbtn {
 	width: 157px;
@@ -422,6 +424,7 @@ h3 {
 	background-color: #FFFFFF;
 	color: #181C25;
 }
+
 </style>
 </head>
 
@@ -580,21 +583,26 @@ option {
 #filter option[value="all"] {
 	color: rgb(165, 165, 165);
 }
+#filter{
+margin-left: 77px;
+}
 
 #filter2 {
-	margin-left: 1100px
+    margin-left: 830px;
+}
+
+div.posts {
+margin-left : 90px;
 }
 
 [id^=filter] {
-	border: 0px solid;
-	border-radius: 10px;
-	display: block;
-	float: left;
-	padding: 7px;
-	width: 100px;
-	cursor: pointer;
-	font-size: 14px;
-	margin: 0 50px;
+    border: 0px solid;
+    border-radius: 9px;
+    display: block;
+    float: left;
+    padding: 10px;
+    font-size: 15px;
+    margin: -9px 0px 4px;
 }
 /* 
 #wwrapper{
