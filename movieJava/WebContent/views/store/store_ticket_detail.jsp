@@ -262,7 +262,6 @@
 					<tr>
 						<td height="15%">
 							<button type="button" class="btn" id="buy">구매하기</button>
-							<button type="button" class="btn" id="bascket">장바구니</button>
 						</td>
 					</tr>
 				</table>

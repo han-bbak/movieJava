@@ -262,7 +262,6 @@
 					<tr>
 						<td height="15%">
 							<button type="button" class="btn" id="buy">구매하기</button>
-							<button type="button" class="btn" id="bascket">장바구니</button>
 						</td>
 					</tr>
 				</table>
@@ -311,21 +310,6 @@ $("#buy").click(function(){
 			alert('로그인 후 결제가 가능합니다.');
 		<% } %>
 	});
-});
-
-//장바구니 버튼
-const bascket = document.getElementById('bascket');
-bascket.addEventListener('click', function() {
-	<% if(loginUser != null) { %>
-		var msg = confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
-		if(msg){
-			location.href = '<%= request.getContextPath() %>/store/bascket';
-		} else {
-			location.reload();
-		}
-	<% } else { %>
-		alert('로그인 후 장바구니에 담기가 가능합니다.');
-	<% } %>
 });
 </script>
 
