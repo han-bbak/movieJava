@@ -901,6 +901,9 @@ function comparePw() {
     }
 }
 
+
+</script>
+<script>
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
