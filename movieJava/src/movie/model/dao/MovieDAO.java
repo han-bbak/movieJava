@@ -83,7 +83,6 @@ public class MovieDAO {
 			 * 직접 검색/장르필터/정렬 3가지 경우의 수 가져오기
 			 */
 	public ArrayList<MovieVO> selectSearchMovie(Connection conn, Search filter) {
-
 		ArrayList<MovieVO> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,11 +90,9 @@ public class MovieDAO {
 		System.out.println(filter);
 		try {
 			if (filter.getSort() != null && !filter.getSort().equals("all")) {
-				// 검색된 값에서 정렬에 선택이 되어있거나 all일 때
 				if (filter.getSort().equals("최신")) {
 					sql = prop.getProperty("MovieSearchSort1");
 				} else {
-					// 평점 리뷰순
 					if (filter.getSort().equals("평점")) {
 						sql = prop.getProperty("MovieSearchSort2");
 					}

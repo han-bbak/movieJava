@@ -11,9 +11,15 @@ public class MovieVO {
 	private String m_summary;		// 설명
 	private String m_rating;		// 관람등급
 	private double m_grade;			// 평점
-	private String status;			// 게시여부
+	private String status;			// 넷플릭스 서비스 여부
 	
 	public MovieVO() {
+	}
+
+	public MovieVO(String m_title, String status) {
+		super();
+		this.m_title = m_title;
+		this.status = status;
 	}
 
 	public MovieVO(String m_code, String m_title, String m_genre, String m_director, String m_date, String m_country,
