@@ -277,6 +277,7 @@ select {
 						<td>
 							<span>총 결제 금액</span>
 							<span id="realtotal" style="color:blue;"><%= rtotal %></span>원
+							<input type="hidden" id="inputtotal" value="<%= rtotal %>">
 						</td>
 					</tr>
 				</table>
@@ -324,6 +325,7 @@ store.addEventListener('click', function(){
 		var r = $rtotal.text();
 		var $useP = $(this).parent().parent().parent().children().eq(3).children().eq(0).children().eq(4);
 		var use = $useP.text();
+		var htotal = $(this).parent().parent().parent().children().eq(3).children().eq(1).children().eq(2).val();
 		
 		if(!havePoint) {
 			havePoint = 0;
@@ -335,7 +337,7 @@ store.addEventListener('click', function(){
 			r *= 1;
 		}
 		
-		if(point < 0) {
+		if(p < 0) {
 			alert('마이너스는 가능하지 않습니다.');
 		} else if (p > havePoint) {
 			alert('보유한 포인트보다 더 많이 사용할 수 없습니다.');
@@ -354,6 +356,10 @@ pay.addEventListener('click', function(){
 		var address1 = document.getElementById('short').value;
 		var address2 = document.getElementById('long').value;
 		var address3 = document.getElementById('detail').value;
+		var point = document.getElementById('point').value;
+		var total = document.getElementById('inputtotal').value;
+		
+		var real = total - point;
 
 		if(address1 == '' || address2 == '' || address3 == '') {
 			alert('주소를 입력해 주세요.');
@@ -363,7 +369,7 @@ pay.addEventListener('click', function(){
 		   	 	pay_method : 'card',
 		    	merchant_uid : 'merchant_' + new Date().getTime(),
 		    	name : '주문명:<%= storeTitle %>',
-		    	amount : '<%= rtotal %>',
+		    	amount : real,
 		    	buyer_email : '<%= loginUser.getEmail() %>',
 		    	buyer_name : '<%= loginUser.getMemName() %>',
 		    	buyer_tel : <%= loginUser.getPhone() %>
