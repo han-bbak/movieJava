@@ -221,7 +221,7 @@
             <br><br><br><br>
             <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
             <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
-         	<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
+         	<a id="interest">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
             <a id="store">STORE</a>
@@ -316,16 +316,10 @@ $("#buy").click(function(){
 	});
 });
 
-//장바구니 버튼
-const bascket = document.getElementById('bascket');
-bascket.addEventListener('click', function() {
-	
-	<% if(loginUser != null) { %>
-		
-		location.href = '<%= request.getContextPath() %>/goods/bascket';
-	<% } else { %>
-		alert('로그인 후 장바구니에 담기가 가능합니다.');
-	<% } %>
+//관심영화 버튼
+const interest = document.getElementById('interest');
+interest.addEventListener('click', function(){
+   location.href='<%= request.getContextPath() %>/mypage/movie';
 });
 </script>
 

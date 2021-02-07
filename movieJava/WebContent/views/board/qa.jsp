@@ -272,7 +272,7 @@
             <br><br><br><br>
             <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
             <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
-         	<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
+         	<a id="interest">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a>
             <a id="store">STORE</a>
@@ -413,6 +413,12 @@
     	const qa1 = document.getElementById('qa1');
     	qa1.addEventListener('click', function(){
     		location.href='<%= request.getContextPath() %>/qa/list';
+    	});
+    	
+    	//관심영화 버튼
+    	const interest = document.getElementById('interest');
+    	interest.addEventListener('click', function(){
+    	   location.href='<%= request.getContextPath() %>/mypage/movie';
     	});
     	
     	//Store 버튼
