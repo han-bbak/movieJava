@@ -323,6 +323,8 @@
             var userName = document.getElementById("userName");
             var birthYear = document.getElementById("birthYear");
             var birthday = document.getElementById("birthday");
+            var email = document.getElementById("email");
+            var phone = document.getElementById("phone");
 
             if (userId.value == "") {
                 alert('아이디를 입력해주세요.');
@@ -345,6 +347,18 @@
             if (userName.value == "") {
                 alert('이름을 입력해주세요');
                 userName.focus();
+                return;
+            }
+            
+            if (email.value == "") {
+                alert('이메일을 입력해주세요');
+                email.focus();
+                return;
+            }
+            
+            if (phone.value == "") {
+                alert('핸드폰 번호를 입력해주세요');
+                phone.focus();
                 return;
             }
 
