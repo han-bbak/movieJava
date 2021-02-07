@@ -11,15 +11,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class NetflixCrawling {
+	
+	public NetflixCrawling() {}
 
-	public static void main(String[] args) {
+	public String netflixCrawling(String search) {
 
 		Document doc = null;
 		Elements element = new Elements();
 
-		// 4flix °Ë»ö°ª Å©·Ñ¸µ
-		String url = "https://www.4flix.co.kr/suggestions.php?stx=¿À´Ã";
-
+		// 4flix ï¿½Ë»ï¿½ï¿½ï¿½ Å©ï¿½Ñ¸ï¿½
+		String url = "https://www.4flix.co.kr/suggestions.php?stx=" + search;
+		String result = "";
+		
 		try {
 			Connection con = Jsoup.connect(url);
 			doc = con.post();
@@ -38,7 +41,7 @@ public class NetflixCrawling {
 				for (int i = 0; i < listArr.size(); i++) {
 					JSONObject movie = (JSONObject) listArr.get(i);
 					String value = (String)movie.get("value");
-//               System.out.println(value); //¿µÈ­ ÄÚµå     
+//               System.out.println(value); //ï¿½ï¿½È­ ï¿½Úµï¿½     
 					url = "http://www.4flix.co.kr/board/netflix/" + value;
 					con = Jsoup.connect(url);
 					doc = con.get();
@@ -57,6 +60,10 @@ public class NetflixCrawling {
 							System.out.println("M_SUMMARY : " + M_SUMMARY.text());
 							System.out.println("link : " + link.attr("title"));
 
+							result.concat(M_TITLE.text());
+							result.concat(M_SUMMARY.text());
+							result.concat(link.attr("title"));
+							
 //							new crawlingNetfilx().crawling(link.attr("title"));
 						}
 					}
@@ -67,5 +74,7 @@ public class NetflixCrawling {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return result;
 	}
 }

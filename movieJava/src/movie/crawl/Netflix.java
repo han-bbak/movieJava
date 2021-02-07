@@ -14,12 +14,13 @@ import org.jsoup.select.Elements;
 
 public class Netflix {
 
-	public static void main(String[] args) {
+	public String netflixCrawling(String search) {
 
 		Document doc = null;
 		Elements element = new Elements();
 
-		String url = "https://www.4flix.co.kr/suggestions.php?stx=나";
+		String crawling = "";
+		String url = "https://www.4flix.co.kr/suggestions.php?stx=" + search;
 
 		try {
 			Connection con = Jsoup.connect(url);
@@ -56,6 +57,9 @@ public class Netflix {
 							System.out.println("M_SUMMARY : " + M_SUMMARY.text());
 							System.out.println("link : " + link.attr("title"));
 
+							crawling.concat(M_TITLE.text());
+							crawling.concat(M_SUMMARY.text());
+							crawling.concat(link.attr("title"));
 
 						}
 					}
@@ -66,5 +70,7 @@ public class Netflix {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return crawling;
 	}
 }
