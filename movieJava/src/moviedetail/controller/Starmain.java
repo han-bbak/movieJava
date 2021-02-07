@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import member.model.vo.Member;
-import moviedetail.model.service.MovieService;
+import moviedetail.model.service.MovieDetailService;
+
 
 /**
  * Servlet implementation class Starmain
@@ -38,7 +39,7 @@ public class Starmain extends HttpServlet {
 		  HttpSession session = request.getSession();
 		  Member member = (Member)session.getAttribute("loginUser");
 		  int memberno=member.getMemNo();
-		   int result=new MovieService().insertStarGrade(stargrade,Movievo,memberno);
+		   int result=new MovieDetailService().insertStarGrade(stargrade,Movievo,memberno);
 		response.sendRedirect(request.getContextPath() + "/movie/detail?mCode=" + Movievo);
 	      
 	

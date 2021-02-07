@@ -10,11 +10,12 @@ import java.util.Properties;
 import static common.JDBCTemplate.close;
 import board.model.dao.BoardDao;
 import movie.model.vo.MovieVO;
+import moviedetail.model.vo.MovieDetailvo;
 
-public class MovieDao {
+public class MovieDetailDao {
 	private Properties prop = new Properties();
 
-	public MovieDao() {
+	public MovieDetailDao() {
 		String fileName = BoardDao.class.getResource("/sql/movie/movie-query.xml").getPath();
 
 		try {
@@ -111,5 +112,7 @@ STATUS	VARCHAR2(20 BYTE)*/
 		}
 		return result;
 	}
-
+public void addComment(MovieDetailvo vo)throws SQLException{
+	int n=0; 
+}
 }
