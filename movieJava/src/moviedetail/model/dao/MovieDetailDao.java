@@ -11,10 +11,10 @@ import static common.JDBCTemplate.close;
 import board.model.dao.BoardDao;
 import movie.model.vo.MovieVO;
 
-public class MovieDao {
+public class MovieDetailDao {
 	private Properties prop = new Properties();
 
-	public MovieDao() {
+	public MovieDetailDao() {
 		String fileName = BoardDao.class.getResource("/sql/movie/movie-query.xml").getPath();
 
 		try {

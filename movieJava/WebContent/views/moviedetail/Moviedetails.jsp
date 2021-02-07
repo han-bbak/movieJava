@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="movie.model.vo.MovieVO,member.model.vo.Member" %>
 <% 
-	MovieVO movie = (MovieVO)request.getAttribute("movie");
+   MovieVO movie = (MovieVO)request.getAttribute("movie");
 // 별점을 등록할떄 어떤회원이 등록하는지 알아야하기때문에 로그인정보를 가져온다 
     Member loginUser = (Member)session.getAttribute("loginUser");
 %>
@@ -10,6 +10,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    
 <meta charset="UTF-8">
 <title>moviedetail</title>
 <style>
@@ -462,70 +463,23 @@ html.open {
       </details>
 </div>
 
-<!-- -->
-    <div id="form-commentInfo">
-           
-    <input id="comment-input" placeholder="댓글을 입력해 주세요.">
-    <button id="submit">등록</button>
-    <div id="comment-count">댓글 <span id="count">0</span></div> 
-   <div class="score">
-       <ul>
-           <li>
-               
-              <div class="star_score">★★★★★ <em>별점점수</em></div> 
-              <span class="st_on"></span>
-              
-              <div class="score_reple">
-                    <p id="score">
-                    <!-- 스포일러 컨텐츠로 처리되는지 여부 -->
-                 <h3>wwwww</h3>>
-    </p>
-    <dl>
-        <dt>
-            <em>
-                <a href="#" onclick="javascript:showPointListByNid(16402064);return false;">
-                    <span>베베(alfn****)    yy/mm/dd</span> 
-                </a>
-                <!--줄바꿈-->
-                <hr>
-            </em>
-       
-        </dt>
-        
-    </dl>
-    </div>
-    
-    </li>
-    <li>
-               
-        <div class="star_score">★★★★★<em>별점점수</em></div> 
-        <span class="st_on"></span>
-        
-        <div class="score_reple">
-              <p id="score">
-              <!-- 스포일러 컨텐츠로 처리되는지 여부 -->
-           <h3>wwwww</h3>>
-</p>
-<dl>
-  <dt>
-      <em>
-          <a href="#" onclick="javascript:showPointListByNid(16402064);return false;">
-              <span>베베(alfn****)    yy/mm/dd</span> 
-          </a>
-          <!--줄바꿈-->
-          <hr>
-      </em>
- 
-  </dt>
-  
-</dl>
+<!--영화리뷰 -->
+<form name="commentFrm">
+<div class="register">
+<textarea cols="100" class="customheight" name="commentContents" id="commentContents"></textarea>
 </div>
+<div class="register">
+<button type="button" class="customHeight btnCommentOK">후기등록</button>
+</div>
+<input type = "hidden" name="pnum" value="${pvo.pnum}"/>
+<input type="hidden" name="gobackURL" value="${goBackURL }"/>
 
-</li>
-    </ul>
-    </div>
-    </div>
-   
+</form>
+	
+
+		
+		
+		
             </div>
 
  
@@ -579,57 +533,70 @@ html.open {
                 //페이지가 열렸을때 해당코드를 실행할수있게  $(function(){
                  // 서블렛을 생성하고 url 만들기 
                   $(function(){
-                	  $("#starto").click(function(){
-                		  var star= document.getElementsByClassName("on");
+                     $("#starto").click(function(){
+                        var star= document.getElementsByClassName("on");
                           // stargrade 에 별점 길이가들어간다 
-                   		var stargrade= star.length;
-                	  
+                         var stargrade= star.length;
+                     
                   <% if(loginUser != null) {%>
                   location.href="<%= request.getContextPath() %>/Star?stargrade="
-                  			+ stargrade + '&MovieVo=' + <%=movie.getM_code()%>;
-                	 <%-- $.ajax({
-                		  url: "<%= request.getContextPath()%>/Star",
-                		  data : {stargrade:stargrade,
-                			    MovieVo:<%=movie.getM_code()%>
-                			  },
-                		  type :"post", 
-                		  success: function(result){
-                			  var Average = 
-                				  // 
-                				  "<h3>평균: </h3>" +result; 
-                			  $("#Average").html(Average);
-                		  },
-                		  error : function(e){
-                			  console.log(e);
-                		  }
-                			  
-                	  }) --%>
+                           + stargrade + '&MovieVo=' + <%=movie.getM_code()%>;
+                    <%-- $.ajax({
+                        url: "<%= request.getContextPath()%>/Star",
+                        data : {stargrade:stargrade,
+                             MovieVo:<%=movie.getM_code()%>
+                           },
+                        type :"post", 
+                        success: function(result){
+                           var Average = 
+                              // 
+                              "<h3>평균: </h3>" +result; 
+                           $("#Average").html(Average);
+                        },
+                        error : function(e){
+                           console.log(e);
+                        }
+                           
+                     }) --%>
                 <% } else { %>
                 alert("로그인후 이용가능한 서비스입니다.");
                 <% } %>
-                	  })
-                  }) 
+                     });
+                  
            
     </script>
 
-    <!-- 댓글 150자이상 금지 -->
+    <!-- 영화후기쓰기 -->
 <script>
-    $(document).ready(function(){
-        // textarea에서 keyup 이벤트 발생했을 경우
-        $("textarea").keyup(function(){
-            // textarea의 길이 값 저장
-            var inputLength = $(this).val().length;
-            $("#counter").html(inputLength);
-
-            var remain = 150 - inputLength;
-
-            if(remain >= 0)
-                $("#counter").css("color", "black");
-            else
-                $("#counter").css("color", "red");
-        });
-    });
+ $(".btnCommentOK").click(function(){
+	 if(${sessionScope.loginuser == null}){
+		 alert("영화후기를 작성할려면 로그인을 하셔야합니다.");
+	 return; 
+	 }
+	 
+	 //글내용 
+	 var commentContents =$("#commentContents").val().trim();
+	 if(commentContents == ""){
+		 alert("영화 후기 내용을 입력해주세요~"); 
+		 return;
+	 }
+	 });
+ 
+   var queryString =$("form[name=commentFrm]").serialize(); 
+   $.ajax({
+	   url:"",
+	   type:"POST",
+	   data:queryString, h
+	   success:function(){
+		   alert("확인용:영화리뷰 작성 성공");
+	   },
+	   error:function(request,status,error){
+		   alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error); 
+	   }
+   });
+   
+   });
 </script>
-
+	
 </body>
 </html>
