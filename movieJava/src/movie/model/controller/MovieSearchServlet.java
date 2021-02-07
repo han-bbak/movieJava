@@ -10,6 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import movie.model.service.MovieService;
 import movie.model.vo.MovieVO;
@@ -45,7 +53,6 @@ public class MovieSearchServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("/views/movie/search/result.jsp");
 		view.forward(request, response);
 	}
-
 	
 
 	/**
