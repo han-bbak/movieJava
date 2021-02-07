@@ -24,6 +24,8 @@
 	
 	
 %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +35,28 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
+
+</style>
+    <% 
+	if(loginUser == null) {%>
+	<script>
+	location.href="<%= request.getContextPath() %>/views/member/loginView.jsp";
+
+	</script>
+	<% } %>
+	
+	<% 
+	if(mList == null) {%>
+	<script>
+	alert("관심영화를 등록해주세요");
+	location.href="<%= request.getContextPath() %>/home.jsp";
+
+	</script>
+	<% } %>
+    
+    
     <style> 
 
          #content {
@@ -476,6 +500,14 @@ h3 {
 	margin: 20px 50px;
 	max-width: 130%;
 }
+.font1{
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
+      #h1con{
+      	font-size : 50px;
+      	color : white;
+      	text-align : center;
+      }
     </style>
     
 </head>
@@ -490,7 +522,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -565,41 +597,17 @@ h3 {
 
 			</div>
 			<br> <br> <br> <br> 
-			<a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a id="netflix">공유 계정</a><br>
-			<!--  <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>-->
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
 		</div>
-        <div id="content">
+		<h1 class="font1" id="h1con">관심영화</h1>
+        <div id="content" class="font1">
         
-        <!--  
-      
-            <div class="card" padding="50px">
-                <div class="top-section">
-                  <!-- <img id="image-container" src="1.png" alt=""> 
-                  
-                  
-                </div>
-              
-                <div class="product-info">
-                  <div class="name"><%= title %></div>
-                  <div class="dis"><%= title2 %></div>
-                  <a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">보러 가기</a>
-                </div>
-              
-              </div>
-
-              <div class="card">
-                <div class="top-section">
-                 <!--   <img id="image-container" src="1.png" alt=""> 
-                 
-                  
-        
-                </div>
-                -->
+       
                 
                 
                 
@@ -618,7 +626,7 @@ h3 {
                     		<div class="name"><%= m.getM_title() %></div>
                     		 <div class="dis"><%= m.getM_genre() %></div>
 
-                    		<a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">보러 가기</a>
+                    		<a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">상세 페이지</a>
 						</div>
 						</div>
                     	<% } %>
@@ -650,5 +658,23 @@ $(".btn").click(function () {
          $("#menu,.page_cover,html").removeClass("open");  
      } 
  };
+ 
+//넷플릭스 버튼
+ const netflix = document.getElementById('netflix');
+ netflix.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/netflix/list';
+ });
+ 
+ // Q&A 버튼
+ const qa = document.getElementById('qa');
+ qa.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/qa/list';
+ });
+ 
+ //Store 버튼
+ const store = document.getElementById('store');
+ store.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/store/list';
+ });
     </script>
 </html>

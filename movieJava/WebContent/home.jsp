@@ -24,6 +24,8 @@
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 </style>
+
+
 <style>
 #menu-icon {
 	color: #ffffff;
@@ -595,7 +597,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">
 								영화 굿즈<br>온라인 단독 판매
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.jsp'">바로가기</button>
+					onclick="location.href='<%= request.getContextPath() %>/store/list'">바로가기</button>
 						</div></li>
 				</ul>
 			</div>
@@ -842,7 +844,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/store/store_goods.js
 			<p>#개봉예정</p>
 		<section id="slider-div2" class="center slider">
 		<div>
-			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2OO1">
+			<a href="<%= request.getContextPath() %>/movie/detail?mCode=2001">
 			<img src="views/movie/image/scheduled/scheduled1.jpg"> 
 			<!-- <span class=center> -->
 			<p class=caption>킹스맨: 퍼스트 에이전트</p></a>

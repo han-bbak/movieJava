@@ -451,9 +451,17 @@ h3 {
       	font-family: 'Noto Sans KR', sans-serif;
       }
       #h1con{
-      	font-size : 30px;
+      	font-size : 50px;
       	color : white;
       	text-align : center;
+      }
+      #last {
+      text-align : center;
+      	width : 300px;
+      	height : 100px;
+      	font-size : 20px;
+      	background-color : #95c1f7;
+      	float : right;
       }
       
       
@@ -475,7 +483,7 @@ h3 {
 				</div>
 			</div>
 			<div class="header" id="header1">
-				<a href="home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+				<a href="<%= request.getContextPath() %>/home.jsp"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
 			</div>
 			<div class="header" id="header2">
 				<form id="search-form">
@@ -550,13 +558,12 @@ h3 {
 
 			</div>
 			<br> <br> <br> <br> 
-			<a href="<%= request.getContextPath() %>home.jsp">HOME</a><br>
+			<a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
 			<a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
 			<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br> 
 			<a id="netflix">공유 계정</a><br>
-			<!--  <a href="<%= request.getContextPath() %>/views/board/watcha.jsp">공유 계정</a>-->
-            <a href="<%= request.getContextPath() %>/views/board/QA.jsp">Q&A</a>
-            <a href="<%= request.getContextPath() %>/views/store/store_goods.jsp">STORE</a>
+            <a id="qa">Q&A</a><br>
+            <a id="store">STORE</a>
 		</div>
         <div id="content">
             <h1 class="font1" id="h1con">결제내역</h1>
@@ -719,8 +726,11 @@ h3 {
                                         </tbody>
                                         
                                     </table>
+                                    <br><Br><br>
+                            <input type="button" id="last" class="font1" onclick="location.href='<%= request.getContextPath() %>/home.jsp'" value="메인으로">
                             
                             
+                          
 </body>
 <script>
 $(".btn").click(function () { 
@@ -733,5 +743,23 @@ $(".btn").click(function () {
          $("#menu,.page_cover,html").removeClass("open");  
      } 
  };
+ 
+//넷플릭스 버튼
+ const netflix = document.getElementById('netflix');
+ netflix.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/netflix/list';
+ });
+ 
+ // Q&A 버튼
+ const qa = document.getElementById('qa');
+ qa.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/qa/list';
+ });
+ 
+ //Store 버튼
+ const store = document.getElementById('store');
+ store.addEventListener('click', function(){
+    location.href='<%= request.getContextPath() %>/store/list';
+ });
     </script>
 </html>

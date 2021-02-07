@@ -22,6 +22,12 @@
 
   
     <style>
+    
+    #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
     #summernote {
     	margin: 0;
     }
@@ -190,9 +196,9 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
+            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+            <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+         	<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
             <a id="store">STORE</a>
@@ -209,7 +215,7 @@
                     <span class="input_area">
                         <input type="text" name="title" value="<%= b.getBrd_title() %>" required>
                     </span>
-                    
+                    <br><br>
                     <h4 class="board_title">내용</h4>
                     <textarea class="input_area" rows="5" id="summernote" name="content" style="resize:none;" required><%= b.getBrd_content() %></textarea>
                     

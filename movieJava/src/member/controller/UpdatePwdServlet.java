@@ -39,12 +39,10 @@ public class UpdatePwdServlet extends HttpServlet {
 		String userPwd = request.getParameter("userPwd");	// 현재 비밀번호
 		String newPwd = request.getParameter("newPwd");		// 변경할 비밀번호
 		
-		System.out.println(userId + " " + userPwd + " " + newPwd);
-		
+
 		Member updateMember = new MemberService().updatePwd(userId, userPwd, newPwd);
 		
-		 System.out.println(updateMember);
-		
+
 		if(updateMember != null) {
 			// 비밀번호 수정이 잘 되었음을 result-success로 표시
 			request.setAttribute("result", "success");

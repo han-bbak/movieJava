@@ -15,6 +15,11 @@
     <link href="<%= request.getContextPath() %>/resources/css/form.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+    #menu-icon { 
+            color: #ffffff;
+            padding: 30px 0 0;
+            font-size: 5em; 
+            }
         #board_top {
             width: 100%;
             height: 4%;
@@ -209,9 +214,9 @@
                   </svg>
             </div>
             <br><br><br><br>
-            <a href="메인페이지.html">Home</a>
-            <a href="마이페이지.html">마이페이지</a><br>
-            <a href="관심영화.html">관심 영화</a><br>
+            <a href="<%= request.getContextPath() %>/home.jsp">HOME</a><br>
+            <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a><br> 
+         	<a href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심 영화</a><br>
             <a id="netflix">공유 계정</a><br>
             <a id="qa">Q&A</a><br>
             <a id="store">STORE</a>
@@ -257,7 +262,6 @@
 					<tr>
 						<td height="15%">
 							<button type="button" class="btn" id="buy">구매하기</button>
-							<button type="button" class="btn" id="bascket">장바구니</button>
 						</td>
 					</tr>
 				</table>
@@ -306,21 +310,6 @@ $("#buy").click(function(){
 			alert('로그인 후 결제가 가능합니다.');
 		<% } %>
 	});
-});
-
-//장바구니 버튼
-const bascket = document.getElementById('bascket');
-bascket.addEventListener('click', function() {
-	<% if(loginUser != null) { %>
-		var msg = confirm('장바구니에 추가되었습니다. 장바구니로 이동하시겠습니까?');
-		if(msg){
-			location.href = '<%= request.getContextPath() %>/store/bascket';
-		} else {
-			location.reload();
-		}
-	<% } else { %>
-		alert('로그인 후 장바구니에 담기가 가능합니다.');
-	<% } %>
 });
 </script>
 

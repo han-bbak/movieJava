@@ -4,8 +4,8 @@
 <%
 	request.setCharacterEncoding("UTF-8"); //검색결과 한글일 때
 	String result = request.getParameter("result");
+	String search = request.getParameter("search");
 	Member loginUser = (Member)session.getAttribute("loginUser");
-
 	ArrayList<MovieVO> list = (ArrayList<MovieVO>)request.getAttribute("list");
 	%>
 
@@ -73,11 +73,12 @@ a:-webkit-any-link {
 }
 
 #footer {
-	margin-top: 70px;
-	padding: 20px;
-	background-color: rgb(24, 24, 24);
-	width: 100%;
-	height: 150px;
+    float: left;
+    margin-top: 300px;
+    padding: 20px;
+    background-color: rgb(24, 24, 24);
+    width: 100%;
+    height: 150px;
 }
 
 .header {
@@ -166,7 +167,9 @@ a:-webkit-any-link {
 	width: 100%;
 	text-align: left;
 }
-
+#searchDiv a {
+	text-decoration : none;
+}
 #searchDiv span {
 	color: #fff;
 	font-size: 12px;
@@ -396,6 +399,7 @@ h3 {
 	opacity: 0;
 }
 
+
 /* 바로가기 버튼 */
 .linkbtn {
 	width: 157px;
@@ -422,6 +426,12 @@ h3 {
 	background-color: #FFFFFF;
 	color: #181C25;
 }
+
+.font1{
+		font-size : 30px
+      	font-family: 'Noto Sans KR', sans-serif;
+      }
+
 </style>
 </head>
 
@@ -499,7 +509,6 @@ h3 {
 							</script>
 						<% } %>
 					</div>
-					-->
 				</div>
 				<script>
 					var logout = document.getElementById("logout");
@@ -551,17 +560,40 @@ h3 {
 <br>
 <a id="netflix">공유 계정</a>
 <br>
-<a href="<%=request.getContextPath()%>/views/board/QA.jsp">Q&A</a>
-<a href="<%=request.getContextPath()%>/views/store/store_goods.jsp">STORE</a>
+<a id="qa">Q&A</a>
+<br>
+<a id="store">STORE</a>
 </div>
+<script>
+//넷플릭스 버튼
+const netflix = document.getElementById('netflix');
+netflix.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/netflix/list';
+});
+
+//Q&A 버튼
+const qa = document.getElementById('qa');
+qa.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/qa/list';
+});
+
+//Store 버튼
+const store = document.getElementById('store');
+store.addEventListener('click', function(){
+	location.href='<%= request.getContextPath() %>/store/list';
+});
+</script>
 
 <head>
 <style>
+h1.sub{
+color: #cecece;
+}
 .sub {
 	text-align: center;
 	font: bold 15px Arial;
 	padding: 10px;
-	border-bottom: 2px solid rgb(41, 41, 41);
+	border-bottom: 2px solid rgb(76 76 76);
 	width: 1230px;
 	margin: 0 auto 25px;
 }
@@ -573,6 +605,11 @@ h3 {
   clear: both;
   overflow: hidden;
 } */
+
+b {
+    font-weight: normal;
+}
+
 option {
 	color: rgb(0, 0, 0);
 }
@@ -580,21 +617,26 @@ option {
 #filter option[value="all"] {
 	color: rgb(165, 165, 165);
 }
+#filter{
+margin-left: 77px;
+}
 
 #filter2 {
-	margin-left: 1100px
+    margin-left: 855px;
+}
+
+div.posts {
+margin-left : 90px;
 }
 
 [id^=filter] {
-	border: 0px solid;
-	border-radius: 10px;
-	display: block;
-	float: left;
-	padding: 7px;
-	width: 100px;
-	cursor: pointer;
-	font-size: 14px;
-	margin: 0 50px;
+    border: 0px solid;
+    border-radius: 9px;
+    display: block;
+    float: left;
+    padding: 10px;
+    font-size: 15px;
+    margin: -9px 0px 4px;
 }
 /* 
 #wwrapper{
