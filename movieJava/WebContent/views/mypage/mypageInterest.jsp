@@ -46,6 +46,15 @@
 
 	</script>
 	<% } %>
+	
+	<% 
+	if(mList == null) {%>
+	<script>
+	alert("관심영화를 등록해주세요");
+	location.href="<%= request.getContextPath() %>/home.jsp";
+
+	</script>
+	<% } %>
     
     
     <style> 

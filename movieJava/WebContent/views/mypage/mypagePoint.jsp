@@ -552,12 +552,12 @@ h3 {
             
             <p><%= loginUser.getPoint() %> 포인트</p>
             <br><br><br><br><br><br>
-            <div id="area1">포인트 적립/사용 내역</div><br><hr><br>
+            <div id="area1">포인트 내역</div><br><hr><br>
             
             <table>
                 <thead>
                   <tr>
-                    <th>날짜</th><th>방식</th><th>적립/사용</th><th>적립/사용 포인트</th><th>보유 포인트</th>
+                    <th>날짜</th><th>결제 코드</th><th></th><th>보유 포인트</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -573,7 +573,7 @@ h3 {
                     		
                     		<td><%= p.getPntDate() %></td>
                     		<td><%= p.getPayCode() %></td>
-                    		<td><%= p.getPntList() %></td>
+                    		
                     		<td></td>
                     		<td><%= loginUser.getPoint() %></td>
 						</tr>

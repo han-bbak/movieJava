@@ -594,6 +594,11 @@ h1 {
 
 .font2 {
 	color: white;
+	
+}
+.font3 {
+	color: white;
+	font-size : 30px;
 }
 </style>
 
@@ -714,6 +719,7 @@ h1 {
 		<div id="wrapper1" class="font1">
 
 			<!-- content-->
+			<p class="font3">비밀번호 변경</p>
 			<div id="content1">
 				<form id="updatePwdForm"
 					action="<%=request.getContextPath()%>/member/updatePwd"
@@ -901,6 +907,9 @@ function comparePw() {
     }
 }
 
+
+</script>
+<script>
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
