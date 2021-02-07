@@ -254,11 +254,23 @@ select {
 							</span>
 						</td>
 					</tr>
-					
 					<tr>
 						<td>
-							<span>총 상품 금액&nbsp; <%= total %>원</span> <br> 
-							<span>배송비 3,000원</span>
+							<span style="color:lightblue; font-size:25px;"><%= loginUser.getMemName() %></span>&nbsp;
+							<span>님의 사용 가능 포인트 : </span>
+							<span><%= loginUser.getPoint() %></span> &nbsp; Point
+						</td>
+						<td>
+							<span>사용하실 포인트: &nbsp;</span>
+							<input type="number" id="point" value="0" step="1000" style="padding: 0px; border:0; width: 80px; height:30px; font-size:18px; text-align:center;">
+							<button type="button" class="btn" id="pntBtn">확인</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span>총 상품 금액&nbsp; <%= total %>원</span><br> 
+							<span>배송비 3,000원</span><br>
+							<span></span>
 						</td>
 						<td>
 							<span>총 결제 금액</span>
@@ -294,8 +306,39 @@ const store = document.getElementById('store');
 store.addEventListener('click', function(){
 	location.href='<%=request.getContextPath()%>/store/list';
 });
-
 </script>
+<script>
+	$('#pntBtn').click(function() {
+		var havePoint = $(this).parent().parent().children().eq(0).children().eq(2).text();
+		var $point = $(this).parent().children().eq(1);
+		var p = $point.val();
+		var $rtotal = $(this).parent().parent().parent().children().eq(3).children().eq(1).children().eq(1);
+		var r = $rtotal.text();
+		var $useP = $(this).parent().parent().parent().children().eq(3).children().eq(0).children().eq(4);
+		var use = $useP.text();
+		
+		if(!havePoint) {
+			havePoint = 0;
+			p = 0;
+			r = 0;
+		} else {
+			havePoint *= 1;
+			p *= 1;
+			r *= 1;
+		}
+		
+		if(point < 0) {
+			alert('마이너스는 가능하지 않습니다.');
+		} else if (p > havePoint) {
+			alert('보유한 포인트보다 더 많이 사용할 수 없습니다.');
+		} else {
+			use = p;
+			
+			r = $rtotal.text(r - use);
+		}
+	});
+</script>
+
 <script> $(function() { $("#postcodify_search_button").postcodifyPopUp(); }); </script>
 <script>
 const pay = document.getElementById('pay');
@@ -312,7 +355,7 @@ pay.addEventListener('click', function(){
 		   	 	pay_method : 'card',
 		    	merchant_uid : 'merchant_' + new Date().getTime(),
 		    	name : '주문명:<%= storeTitle %>',
-		    	amount : <%= rtotal %>,
+		    	amount : '<%= rtotal %>',
 		    	buyer_email : '<%= loginUser.getEmail() %>',
 		    	buyer_name : '<%= loginUser.getMemName() %>',
 		    	buyer_tel : <%= loginUser.getPhone() %>
