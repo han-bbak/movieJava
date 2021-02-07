@@ -57,10 +57,8 @@ public class Netflix {
 							System.out.println("M_SUMMARY : " + M_SUMMARY.text());
 							System.out.println("link : " + link.attr("title"));
 
-							crawling.concat(M_TITLE.text());
-							crawling.concat(M_SUMMARY.text());
-							crawling.concat(link.attr("title"));
-
+							crawling += "," + M_TITLE.text();
+							
 						}
 					}
 				

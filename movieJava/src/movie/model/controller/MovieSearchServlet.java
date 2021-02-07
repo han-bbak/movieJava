@@ -37,6 +37,7 @@ public class MovieSearchServlet extends HttpServlet {
 		String search = request.getParameter("search");
 		String genre = request.getParameter("genre");
 		String sort = request.getParameter("sort");
+		boolean chkNetflix = false;
 		
 		Search filter = new Search(search, genre, sort);
 		ArrayList<MovieVO> list = new MovieService().selectSearchMovie(filter);
@@ -44,6 +45,15 @@ public class MovieSearchServlet extends HttpServlet {
 		
 		String crawling = new Netflix().netflixCrawling(search);
 		
+		String[] cArr = crawling.split(",");
+		for(int i = 0; i < list.size(); i++) {
+			for(int j = 0; j < cArr.length; j++) {
+				if(cArr[j].contains(list.get(i).getM_title())) {
+					chkNetflix = true;
+					System.out.println(list.get(i).getM_title() + "" + chkNetflix);
+				}
+			}
+		}
 		System.out.println(crawling);
 		request.setAttribute("list", list);
 		RequestDispatcher view = request.getRequestDispatcher("/views/movie/search/result.jsp");
