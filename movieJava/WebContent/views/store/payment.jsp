@@ -282,6 +282,7 @@ select {
 					</tr>
 				</table>
 				<div class="btnArea">
+					<input type="hidden" id="hMemNo" value="<%= loginUser.getMemNo() %>">
 					<button type="button" class="btn" id="pay">결제</button>
 					<button type="button" class="btn" onclick="history.back();">취소</button>
 				</div>
@@ -358,6 +359,9 @@ pay.addEventListener('click', function(){
 		var address3 = document.getElementById('detail').value;
 		var point = document.getElementById('point').value;
 		var total = document.getElementById('inputtotal').value;
+		var memNo = document.getElementById('hMemNo').value;
+		
+		console.log(memNo);
 		
 		var real = total - point;
 
@@ -377,7 +381,7 @@ pay.addEventListener('click', function(){
 			},	function(rsp) {
 		    	    if(rsp.success ) {
 		    	        var msg = '결제가 완료되었습니다.';
-		    	        location.href="<%= request.getContextPath() %>/home.jsp";
+		    	        location.href="<%= request.getContextPath() %>/payment/point?memNo=" + memNo + "&point=" + point;
 		    	    } else {
 		    	    	var msg = '결제가 취소되었습니다.';
 		    	    }

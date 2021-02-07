@@ -210,4 +210,29 @@
 		AND ST_CATEGORY = 2
 		ORDER BY ST_NO
 	</entry>
+	<entry key="usePoint">
+		UPDATE
+		       MEMBER
+		   SET
+		       POINT = POINT + ?
+		 WHERE
+		       MEM_NO = ?
+	</entry>
+	<entry key="listPoint">
+		INSERT 
+			INTO POINT
+			(
+				PNT_CODE,
+				PNT_LIST,
+				PNT_DATE,
+				MEM_NO
+			)
+			VALUES
+			(
+				SEQ_PNT_CODE.nextval,
+				?,
+				SYSDATE,
+				?
+			)
+	</entry>
 </properties>

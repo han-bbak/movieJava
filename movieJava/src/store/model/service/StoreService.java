@@ -137,4 +137,28 @@ public class StoreService {
 		return s;
 	}
 
+	public int usePoint(int memNo, int point) {
+		Connection conn = getConnection();
+		int rPoint = 0;
+		
+		int result = new StoreDao().usePoint(conn, memNo, point);
+		
+	
+		close(conn);
+		
+		return rPoint;
+	}
+
+	public int listPoint(int memNo, int point) {
+		Connection conn = getConnection();
+		int rrPoint = 0;
+		
+		int result = new StoreDao().listPoint(conn, memNo, point);
+		
+		close(conn);
+		
+		return rrPoint;
+	}
+
+
 }

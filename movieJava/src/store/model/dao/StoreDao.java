@@ -435,4 +435,49 @@ public class StoreDao {
 		return s;
 	}
 
+	public int usePoint(Connection conn, int memNo, int point) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("usePoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, point);
+			pstmt.setInt(2, memNo);
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+
+		}
+		
+		return result;
+	}
+
+	public int listPoint(Connection conn, int memNo, int point) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("listPoint");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, point);
+			pstmt.setInt(2, memNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
