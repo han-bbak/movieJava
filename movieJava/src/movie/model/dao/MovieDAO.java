@@ -124,7 +124,7 @@ public class MovieDAO {
 				movie.setM_image(rs.getString("m_image"));
 				movie.setM_summary(rs.getString("m_summary"));
 				movie.setM_rating(rs.getString("m_rating"));
-				movie.setM_grade(rs.getInt("m_grade"));
+				movie.setM_grade(rs.getDouble("m_grade"));
 				movie.setStatus(rs.getString("status"));
 				list.add(movie);
 			}

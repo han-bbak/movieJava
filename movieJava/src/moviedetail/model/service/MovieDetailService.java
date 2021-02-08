@@ -1,8 +1,13 @@
 package moviedetail.model.service;
 
 import java.sql.Connection;
+
+
+import interest.model.vo.Interest;
+
 import static common.JDBCTemplate.*;
 import movie.model.vo.MovieVO;
+import moviedetail.model.dao.InterestDao;
 import moviedetail.model.dao.MovieDetailDao;
 
 public class MovieDetailService {
@@ -32,8 +37,22 @@ public class MovieDetailService {
 		
 		return stargraded;
 	}
- 
+	public int insertInterest(  int mem_no ,String m_code ) {
+		Connection conn= getConnection(); 
+		 int interest = new InterestDao().insertInterest(conn,mem_no,m_code);
+               if(interest > 0) {
+            	  commit(conn);
+               }else {
+            	   rollback(conn);
+               }
+		 
+		 close(conn);
+		
+		
+		return interest;
+	
  }
+}
 
 
 

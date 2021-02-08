@@ -52,13 +52,13 @@ p {
     width: 1190px;
     height: 1400px;
     margin: auto;
-    border: 1px solid white;
+
 }
 
 #header {
     width: 100%;
     height: 10%;
-    border: 1px solid white;
+  
 }
 
 #content {
@@ -75,7 +75,7 @@ p {
 
 .header {
     float: left;
-    border: 1px solid white;
+   
 }
 
 #header-menu {
@@ -85,8 +85,8 @@ p {
 }
 
 #header1 {
-    width: 15%;
-    height: 100%;
+	width: 15%;
+	height: 100%;
 }
 
 #header2 {
@@ -317,7 +317,11 @@ html.open {
     margin-top: 12%;
     
 }
-
+.logo {
+   position: relative;
+   margin: 20px 50px;
+   max-width: 130%;
+}
 
 /*====================리뷰 전체페이지==================*/
 #form-commentInfo{ width: 100%; 
@@ -349,8 +353,8 @@ html.open {
                 </div>
             </div>
             <div class="header" id="header1">
-                <p>로고</p>
-            </div>
+				<a href="<%= request.getContextPath() %>"><img class="logo" src="<%= request.getContextPath() %>/images/logo.png"></a>
+			</div>
             <div class="header" id="header2">
                 <form id="search-form">
                     <section id="search-btn-area">
@@ -455,27 +459,17 @@ html.open {
 
         <!--    버튼-->      
         <div class="Attention">
-            <button class="button">관심목록</button>
+      
+            <button id="interest">관심목록</button>
         </div>
+ 
     <details id="detail">
         <summary><h3>더보기</h3></summary>
         <p> 시간남으면 유투브 리소스로 영화예고편 or 영화 주연배우들 넣을 계획</p>
       </details>
 </div>
 
-<!--영화리뷰 -->
-<form name="commentFrm">
-<div class="register">
-<textarea cols="100" class="customheight" name="commentContents" id="commentContents"></textarea>
-</div>
-<div class="register">
-<button type="button" class="customHeight btnCommentOK">후기등록</button>
-</div>
-<input type = "hidden" name="pnum" value="${pvo.pnum}"/>
-<input type="hidden" name="gobackURL" value="${goBackURL }"/>
 
-</form>
-	
 
 		
 		
@@ -513,7 +507,7 @@ html.open {
                 var submenu = $(this).next("ul");
 
                 // submenu 가 화면상에 보일때는 위로 보드랍게 접고 아니면 아래로 보드랍게 펼치기
-                if (submenu.is(":visible")) {/
+                if (submenu.is(":visible")) {
                     submenu.slideUp();
                 } else {
                     submenu.slideDown();
@@ -565,37 +559,35 @@ html.open {
                   
            
     </script>
+    <!-- 관심영화등록 ajax -->
+    
+    <script>
+    $("#interest").click(function() {
+    <% if(loginUser != null) {%>
+      $.ajax({
+          url: "<%= request.getContextPath()%>/InterestServlet",
+          data : {mem_no : <%= loginUser.getMemNo() %> ,
+        	  m_code : <%= movie.getM_code() %>
+          },
+          type :"post", 
+          success: function(result){
+           alert("관심영화에 등록되었습니다");
+          },
+          error : function(e){
+             console.log(e);
+          }
+             
+       });
+  <% } else { %>
+  alert("로그인후 이용가능한 서비스입니다.");
+  <% } %>
+    });
+    </script>
+    
 
     <!-- 영화후기쓰기 -->
 <script>
- $(".btnCommentOK").click(function(){
-	 if(${sessionScope.loginuser == null}){
-		 alert("영화후기를 작성할려면 로그인을 하셔야합니다.");
-	 return; 
-	 }
-	 
-	 //글내용 
-	 var commentContents =$("#commentContents").val().trim();
-	 if(commentContents == ""){
-		 alert("영화 후기 내용을 입력해주세요~"); 
-		 return;
-	 }
-	 });
- 
-   var queryString =$("form[name=commentFrm]").serialize(); 
-   $.ajax({
-	   url:"",
-	   type:"POST",
-	   data:queryString, h
-	   success:function(){
-		   alert("확인용:영화리뷰 작성 성공");
-	   },
-	   error:function(request,status,error){
-		   alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error); 
-	   }
-   })
-   
-   });
+
 </script>
 	
 </body>

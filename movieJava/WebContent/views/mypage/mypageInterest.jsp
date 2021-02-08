@@ -626,7 +626,7 @@ h3 {
                     		<div class="name"><%= m.getM_title() %></div>
                     		 <div class="dis"><%= m.getM_genre() %></div>
 
-                    		<a class="btn1" href="http://localhost:8800/movieJava/views/movie.moviedetail/Moviedetails.jsp">상세 페이지</a>
+                    		<a class="btn1"href="<%= request.getContextPath() %>/movie/detail?mCode=<%= m.getM_code() %>">상세 페이지</a>
 						</div>
 						</div>
                     	<% } %>

@@ -44,5 +44,16 @@ set m_grade = (select avg(star_grade)
                where movie_code = ?)
 where m_code = ?
 	</entry>
+	<entry key="insertInterest">
+	INSERT 
+	INTO INTEREST
+	(MEM_NO,
+	M_CODE
+	)
+	VALUES(
+	?,
+	?
 	
+	)
+	</entry>
 </properties>
