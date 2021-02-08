@@ -8,7 +8,6 @@
 %>
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -542,7 +541,9 @@ h3 {
 <br>
 <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
 <br>
-<a id="interest">관심 영화</a>
+<a
+	href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심
+	영화</a>
 <br>
 <a id="netflix">공유 계정</a>
 <br>
@@ -568,12 +569,6 @@ const store = document.getElementById('store');
 store.addEventListener('click', function(){
 	location.href='<%= request.getContextPath() %>/store/list';
 });
-
-//관심영화 버튼
-const interest = document.getElementById('interest');
-interest.addEventListener('click', function(){
-   location.href='<%= request.getContextPath() %>/mypage/movie';
-});
 </script>
 
 <div id="content">
@@ -585,7 +580,7 @@ interest.addEventListener('click', function(){
 						<div class="caption right-align">
 							<h3 class="push_1">역대 국내 흥행영화</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>#">바로가기</button>
+								onclick="location.href='<%=request.getContextPath()%>#">바로가기</button>
 						</div></li>
 					<li><img src="views/movie/image/slide/banner2.jpg">
 						<div class="caption right-align">
@@ -593,7 +588,7 @@ onclick="location.href='<%=request.getContextPath()%>#">바로가기</button>
 								나만 넷플릭스 없을땐?<br>파티구하기!
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">바로가기</button>
+								onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">바로가기</button>
 						</div></li>
 					<li><img src="views/movie/image/slide/banner3.jpg">
 						<div class="caption right-align">
@@ -601,7 +596,7 @@ onclick="location.href='<%=request.getContextPath()%>/views/board/netflix.jsp'">
 								영화 굿즈<br>온라인 단독 판매
 							</h3>
 							<button type="button" class="linkbtn btn-outline"
-					onclick="location.href='<%= request.getContextPath() %>/store/list'">바로가기</button>
+								onclick="location.href='<%=request.getContextPath()%>/store/list'">바로가기</button>
 						</div></li>
 				</ul>
 			</div>

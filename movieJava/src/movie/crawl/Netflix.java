@@ -52,10 +52,10 @@ public class Netflix {
 							M_TITLE = element.select("h1");
 							M_SUMMARY = element.select("p");
 							link = element.select("section ul button a");
-							System.out.println("---" + value + "---");
+/*							System.out.println("---" + value + "---");
 							System.out.println("M_TITLE : " + M_TITLE.text());
 							System.out.println("M_SUMMARY : " + M_SUMMARY.text());
-							System.out.println("link : " + link.attr("title"));
+							System.out.println("link : " + link.attr("title"));*/
 
 							crawling += "," + M_TITLE.text();
 							
