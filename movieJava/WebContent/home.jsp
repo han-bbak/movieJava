@@ -541,9 +541,7 @@ h3 {
 <br>
 <a href="<%= request.getContextPath() %>/views/mypage/mypagemain.jsp">마이페이지</a>
 <br>
-<a
-	href="<%= request.getContextPath() %>/views/mypage/mypageInterest.jsp">관심
-	영화</a>
+<a id="interest">관심 영화</a>
 <br>
 <a id="netflix">공유 계정</a>
 <br>
@@ -552,6 +550,12 @@ h3 {
 <a id="store">STORE</a>
 </div>
 <script>
+//관심영화 버튼
+const interest = document.getElementById('interest');
+interest.addEventListener('click', function(){
+   location.href='<%= request.getContextPath() %>/mypage/movie';
+});
+
 //넷플릭스 버튼
 const netflix = document.getElementById('netflix');
 netflix.addEventListener('click', function(){
