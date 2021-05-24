@@ -28,4 +28,4 @@
 https://www.erdcloud.com/d/6PbRhTaZFY7zqRpHn
 
 ### Final Presentaion (with code reviews)  
-• [movieJava 최종 발표.ppt](https://drive.google.com/file/d/1Dn88Vzv1l2jW0CXb3y5rjhFtiyMrZwDd/view?usp=sharing)
+• [무비자바 최종.pptx](https://github.com/han-bbak/movieJava/files/6532009/default.pptx)
