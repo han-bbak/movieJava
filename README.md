@@ -22,5 +22,9 @@
 • ProcessMap  
 ![세미 프로젝트 프로세스 맵](https://user-images.githubusercontent.com/77658506/119333528-ecf4a500-bcc4-11eb-94f9-1a5271bead02.png)
 
+• DB
+![erd](https://user-images.githubusercontent.com/77658506/119333809-465cd400-bcc5-11eb-9b17-d31d8d638eb0.png)
+https://www.erdcloud.com/d/6PbRhTaZFY7zqRpHn
+
 ### Final Presentaion (with code reviews)  
 • [movieJava 최종 발표.ppt](https://drive.google.com/file/d/1Dn88Vzv1l2jW0CXb3y5rjhFtiyMrZwDd/view?usp=sharing)
