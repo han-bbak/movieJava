@@ -18,7 +18,10 @@
 
 ### Building
 • Plan  
-[movieJava 기획 발표.pptx](https://github.com/han-bbak/movieJava/files/6532017/OTT.pptx)
+[movieJava 기획 발표.pptx](https://github.com/han-bbak/movieJava/files/6532017/OTT.pptx)  
+
+• UI  
+[무비자바 ui.pdf](https://github.com/han-bbak/movieJava/files/6532044/ui.pdf)  
 
 • ProcessMap  
 ![세미 프로젝트 프로세스 맵](https://user-images.githubusercontent.com/77658506/119333528-ecf4a500-bcc4-11eb-94f9-1a5271bead02.png)
