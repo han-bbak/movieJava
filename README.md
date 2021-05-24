@@ -8,7 +8,7 @@
 
 <hr>
 
-### Langages, Tools
+### Languages, Tools
 | OS         | Window 10 |
 | ---------- | ------------- |
 | Tool       | Eclipse |
