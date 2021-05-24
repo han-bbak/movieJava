@@ -20,7 +20,7 @@
 [movieJava 기획 발표.ppt](https://drive.google.com/file/d/1HW86P7mkngrS-lr7Azy7PHmVwqJi44QL/view?usp=sharing)
 
 • ProcessMap  
-
+![세미 프로젝트 프로세스 맵](https://user-images.githubusercontent.com/77658506/119333528-ecf4a500-bcc4-11eb-94f9-1a5271bead02.png)
 
 ### Final Presentaion (with code reviews)  
 • [movieJava 최종 발표.ppt](https://drive.google.com/file/d/1Dn88Vzv1l2jW0CXb3y5rjhFtiyMrZwDd/view?usp=sharing)
