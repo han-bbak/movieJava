@@ -41,4 +41,8 @@ https://www.erdcloud.com/d/6PbRhTaZFY7zqRpHn
 <hr>
 
 ### Final Presentaion (with code reviews)  
+|![코드리뷰1](https://user-images.githubusercontent.com/77658506/119343590-9d68a600-bcd1-11eb-9750-044ea708ab4c.PNG)|![코드리뷰2](https://user-images.githubusercontent.com/77658506/119343581-9b9ee280-bcd1-11eb-8ed6-bd12d9ccf09b.PNG)|
+| ---------- | ------------- |
+|![코드리뷰3](https://user-images.githubusercontent.com/77658506/119343586-9cd00f80-bcd1-11eb-9332-794d8115e71e.PNG)|![코드리뷰4](https://user-images.githubusercontent.com/77658506/119343587-9d68a600-bcd1-11eb-9e9b-804bca025d39.PNG)|
+
 • [무비자바 최종.pptx](https://github.com/han-bbak/movieJava/files/6532009/default.pptx)
